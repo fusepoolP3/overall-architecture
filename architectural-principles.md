@@ -254,13 +254,14 @@ Take for example the graphs:
 
 G
 
-ex:a  ex:b  \_:b1.                  \
- ex:p  ex:b  \_:b1.                  \
- ex:a  ex:b  \_:b2 \
- \
- and G' \
- ex:a  ex:b  \_:b3. \
- ex:p  ex:b  \_:b3.
+    ex:a  ex:b  \_:b1.                  \
+    ex:p  ex:b  \_:b1.                  \
+     ex:a  ex:b  \_:b2 \
+
+and G' \
+
+    ex:a  ex:b  \_:b3. \
+    ex:p  ex:b  \_:b3.
 
  
 
@@ -280,9 +281,9 @@ as opposed to Sesame SPARQL is not tied to the Java platform so it
 allows more variation while guaranteeing the interoperability with a
 smaller set of standards.
 
-The Fusepool P3 projects wants to build “Data publishing tools that are
+The Fusepool P3 projects wants to build "Data publishing tools that are
 […] very simple to deploy and maintain in organizational IT
-environments”. Deployment in existing IT infrastructure is clearly
+environments". Deployment in existing IT infrastructure is clearly
 easier if the software interacts with other software (such as a triple
 store) using well defined standards. Even if it might be possible that
 the enterprise database the organization uses (e.g. Oracle Database)
@@ -292,10 +293,7 @@ SPARQL communication over the network no driver exchange is necessary.
 An exchange of driver is particularly tedious if the software doesn’t
 use a module system such as OSGi.
 
-  {style="text-indent:0cm"}
-=
 
-\
 
 * * * * *
 
