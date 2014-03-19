@@ -1,20 +1,20 @@
-+--------------------------------------------------------------------------+
-| Fusepool P3 Architectural Principles                                     |
-|                                                                          |
-| Basic architectural design choices for Fusepool P3                       |
-|                                                                          |
-|                                                                          |
-|                                                                          |
-| **Reto Gmür**                                                            |
-|                                                                          |
-| **0.7 2.2.2014**                                                         |
-+--------------------------------------------------------------------------+
-| **Bern University of Applied Sciences**                                  |
-|                                                                          |
-| TI                                                                       |
-|                                                                          |
-| ICTM                                                                     |
-+--------------------------------------------------------------------------+
+    +--------------------------------------------------------------------------+
+    | Fusepool P3 Architectural Principles                                     |
+    |                                                                          |
+    | Basic architectural design choices for Fusepool P3                       |
+    |                                                                          |
+    |                                                                          |
+    |                                                                          |
+    | **Reto Gmür**                                                            |
+    |                                                                          |
+    | **0.7-MD 2.2.2014**                                                         |
+    +--------------------------------------------------------------------------+
+    | **Bern University of Applied Sciences**                                  |
+    |                                                                          |
+    | TI                                                                       |
+    |                                                                          |
+    | ICTM                                                                     |
+    +--------------------------------------------------------------------------+
 
 1    Introduction
 =================
@@ -43,16 +43,11 @@ the overall patterns within which such interaction is defined.
 The goal of this document is to provide architectural principles so
 that:
 
-·       Reusability of Fusepool component is maximized
-
-·       Distributed development is facilitated
-
-·       It is easy for developer to understand and extend the software
-
-·       Ensure longevity of the software
-
-·       The software is simple to deploy and maintain in organizational
-IT environments [DoW 1.2.2]
+- Reusability of Fusepool component is maximized
+- Distributed development is facilitated
+- It is easy for developer to understand and extend the software
+- Ensure longevity of the software
+- The software is simple to deploy and maintain in organizational IT environments [DoW 1.2.2]
 
 2     Basic component interaction patterns
 ==========================================
@@ -60,11 +55,9 @@ IT environments [DoW 1.2.2]
 The interaction between components shall be defined using one of the
 following methods:
 
-·       Semantic REST API
-
-·       Linked Data Platform
-
-·       SPARQL 1.1 Protocol
+- Semantic REST API
+- Linked Data Platform
+- SPARQL 1.1 Protocol
 
 This three basic architectures require different levels of specification
 to define the concrete interaction between two components.
