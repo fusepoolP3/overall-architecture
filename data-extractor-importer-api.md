@@ -1,4 +1,4 @@
-# Deliverable 2.1
+# Data extractor and importer with extraction
 
 D2.1) Data importer with data extraction tools implemented: PDF Report and software. The prototype deliverables will always be accompanied by appropriate documentation for their development and for their usage. In addition, prototype deliverables need to ensure integration with other prototype deliverables in order to maximise the value of that prototype. [OGL, M12, T2.1+2.2] [month 12] 
 
