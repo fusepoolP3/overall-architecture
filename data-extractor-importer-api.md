@@ -117,3 +117,7 @@ Response
        fp:extractor <http://example.org/simple-extractor>.
 
 The above container will process added resources using `http://example.org/simple-extractor` if their media-type matches one of the supported input formats of this extractor. If this is the case both the original resource as well as the extraction results will be added to the container.
+
+### Open issues
+
+- Name hints: can one give name hint for the extracted resource?
