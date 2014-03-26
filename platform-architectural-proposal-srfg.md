@@ -6,9 +6,9 @@
 
 # Motivation
 
-The proposal is build around this concept. Where it aims to provide a set of integrated 
-software components that provide a dynamic data value chain capable of process,
-enhance and publish the data. Let's try to arrive to a common understanding of it.
+The proposal is build around the _data value chain_ concept. Where it aims to provide a 
+set of integrated software components that provide a dynamic data value chain capable of 
+process, enhance and publish the data. Let's try to arrive to a common understanding of it.
 
 The [architectural principles](https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md)
 outlined by Reto envisions a complete interaction model based fully based on HTTP, 
@@ -97,25 +97,31 @@ provide a adequate answer.
 
 # Java API
 
-TBD
+TBD (probably a concept similar to
+[what we have](https://git-wip-us.apache.org/repos/asf?p=marmotta.git;a=blob;f=libraries/ldclient/ldclient-api/src/main/java/org/apache/marmotta/ldclient/api/provider/DataProvider.java;h=5d0fda3d01dce4b5349c16e8df6097165bb873cb;hb=develop#l35) in [LDClient](http://marmotta.apache.org/ldclient))
 
 ## REST API
 
-| Scope                  | Endpoint                      | Method  | Status | Description | 
-| ---------------------- | ----------------------------- | ------- | ------ | ----------- | 
-| Global                 | /p3                           |         |        | TBD         |
-| Transformers           | /p3/transformers              | GET     | 200    | List all available transformers. | 
-|                        | /p3/transformers/_t1_         | GET     | 200    | Get RDF description (vocab to be defined), including all available configurations. |
-|                        |                               | POST    | 201    | Creates a instance of the transformer with the configuration in the body (in the case of BatchRefine the JSON script, XSLT for the Sponger, etc). The `Slug` header indicates name preference. `Location` returns the created endpoint.  | 
-|                        | /p3/transformers/_t1_/_c1_    | GET     | 200    | Return the raw configuration of the instance. `Link` header to the transformer it belongs to. | 
-|                        |                               | POST    | 200    | **Synchronous**: with header `Prefer: return="representation"` will return the transformed data, no server-side storage (see [Prefer Header for HTTP](http://tools.ietf.org/html/draft-snell-http-prefer-18#section-4)). | 
-|                        |                               |         | 202    | **Asynchronous**: with header `Prefer: respond-async` the transformation will be executed in background, returning a `Location` header to the job. |
-| Enhancers              | /p3/enhancers                 |         |        | TBD         |
-| Jobs                   | /p3/jobs                      | GET     | 200    | List all running jobs (TBD). |
-|                        | /p3/jobs/_j1_                 | GET     | 200    | Current status while the job is running. | 
-|                        |                               |         | 303    | Once the job has been complete, it redirects to the result (`Location` header). | 
-|                        |                               |         | 500    | Job execution error. | 
-| Results                | /ldp/...                      | *       | *      | Result (Regular LDP Interaction Models). | 
+Here an initial draft how the REST API could look like:
+
+| Scope                  | Endpoint                      | Method  | Status | Description
+| ---------------------- | ----------------------------- | ------- | ------ | -----------------------------------------------------------------------------------------------------
+| Global                 | /p3                           |         |        | TBD
+| Transformers           | /p3/transformers              | GET     | 200    | List all available transformers.  
+|                        | /p3/transformers/_t1_         | GET     | 200    | Get RDF description (vocab to be defined), including all available configurations.
+|                        |                               | POST    | 201    | Creates a instance of the transformer with the configuration in the body (in the case of BatchRefine the JSON script, XSLT for the Sponger, etc). The `Slug` header indicates name preference. `Location` returns the created endpoint.
+|                        |                               |         | 400    | The transformer does not accept the configuration submitted.
+|                        | /p3/transformers/_t1_/_c1_    | GET     | 200    | Return the raw configuration of the instance. `Link` header to the transformer it belongs to.
+|                        |                               | POST    | 200    | **Synchronous**: with header `Prefer: return="representation"` will return the transformed data, no server-side storage (see [Prefer Header for HTTP](http://tools.ietf.org/html/draft-snell-http-prefer-18#section-4)).
+|                        |                               |         | 202    | **Asynchronous**: with header `Prefer: respond-async` the transformation will be executed in background, returning a `Location` header to the job.
+|                        |                               |         | 400    | The submitted data cannot be transformed.
+|                        |                               |         | 500    | An error has occurred during transformation (when synchronous).   
+| Enhancers              | /p3/enhancers                 |         |        | TBD 
+| Jobs                   | /p3/jobs                      | GET     | 200    | List all running jobs (TBD). 
+|                        | /p3/jobs/_j1_                 | GET     | 200    | Current status while the job is running. 
+|                        |                               |         | 303    | Once the job has been complete, it redirects to the result (`Location` header). 
+|                        |                               |         | 500    | Job execution error.
+| Results                | /ldp/...                      | *       | *      | Result (Regular LDP interaction). 
 
 # Open issues
 
