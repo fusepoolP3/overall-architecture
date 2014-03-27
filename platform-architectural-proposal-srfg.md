@@ -4,7 +4,7 @@
 * **Last modification date**: March 25, 2014
 * **Status**: This documents is just a proposal, a **draft** to discuss with the [Fusepool P3](http://www.fusepool.eu/p3) consortium; most of the points described in this document are just ideas that need to be proven.
 
-# Motivation
+## Motivation
 
 The proposal is build around the _data value chain_ concept. Where it aims to provide a 
 set of integrated software components that provide a dynamic data value chain capable of 
@@ -17,30 +17,30 @@ would interactuate in the project, both with the platform and between themselves
 that requires a more detailed analysis. The motivation is to try to get closer to Reto's 
 idea, and to asssess some of the concepts.
 
-This document aims to provide a suitable proposal to implement the proposal. In 
+This document aims to provide a suitable proposal to implement the platform. In 
 this document we are trying our best to anticipate the functional requirements 
 from the use cases, as well of trying to be a much compatible with the technological 
-stack of the consortium. Probably few points would be actually right, and many other 
-would require further discussion and agreement, but at least is good to continue 
+stack of the consortium. Probably few points will be actually right, and many other 
+will require further discussion and agreement, but at least is good to continue 
 discussing
 
-In addition, this document would also provide the fundamentals for the Deliverable 
+In addition, this document should also provide the fundamentals for the Deliverable 
 D5.1, scheduled to be delivered by M6 of the project (June 2014).
 
-# Components
-
-## Components implementation
+## Components
+**TODO:** What are "Components"
+### Components implementation
 
 The intermediate results from the [current sprint](https://easybacklog.com/accounts/4748/backlogs/54217#2) 
 arise that the simple concepts proposed to 
-[interactuate with the extractors](https://github.com/fusepoolP3/overall-architecture/blob/master/data-extractor-importer-api.md)
+[interact with the extractors](https://github.com/fusepoolP3/overall-architecture/blob/master/data-extractor-importer-api.md)
 wouldn't be enough: OpenRefine [requires several calls](https://docs.google.com/a/spaziodati.eu/document/d/18Dup7hT2DMMCK6MP8IpnKSEM9YjKSY-cVTjC36P9_Kw), 
-even pull or callbacks; Virtuoso Sponger implements something completelly different,
-where data is statefully stored. Therefore the interaction would be more complex
+even pull or callbacks; Virtuoso Sponger implements something completely different,
+where data is statefully stored. Therefore the interaction will be more complex
 in many scenarios.
 
-From the platform perspective, each component would need to be managed somehow. 
-So we propose that, based on the Adapter design pattern, each component would 
+From the platform perspective, each component would needs to be managed somehow. 
+So we propose that, based on the Adapter design pattern, each component shall 
 implement a simple Java API (TBD) that allows to wrap the actual implementation 
 behind the interaction with the actual business logic. We expect most of the components 
 would be simple wrappers over other REST web services; but at the same time we allow 
@@ -53,39 +53,38 @@ to handle in a more effective way the components registration by removing some
 unnecessary overhead, that at the same time would potentially introduce points of 
 failure.
 
-## Components types
+### Components types
 
-In principle we would have two types of components manage by the platform:
+In principle we would have two types of components managed by the platform:
 
 * transformers (WP2)
 * enhancers (WP3)
 
-but that could be extended if necessary.
+but this list can be extended if necessary.
 
-## Components registration
+### Components registration
 
 From our point of view these management operations do not need to be done following
 Linked Data principles. Linked Data was never design for such tasks, so it offers
-a poor expressivity with an elevanted overhead. Instead we propose to use any native 
-mechanism available for solve in a effective way this non-fufunctional requirement.
+a poor expressivity with an elevated overhead. Instead we propose to use any native 
+mechanism available for solve this non-functional requirement in a effective way.
 
-For our ([Marmotta](http://marmotta.apache.org)) perspective, we will provide a simple 
-Java API for the components, that will be registered in the platform via common mechanism, 
-[ServiceLoader](http://docs.oracle.com/javase/7/docs/api/index.html?java/util/ServiceLoader.html)
-for instance. This would provide a components' runtime with a very small effort,
-that could be refine in future iterations.
+In ([Marmotta](http://marmotta.apache.org)), we will provide a simple 
+Java API for the components, that will be (auto-)registered in the platform via common mechanism, 
+e.g. [ServiceLoader](http://docs.oracle.com/javase/7/docs/api/index.html?java/util/ServiceLoader.html). This would provide a components' runtime with a very small effort,
+that could be refined in future iterations.
 
-Internally, based on the defined Java API, the platform could optional create
+Internally, based on the defined Java API, the platform can optional create
 RDF descriptions that would be published following the Linked Data principles. 
-And used for further steps of the workflow (see the details in the description 
+This meta-data can be used for further steps of the workflow (see the details in the description 
 of the REST API). 
 
-## Components configuration
+### Components configuration
 
-Each component would be free to accept the submitted configuration. See further details 
+Each component is free to accept or reject the submitted configuration. See further details 
 in the description of the REST API.
 
-## Components orchestration
+### Components orchestration
 
 Now that the platform provides, in theory, a set of components usable from a clean API,
 a remarkable question comes: who (which WP) is reponsable of the components orchestration?
@@ -93,35 +92,35 @@ For instance, which transformed call, which enhancer fits better for this concre
 and so on. This issue has appear several times in the last meetings, but the DoW does not
 provide a adequate answer. 
 
-# APIs
+## APIs
 
-# Java API
+### Java API
 
-TBD (probably a concept similar to
+TBD (e.g. a concept similar to
 [what we have](https://git-wip-us.apache.org/repos/asf?p=marmotta.git;a=blob;f=libraries/ldclient/ldclient-api/src/main/java/org/apache/marmotta/ldclient/api/provider/DataProvider.java;h=5d0fda3d01dce4b5349c16e8df6097165bb873cb;hb=develop#l35) in [LDClient](http://marmotta.apache.org/ldclient))
 
-## REST API
+### REST API
 
 Here an initial draft how the REST API could look like:
 
 | Scope                  | Endpoint                      | Method  | Status | Description
 | ---------------------- | ----------------------------- | ------- | ------ | -----------------------------------------------------------------------------------------------------
 | Global                 | /p3                           |         |        | TBD
-| Transformers           | /p3/transformers              | GET     | 200    | List all available transformers.  
-|                        | /p3/transformers/_t1_         | GET     | 200    | Get RDF description (vocab to be defined), including all available configurations.
-|                        |                               | POST    | 201    | Creates a instance of the transformer with the configuration in the body (in the case of BatchRefine the JSON script, XSLT for the Sponger, etc). The `Slug` header indicates name preference. `Location` returns the created endpoint.
-|                        |                               |         | 400    | The transformer does not accept the configuration submitted.
-|                        | /p3/transformers/_t1_/_c1_    | GET     | 200    | Return the raw configuration of the instance. `Link` header to the transformer it belongs to.
-|                        |                               | POST    | 200    | **Synchronous**: with header `Prefer: return="representation"` will return the transformed data, no server-side storage (see [Prefer Header for HTTP](http://tools.ietf.org/html/draft-snell-http-prefer-18#section-4)).
-|                        |                               |         | 202    | **Asynchronous**: with header `Prefer: respond-async` the transformation will be executed in background, returning a `Location` header to the job.
-|                        |                               |         | 400    | The submitted data cannot be transformed.
-|                        |                               |         | 500    | An error has occurred during transformation (when synchronous).   
+| Transformers           | /p3/transformers              | `GET`   | `200`  | List all available transformers.  
+|                        | /p3/transformers/_t1_         | `GET`   | `200`  | Get RDF description (vocab to be defined), including all available configurations.
+|                        |                               | `POST`  | `201`  | Creates a instance of the transformer with the configuration in the body (in the case of BatchRefine the JSON script, XSLT for the Sponger, etc). The `Slug` header indicates name preference. `Location` returns the created endpoint.
+|                        |                               |         | `400`  | The transformer does not accept the configuration submitted.
+|                        | /p3/transformers/_t1_/_c1_    | `GET`   | `200`  | Return the raw configuration of the instance. `Link` header to the transformer it belongs to.
+|                        |                               | `POST`  | `200`  | **Synchronous**: with header `Prefer: return="representation"` will return the transformed data, no server-side storage (see [Prefer Header for HTTP](http://tools.ietf.org/html/draft-snell-http-prefer-18#section-4)).
+|                        |                               |         | `202`  | **Asynchronous**: with header `Prefer: respond-async` the transformation will be executed in background, returning a `Location` header to the job.
+|                        |                               |         | `400`  | The submitted data cannot be transformed.
+|                        |                               |         | `500`  | An error has occurred during transformation (when synchronous).   
 | Enhancers              | /p3/enhancers                 |         |        | TBD 
-| Jobs                   | /p3/jobs                      | GET     | 200    | List all running jobs (TBD). 
-|                        | /p3/jobs/_j1_                 | GET     | 200    | Current status while the job is running. 
-|                        |                               |         | 303    | Once the job has been complete, it redirects to the result (`Location` header). 
-|                        |                               |         | 500    | Job execution error.
-| Results                | /ldp/...                      | *       | *      | Result (Regular LDP interaction). 
+| Jobs                   | /p3/jobs                      | `GET`   | `200`  | List all running jobs (TBD). 
+|                        | /p3/jobs/_j1_                 | `GET`   | `200`  | Current status while the job is running. 
+|                        |                               |         | `303`  | Once the job has been complete, it redirects to the result (`Location` header). 
+|                        |                               |         | `500`  | Job execution error.
+| Results                | /ldp/...                      | _*_     | _*_    | Result (Regular LDP interaction). 
 
 # Open issues
 
