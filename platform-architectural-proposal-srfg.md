@@ -1,7 +1,7 @@
 # Fusepool P3: Platform Architectural Proposal (by SRFG)
 
 * **Authors**: Jakob Frank, Rupert Westenthaler, Sergio Fernández
-* **Last modification date**: March 25, 2014
+* **Last modification date**: March 27, 2014
 * **Status**: This documents is just a proposal, a **draft** to discuss with the [Fusepool P3](http://www.fusepool.eu/p3) consortium; most of the points described in this document are just ideas that need to be proven.
 
 ## Motivation
@@ -13,9 +13,9 @@ process, enhance and publish the data. Let's try to arrive to a common understan
 The [architectural principles](https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md)
 outlined by Reto envisions a complete interaction model based fully based on HTTP, 
 either LDP, SPARQL or custom REST APIs. But there a several aspects on how component 
-would interactuate in the project, both with the platform and between themselves, 
+would interact in the project, both with the platform and between themselves, 
 that requires a more detailed analysis. The motivation is to try to get closer to Reto's 
-idea, and to asssess some of the concepts.
+idea, and to assess some of the concepts.
 
 This document aims to provide a suitable proposal to implement the platform. In 
 this document we are trying our best to anticipate the functional requirements 
@@ -36,7 +36,7 @@ arise that the simple concepts proposed to
 [interact with the extractors](https://github.com/fusepoolP3/overall-architecture/blob/master/data-extractor-importer-api.md)
 wouldn't be enough: OpenRefine [requires several calls](https://docs.google.com/a/spaziodati.eu/document/d/18Dup7hT2DMMCK6MP8IpnKSEM9YjKSY-cVTjC36P9_Kw), 
 even pull or callbacks; Virtuoso Sponger implements something completely different,
-where data is statefully stored. Therefore the interaction will be more complex
+where data is stasteful stored. Therefore the interaction will be more complex
 in many scenarios.
 
 From the platform perspective, each component would needs to be managed somehow. 
@@ -47,7 +47,7 @@ would be simple wrappers over other REST web services; but at the same time we a
 the implementation of more complex interaction models without increasing the complexity 
 of the platform.
 
-On the contrary to the [RESTful interactuation proposed](https://github.com/fusepoolP3/overall-architecture/blob/master/data-extractor-importer-api.md),
+On the contrary to the [RESTful interaction proposed](https://github.com/fusepoolP3/overall-architecture/blob/master/data-extractor-importer-api.md),
 this approach is a compromise between the functionality and effectiveness. It tries
 to handle in a more effective way the components registration by removing some 
 unnecessary overhead, that at the same time would potentially introduce points of 
@@ -66,7 +66,7 @@ but this list can be extended if necessary.
 
 From our point of view these management operations do not need to be done following
 Linked Data principles. Linked Data was never design for such tasks, so it offers
-a poor expressivity with an elevated overhead. Instead we propose to use any native 
+a poor expressiveness with an elevated overhead. Instead we propose to use any native 
 mechanism available for solve this non-functional requirement in a effective way.
 
 In ([Marmotta](http://marmotta.apache.org)), we will provide a simple 
@@ -87,7 +87,7 @@ in the description of the REST API.
 ### Components orchestration
 
 Now that the platform provides, in theory, a set of components usable from a clean API,
-a remarkable question comes: who (which WP) is reponsable of the components orchestration?
+a remarkable question comes: who (which WP) is responsible of the components orchestration?
 For instance, which transformed call, which enhancer fits better for this concrete data, 
 and so on. This issue has appear several times in the last meetings, but the DoW does not
 provide a adequate answer. 
