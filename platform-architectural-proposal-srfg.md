@@ -1,7 +1,7 @@
 # Fusepool P3: Platform Architectural Proposal (by SRFG)
 
 * **Authors**: Jakob Frank, Rupert Westenthaler, Sergio Fernández
-* **Last modification date**: March 27, 2014
+* **Last modification date**: March 28, 2014
 * **Status**: This documents is just a proposal, a **draft** to discuss with the [Fusepool P3](http://www.fusepool.eu/p3) consortium; most of the points described in this document are just ideas that need to be proven.
 
 ## Motivation
@@ -111,7 +111,8 @@ Here an initial draft how the REST API could look like:
 |                        |                               | `POST`  | `201`  | Creates a instance of the transformer with the configuration in the body (in the case of BatchRefine the JSON script, XSLT for the Sponger, etc). The `Slug` header indicates name preference. `Location` returns the created endpoint.
 |                        |                               |         | `400`  | The transformer does not accept the configuration submitted.
 |                        | /p3/transformers/_t1_/_c1_    | `GET`   | `200`  | Return the raw configuration of the instance. `Link` header to the transformer it belongs to.
-|                        |                               | `POST`  | `200`  | **Synchronous**: with header `Prefer: return="representation"` will return the transformed data, no server-side storage (see [Prefer Header for HTTP](http://tools.ietf.org/html/draft-snell-http-prefer-18#section-4)).
+|                        |                               | `POST`  |        | Sending the original data in the request body, or by reference using [RFC2017](http://tools.ietf.org/html/rfc2017) (using the header `Content-type: message/external-body; access-type=URL; URL="http://example.org/file.csv"`). Two rpocessing options would be offered:
+|                        |                               |         | `200`  | **Synchronous**: with header `Prefer: return="representation"` will return the transformed data, no server-side storage (see [Prefer Header for HTTP](http://tools.ietf.org/html/draft-snell-http-prefer-18#section-4)).
 |                        |                               |         | `202`  | **Asynchronous**: with header `Prefer: respond-async` the transformation will be executed in background, returning a `Location` header to the job.
 |                        |                               |         | `400`  | The submitted data cannot be transformed.
 |                        |                               |         | `500`  | An error has occurred during transformation (when synchronous).   
