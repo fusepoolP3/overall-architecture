@@ -150,7 +150,7 @@ _An RDF description of the CSV cartridge returned by /p3/transformers/opl-csv wo
   _Virtuoso extractor cartridges operate synchronously. We're unlikely to support asynchronous operation._
   
   \[OPL6\]
-  _Could header `Prefer: return=minimal` be used to support a stateful option in which, rather than returning the generated RDF directly, the transformer saves the generated RDF to a graph? The Content-Location header could then be used to identify the URI of the graph containing the generated RDF. return=representation and return=minimal would then allow support of both stateless and stateful transformation._
+  _Could header `Prefer: return=minimal` be used to support a stateful option in which, rather than returning the generated RDF directly, the transformer saves the generated RDF, e.g. to a graph? The Content-Location header could then be used to identify the URI of the resource containing the generated RDF, or a proxy URI which returns the graph contents. return=representation and return=minimal would then allow support of both stateless and stateful transformation._
   
   \[OPL7\]
 _Rather than only allowing the POSTing of content to be transformed, it may also be desirable to allow an agent to POST the URL of a resource/document to be transformed. (This is primarily how the Virtuoso Sponger works at present.) The document URL and other transformer options could, for instance, be encoded as application/x-www-form-urlencoded._
