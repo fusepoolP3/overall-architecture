@@ -27,6 +27,11 @@ discussing
 In addition, this document should also provide the fundamentals for the Deliverable 
 D5.1, scheduled to be delivered by M6 of the project (June 2014).
 
+# Scope
+
+The scope of this document is limited to the platform architecture. Overall project
+architecture is not a responsability of WP5.
+
 ## Components
 **TODO:** What are "Components"
 ### Components implementation
