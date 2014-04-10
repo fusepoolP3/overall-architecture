@@ -94,7 +94,7 @@ to agree on the ontologies used and the Entry-URI.
 
 ### 2.1.1 Example REST API definition 
 
-[TODO]
+See [data-extractor-importer-api.md](data-extractor-importer-api.md) as an example.
 
 2.2 Linked Data Platform 
 ------------------------
