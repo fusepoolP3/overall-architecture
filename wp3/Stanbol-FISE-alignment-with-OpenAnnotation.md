@@ -56,11 +56,20 @@ The Ontologies of Linguistic Annotation ([OLiA](http://purl.org/olia) - [paper](
 
 # Working Plan
 
-@@TODO@@
+1. Looking at the available standards
+2. Definition of the aligned annotation model
+3. Implementation in in the Enhancer core modules
+4. Adaptations of all Enhancement Engines
+5. Adaptations of client libraries
+
+# Related Information
+
+* There was already a [discussion](http://markmail.org/message/mwnsz7lznq3g77el) about a similar toic on the Stanbol Mailing list.
+* [STANBOL-351](https://issues.apache.org/jira/browse/STANBOL-351) is about the definition of a Stanbol Enhancement Structure. This work should contribute to this issue.
 
 # Open issues
 
-@@TODO@@
+* 
 
 # Conclusions
 
