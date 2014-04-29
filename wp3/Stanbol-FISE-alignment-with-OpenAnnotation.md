@@ -1,4 +1,4 @@
-# Fusepool P3: Platform Architectural Proposal (by SRFG)
+# Fusepool P3: Stanbol's FISE alignment with OpenAnnotation
 
 * **Authors**: Rupert Westenthaler, Sergio Fernández
 * **Last modification date**: April 29, 2014
