@@ -54,10 +54,20 @@ The Ontologies of Linguistic Annotation ([OLiA](http://purl.org/olia) - [paper](
 
 [NERD](http://nerd.eurecom.fr/ontology/) (Named Entity Recognition and Disambiguation - papers: [1](http://nerd.eurecom.fr/ui/paper/Rizzo_Troncy-eacl2012demo.pdf), [2](http://events.linkeddata.org/ldow2012/papers/ldow2012-paper-02.pdf)) defines both a data model for describing detected Named Entities as well as an ontology for the types of Named Entities. This hierarchy of Named Entity types is also aligned with several other ontologies and common datasets. NIF uses NER to link Strings with entities as well as with the NER type.
 
+# Migration from FISE
+
+The following migration plan from FIST to the Annotation Model defined by this task was discussed:
+
+1. Use FISE as AnnotationStructure as long this task is not finished
+2. Alignment of FISE with available standards (like OpenAnnotation, NIF and NERD) in a way that one can implement a Graph Transformation EnhancementEngine converting FISE to the defined schema. While this will cause some restruction on the Annotation Model it ensures that all EnhancementEngines available in Stanbol can be used with the defined Annotation Model.
+3. Suggest to the Stanbol Community to adapt an Annotation Model based on the available standards (e.g. as part of  STANBOL-1326 - the Stanbol Enhancer 2.0). This could also mean to refine the Annotation Model defined for (2) as in this case one would not need to ensure that the current FIST model can be transforemd to the new Annotation Model.
+
 # Working Plan
 
 1. Looking at the available standards (done)
 2. Definition of the aligned annotation model (until end of June)
+    1. Analyse possible mappings from FISE to available standards
+    2. Define annotation model
 3. Implementation in in the Enhancer core modules (until August)
 4. Adaptations of all Enhancement Engines
 5. Adaptations of client libraries
