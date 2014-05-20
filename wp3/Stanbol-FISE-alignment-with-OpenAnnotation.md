@@ -56,9 +56,9 @@ The Ontologies of Linguistic Annotation ([OLiA](http://purl.org/olia) - [paper](
 
 # Working Plan
 
-1. Looking at the available standards
-2. Definition of the aligned annotation model
-3. Implementation in in the Enhancer core modules
+1. Looking at the available standards (done)
+2. Definition of the aligned annotation model (until end of June)
+3. Implementation in in the Enhancer core modules (until August)
 4. Adaptations of all Enhancement Engines
 5. Adaptations of client libraries
 
