@@ -161,6 +161,8 @@ Response 3:
 
 Eventually the client gets a 200 Response code with the RDF representation of the submitted VCard content as body.
 
+The asynchronous extractor does not need to be a separate extractor from its synchronous counterpart. It can be the same extractor from the user perspective, i.e. have the same URI. This extractor can then support both sync and async behaviour. The exact behaviour can be triggered based on the lenght of the POSTed content, for example.
+
 
 ## Data-Importer tool
 
