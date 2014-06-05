@@ -161,7 +161,11 @@ Response 3:
 
 Eventually the client gets a 200 Response code with the RDF representation of the submitted VCard content as body.
 
+### Remarks
+
 The asynchronous extractor does not need to be a separate extractor from its synchronous counterpart. It can be the same extractor from the user perspective, i.e. have the same URI. This extractor can then support both sync and async behaviour. The exact behaviour can be triggered based on the lenght of the POSTed content, for example.
+
+It is undefined by this specification how long an extraction result shall remain available for retrieval. The extractor should not delete the extraction result on the first GET request, repeating the GET request shortly after should yield to the same results. Typical the time a result is available depends on the required processing time. The result of a job that took only a few seconds might remain available for several minutes, the result of a job that took several hours might remain available for several days. When a result is no longer available the server returns status code 404. A restart of the extractor will typically cause the extraction results to become unavailable. Even though some extractors might keep the result available permantently, clients should never rely on this.
 
 
 ## Data-Importer tool
