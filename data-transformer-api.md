@@ -1,9 +1,8 @@
-# Data transformer and importer with Transformation
+# Data transformation
 
-D2.1) Data importer with data Transformation tools implemented: PDF Report and software. The prototype deliverables will always be accompanied by appropriate documentation for their development and for their usage. In addition, prototype deliverables need to ensure integration with other prototype deliverables in order to maximise the value of that prototype. [OGL, M12, T2.1+2.2] [month 12]
+This document defines an API for data transforming components. The term "transform" and the derived terms are sued very broadly here and they include processes auch as annotating and lifting content.
 
-
-##Data-Transformation tool
+##Transformers
 
 An Transformation Service is represented by an dereferenceable URI representing a resource of type fp:ExctractionService
 
