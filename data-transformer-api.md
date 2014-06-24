@@ -168,40 +168,6 @@ The asynchronous transformer does not need to be a separate transformer from its
 It is undefined by this specification how long an Transformation result shall remain available for retrieval. The transformer should not delete the Transformation result on the first GET request, repeating the GET request shortly after should yield to the same results. Typical the time a result is available depends on the required processing time. The result of a job that took only a few seconds might remain available for several minutes, the result of a job that took several hours might remain available for several days. When a result is no longer available the server returns status code 404. A restart of the transformer will typically cause the Transformation results to become unavailable. Even though some transformers might keep the result available permantently, clients should never rely on this.
 
 
-## Data-Importer tool
-
-For importing data to be transformed on import the resources to be transformed are added to a specially marked LDPC. When requesting the LDPC a triple with the LDPC as subject `fp:transformer`as property and an instance of `fp:ExctractionService` as object is returned in the returned graph. When a non-RDF resource is posted against that container the Transformation service will asynchronously be invoked. The results of the Transformation will be added to the same collection. A triple with predicate `fp:extractedFrom`point from the extracted resource to the non-RDF resource.
-
-### Example 4
-
-    GET /container1 HTTP/1.1
-    Host: example.org
-    Accept: text/turtle; charset=UTF-8
-    Prefer: return=representation; include="http://www.w3.org/ns/ldp#PreferEmptyContainer"
-
-Response
-
-    HTTP/1.1 200 OK
-    Content-Type: text/turtle; charset=UTF-8
-    ETag: "_87e52ce2917987"
-    Content-Length: 477
-    Link: <http://www.w3.org/ns/ldp#Container>; rel="type"
-    Preference-Applied: return=representation
-
-    @prefix dcterms: <http://purl.org/dc/terms/>.
-    @prefix ldp: <http://www.w3.org/ns/ldp#>.
-    @prefix fp: <http://fusepool.eu/ontology/p3#>.
-
-    <http://example.org/container1/>
-       a ldp:DirectContainer;
-       dcterms:title "An extracting LDP Container using simple-transformer";
-       ldp:membershipResource <http://example.org/container1/>;
-       ldp:hasMemberRelation ldp:member;
-       ldp:insertedContentRelation ldp:MemberSubject;
-       fp:transformer <http://example.org/simple-transformer>.
-
-The above container will process added resources using `http://example.org/simple-transformer` if their media-type matches one of the supported input formats of this transformer. If this is the case both the original resource as well as the Transformation results will be added to the container.
-
 ### Open issues
 
 - Name hints: can one give name hint for the extracted resource?
