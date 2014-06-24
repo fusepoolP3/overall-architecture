@@ -4,7 +4,7 @@ This document defines an API for data transforming components. The term "transfo
 
 ##Transformers
 
-An Transformation Service is represented by an dereferenceable URI representing a resource of type fp:ExctractionService
+An Transformation Service is represented by an dereferenceable URI representing a resource of type trans:Transformer
 
 A GET request of the resource will return a description of the service. At least text/turle must be supported as format to describe the resource. A POST request does the actual transformation of the data.
 
@@ -26,13 +26,13 @@ Response:
     Content-Type: text/turtle
 
 	@prefix dct: <http://purl.org/dc/terms/>.
-    @prefix fp: <http://fusepool.eu/ontology/p3#>.
-    <http://example.org/simple-transformer> a fp:ExctractionService;
+    @prefix trans: <http://vocab.fusepool.info/transformer#>.
+    <http://example.org/simple-transformer> a trans:Transformer;
 		dct:title "A simple rdf Transformation"@en;
 		dct:description "transforms vcards to RDF";
-		fp:supportedInputFormat "text/vcard";
-		fp:supportedOutputFormat "text/turtle";
-		fp:supportedOutputFormat "text/ld+json".
+		trans:supportedInputFormat "text/vcard";
+		trans:supportedOutputFormat "text/turtle";
+		trans:supportedOutputFormat "text/ld+json".
 
 This response tells the client that this is an Transformation service accepting text/vcard and able to produce text/turtle or text/ld+json.
 
@@ -42,7 +42,6 @@ The media type might also contain wildcars, analogously to the accept header in 
 
 #### Open issues:
 
-- Namespace of fp ontology
 - Using hydra?
 - Should it be possible to use wildcars when specifying the input format (e.g. for a service routing the requests based on their content type)?
 
@@ -129,10 +128,10 @@ Response 2:
     Connection: close
     Content-Type: text/turtle
 
-    @prefix fp: <http://fusepool.eu/ontology/p3#>.
-    <> fp:status fp:Processing.
+    @prefix trans: <http://vocab.fusepool.info/transformer#>.
+    <> trans:status trans:Processing.
 
-The request was accepted and the body of the message tells the client that the status if still `fp:Processing`.
+The request was accepted and the body of the message tells the client that the status if still `trans:Processing`.
 
 Request 3
 
