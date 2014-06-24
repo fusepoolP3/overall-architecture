@@ -1,4 +1,4 @@
-# Data transformation
+# Transformer API
 
 This document defines an API for data transforming components. The term "transform" and the derived terms are sued very broadly here and they include processes auch as annotating and lifting content.
 
