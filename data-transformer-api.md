@@ -2,15 +2,62 @@
 
 This document defines an API for data transforming components. The term "transform" and the derived terms are sued very broadly here and they include processes auch as annotating and lifting content.
 
-##Transformers
+## Conventions
 
-An Transformation Service is represented by an dereferenceable URI representing a resource of type trans:Transformer
+This section is normative.
+
+In this document the following CURIE-Prefix shall be used for the following URIs:
+
+ * trans: http://vocab.fusepool.info/transformer#
+ * rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+
+Sections are non-normative unless otherwise specified. Unless otherwise specified subsections are normative if the containing section is normative.
+
+The key words MUST, MUST NOT, REQUIRED, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in this specification are to be interpreted as described in [RFC2119].
+
+## Terminology
+
+This section is normative.
+
+ * Transformer: A transformer is transformation service identified and accessible via an HTTP(S) URI.
+ * Implementation: An implemenation is the server processing requests against the URI of Transformers.
+
+## Introduction
+
+A Transformation Service (aka Transformer) is represented by an dereferenceable URI representing a resource of type `trans:Transformer`
 
 A GET request of the resource will return a description of the service. At least text/turle must be supported as format to describe the resource. A POST request does the actual transformation of the data.
 
 This is a very generic menchanism designed to interface simple services that can do a very specific transformation as well as services that interface a complex pipe or routing mechanism to handle many input and output formats. Such a more complex service might well delegate to more simple services that also expose the interface.
 
-### Example 1
+
+## Transformers
+
+This section is normative.
+
+Implementation MUST support the GET method for Transformers. Implementations MUST accept at least requests for `text/turtle` representations. Implementations MAY support other RDF and non-RDF formats. If an acceptable request is answered with a response entity in a format serializing an RDF graph this graph must contain at least the following triples:
+
+* A triple with the Transformer as subject, `rdf:type` as predicate and `trans:Transformer` as object.
+* A triple with the Transformer as subject and `trans:supportedInputFormat` as predicate.
+* A triple with the Transformer as subject and `trans:supportedOutputFormat` as predicate.
+
+Implementations SHOULD return a triple with the Transformer as subject and `trans:supportedOutputFormat` as predicate and a media type as `xsd:String`value of the object for any media-type that might be the format of the result of a successful transformation.
+
+Implementations must support POST requests. Implementations SHOULD accept requests entities of all media-types matching a value of one of the `trans:supportedInputFormat` properties of the Extractor contained in the RDF representation returned on GET requests when interpreing this value as `media-range` the same way as the `media-range` is for accept header values as per section 14.1 of [RFC2616].
+
+Implementations handle the request synchronously or asynchronously. If the implementations chooses to handle the request synchonously and the transformation succeeds it MUST respond with status code 200. The result of the transformation MUST be returned as the response entity. If the request fails because of an error in the POSTed entity implementation SHOULD answer the request with status code 400 and a response entity explaining the error.
+
+If the implementation chooses to handle the request asynchronously and the request is acceptable in that the value of the Accept-headers as the Media-Type of request entity is acceptable the implementations MUST respond with status code 202 and a Location header with a URI as value for which requests are handled by the implementation, in the follwing this URI will be referred to as JOB-URI.
+
+As long as the transformation has not completed implemenations MUST respond with status code 202 to GET requests against the JOB-URI. The response entity should be in preferred RDF serialization in the request accept header supported by the implementation, if multiple supported RDF serializations are equally preferred the response entity SHOULD by of type `text/turtle`. The graph serialized by the response entity SHOULD contain as least a triple with JOB-URI as subject, trans:status as property and trans:Processing as object.
+
+After the request completed successfully implementatins MUST respond to request to the JOB-URI with status code 200 for some time. The response entity MUST be the result of the transformation. If the transformation failed implemenation should respod to requests to the JOB URI with status code 500 and a response entity explaining the error. In both cases after some time implementations MAY respond with status code 404 to request to the JOB-URI.
+
+### Examples
+
+This section is non-normative.
+
+#### Example 1
 Retrieving the description of the transformer `http://example.org/simple-transformer`
 
     GET /simple-transformer
@@ -40,12 +87,8 @@ Parameters of the media type might further narrow the format using media type pa
 
 The media type might also contain wildcars, analogously to the accept header in HTTP.
 
-#### Open issues:
 
-- Using hydra?
-- Should it be possible to use wildcars when specifying the input format (e.g. for a service routing the requests based on their content type)?
-
-### Example 2
+#### Example 2
 Transorming data using the transformer `http://example.org/simple-transformer`
 
     POST /simple-transformer
@@ -84,7 +127,7 @@ Response:
 The response is an RDF representation of the submitted VCard content.
 
 
-### Example 3
+#### Example 3
 Transforming data using the asynchronous transformer `http://example.org/asynchronous-transformer`
 
 Request 1
@@ -169,3 +212,7 @@ It is undefined by this specification how long an Transformation result shall re
 ### Open issues
 
 - Name hints: can one give name hint for the extracted resource?
+- Using hydra?
+
+[RFC2119]: http://www.ietf.org/rfc/rfc2119
+[RFC2616]: http://www.ietf.org/rfc/rfc2616
