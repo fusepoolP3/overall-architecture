@@ -4,8 +4,8 @@
 
 In this document the following CURIE-Prefix shall be used for the following URIs:
 
-eldp: http://vocab.fusepool.info/ldp#
-trans: http://vocab.fusepool.info/transformer#
+ * eldp: http://vocab.fusepool.info/ldp#
+ * trans: http://vocab.fusepool.info/transformer#
 
 ## Introduction
 
