@@ -23,7 +23,7 @@ This section is normative.
 
 Implementations of this specification MUST also conform to [LDP].
 
-If the representation contains a triple with the LDPC as subject and `eldp:transformer` as triple a complaint will invoke the `trans:Transformer` identified by the object of this triple whenever a non-RDF member resource is create following a POST request to the LDPC. The request against the `trans:Transformer` is executed asynchronously, the POST request will return according to section 5.2.3.1 of [LDP] without waiting for the Transformer to complete. If the transformationis successful The results of the Transformation will be added to the same collection. If the transformation result is an RDFS a triple with predicate `eldp:extractedFrom` the transformation result resource as subject and the original non-RDF resource as object is added to the transformation result LDPR.
+If the representation contains a triple with the LDPC as subject and `eldp:transformer` as predicate a compliant implementation will invoke the `trans:Transformer` identified by the object of this triple whenever a non-RDF member resource is create following a POST request to the LDPC. The request against the `trans:Transformer` is executed asynchronously, the POST request will return according to section 5.2.3.1 of [LDP] without waiting for the Transformer to complete. If the transformationis successful The results of the Transformation will be added to the same collection. If the transformation result is an RDFS a triple with predicate `eldp:extractedFrom` the transformation result resource as subject and the original non-RDF resource as object is added to the transformation result LDPR.
 
 ### Example
 
