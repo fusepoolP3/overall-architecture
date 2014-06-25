@@ -53,7 +53,7 @@ As long as the transformation has not completed implemenations MUST respond with
 
 After the request completed successfully implementatins MUST respond to request to the JOB-URI with status code 200 for some time. The response entity MUST be the result of the transformation. If the transformation failed implemenation should respod to requests to the JOB URI with status code 500 and a response entity explaining the error. In both cases after some time implementations MAY respond with status code 404 to request to the JOB-URI.
 
-Implementations MAY honor a `Prefer` header with value `respond-async` as well as the "Wait" preference both specified in [RFC7240]. Implementations SHOULD NOT assume that a client sending a request without specifying a respond-async preference prefer a snychrnous response.
+Implementations MAY honor a `Prefer` header with value `respond-async` as well as the "Wait" preference both specified in [RFC7240]. Implementations SHOULD NOT assume that a client sending a request without specifying a respond-async preference prefers a synchrnous response.
 
 ### Examples
 
