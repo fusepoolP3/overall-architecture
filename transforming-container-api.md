@@ -6,7 +6,7 @@ This section is normative.
 
 In this document the following CURIE-Prefix shall be used for the following URIs:
 
- * eldp: http://vocab.fusepool.info/ldp#
+ * eldp: http://vocab.fusepool.info/eldp#
  * trans: http://vocab.fusepool.info/transformer#
 
 Sections are non-normative unless otherwise specified. Unless otherwise specified subsections are normative if the containing section is normative.
@@ -45,7 +45,7 @@ Response
 
     @prefix dcterms: <http://purl.org/dc/terms/>.
     @prefix ldp: <http://www.w3.org/ns/ldp#>.
-    @prefix eldp: <http://vocab.fusepool.info/ldp#>.
+    @prefix eldp: <http://vocab.fusepool.info/eldp#>.
 
     <http://example.org/container1/>
        a ldp:DirectContainer;
