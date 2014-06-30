@@ -43,7 +43,7 @@ Implementation MUST support the GET method for Transformers. Implementations MUS
 
 Implementations SHOULD return a triple with the Transformer as subject and `trans:supportedOutputFormat` as predicate and a media type as `xsd:String`value of the object for any media-type that might be the format of the result of a successful transformation.
 
-Implementations must support POST requests. Implementations SHOULD accept requests entities of all media-types matching a value of one of the `trans:supportedInputFormat` properties of the Extractor contained in the RDF representation returned on GET requests when interpreing this value as `media-range` the same way as the `media-range` is for accept header values as per section 14.1 of [RFC2616].
+Implementations MUST support POST requests. Implementations SHOULD accept requests entities of all media-types matching a value of one of the `trans:supportedInputFormat` properties of the Extractor contained in the RDF representation returned on GET requests when interpreing this value as `media-range` the same way as the `media-range` is for accept header values as per section 14.1 of [RFC2616].
 
 Implementations handle the request synchronously or asynchronously. If the implementations chooses to handle the request synchonously and the transformation succeeds it MUST respond with status code 200. The result of the transformation MUST be returned as the response entity. If the request fails because of an error in the POSTed entity implementation SHOULD answer the request with status code 400 and a response entity explaining the error.
 
