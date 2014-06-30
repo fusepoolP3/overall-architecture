@@ -130,7 +130,7 @@ The response is an RDF representation of the submitted VCard content.
 
 
 #### Example 3
-Transforming data using the asynchronous transformer `http://example.org/asynchronous-transformer`
+Transforming data using the transformer `http://example.org/asynchronous-transformer` which handles the request asynchronously.
 
 Request 1
 
