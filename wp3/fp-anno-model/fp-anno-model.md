@@ -1,6 +1,6 @@
 # Fusepool P3 Annotation Model
 
-The Fusepool Annotation Model is used by all Annotator implementations of the Fusepool Plattform. Annotators and Transformers together build the components of the Extractor API.
+The Fusepool P3 Annotation Model is used by all Annotator implementations of the Fusepool Plattform. Annotators and transformers together build the components of the Transformation API.
 
 Defining a commonly used model is core of enabling the use and configuration of Annotations workflows - piping different annotators together. It is also important for the consumption of annotation results.
 
@@ -32,12 +32,12 @@ As a tradeoff between both the Fusepool Annotation Structure will define some sh
 
 ### Transformation from Stanbol Enhancement Structure
 
-The design of the Fusepool Annotation Model must ensure that a transformation from the [Stanbol Enhancement Structure](http://stanbol.apache.org/docs/trunk/components/enhancer/enhancementstructure) is possible. This ensures that all Enhancement Engines available for Apache Stanbol can be used as extractors in the Fusepool Plattform.
+The design of the Fusepool Annotation Model must ensure that a transformation from the [Stanbol Enhancement Structure](http://stanbol.apache.org/docs/trunk/components/enhancer/enhancementstructure) is possible. This ensures that all Enhancement Engines available for Apache Stanbol can be used as transformers in the Fusepool Plattform.
 
 
 ## Annotation Model
 
-This section describes the Annotation Model as used by Fusepool. This annotation model is build upon a core that is fully compatible to Open Annotation. On top of this core Fusepool defines multiple _Annotation Types_ used as `{annotation-body}`. _Annotation Types_ are extensible meaning that Extractors capable of extracting information not covered by the _Annotation Types_ defined in this specification can define/use their own _Annotation Types_.
+This section describes the Annotation Model as used by Fusepool. This annotation model is build upon a core that is fully compatible to Open Annotation. On top of this core Fusepool defines multiple _Annotation Types_ used as `{annotation-body}`. _Annotation Types_ are extensible meaning that transformers capable of extracting information not covered by the _Annotation Types_ defined in this specification can define/use their own _Annotation Types_.
 
 This chapter first provides the definition of the Annotation code followed by the definition of the different Annotation Types in their own sub-sections.
 
@@ -75,14 +75,14 @@ In the case that multiple language annotations are present for the same section 
 
 ### Text Annotation
 
-_Text Annotation_ are used to annotate Entity Mentions in the text. Such annotations can originate from different Extractor types:
+_Text Annotation_ are used to annotate Entity Mentions in the text. Such annotations can originate from different transformer types:
 
 1. Named Entity Recognition (NER): NER is an Natural Language Processing (NLP) technique that detects the mentions of Named Entities of a given Types in texts. Both statistical and rule based systems are possible. NER extractors are usually trained for specific types of entities. Typically they do support Persons, Organizations and Locations but also other types such as Roles, Money, Date/Time ... are common.
-2. Entity Mention: In this case an Extractor uses some kind of controlled vocabulary (e.g. the list of employees, projects) as a basis to detect mentions of such entities in parsed text.
+2. Entity Mention: In this case an transformer uses some kind of controlled vocabulary (e.g. the list of employees, projects) as a basis to detect mentions of such entities in parsed text.
 
-In both cases Extractors will create a _Text Annotation_ to formally describe the extracted information. Apache Stanbol uses `fise:TextAnnotation` for that purpose. The Fusepool `fam:TextAnnotation` is very similar
+In both cases tansformers will create a _Text Annotation_ to formally describe the extracted information. Apache Stanbol uses `fise:TextAnnotation` for that purpose. The Fusepool `fam:TextAnnotation` is very similar
 
-* `fam:entity-type`: the general type of the detected entity. Extractors are free to use any type. However it is recommended to use types form well known ontologies such as [NERD](http://nerd.eurecom.fr/ontology), [DBPedia](http://mappings.dbpedia.org/server/ontology/classes/), [Schema.org](http://schema.org/docs/full.html) or similar.
+* `fam:entity-type`: the general type of the detected entity. Transformers are free to use any type. However it is recommended to use types form well known ontologies such as [NERD](http://nerd.eurecom.fr/ontology), [DBPedia](http://mappings.dbpedia.org/server/ontology/classes/), [Schema.org](http://schema.org/docs/full.html) or similar.
 * `fam:entity-mention`: The lexical form of the mention in the text. This is not necessarily the exact literal of the selected section in the text but is expected to represent the mentioned name of the Entity. Examples for deviations from the mention with the selection are due to lemmatization, case corrections, ...
 
 The following figure shows an example of a _Text Annotation_ for Salzburg detected as Named Entity with the type dbpedia Place in the sentence "Mozard was born in Salzburg"
