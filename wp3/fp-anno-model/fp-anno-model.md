@@ -1,8 +1,16 @@
-# Fusepool Annotation Model
+# Fusepool P3 Annotation Model
 
 The Fusepool Annotation Model is used by all Annotator implementations of the Fusepool Plattform. Annotators and Transformers together build the components of the Extractor API.
 
 Defining a commonly used model is core of enabling the use and configuration of Annotations workflows - piping different annotators together. It is also important for the consumption of annotation results.
+
+## Usage
+
+The Fusepool P3 Annotation Model is still being defined. All terms will be under the following normative namespace:
+
+    http://vocab.fusepool.info/fam#
+
+Behind that namespece there is not yet a proper RDF vocabulary/ontology defined. But it will be added in the upcoming weeks.
 
 ## Design Considerations
 
