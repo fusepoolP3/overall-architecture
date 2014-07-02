@@ -58,6 +58,36 @@ To make the consumption of the annotations easier the Fusepool Annotation Model 
 1. `fam:selector` defines a direct relation between the `{annotation-body}` and the `{selector}`. This property is used as shortcut for the following path in the  Open Annotation model: `{annotation-body} <--oa:hasBody-- {annotation} --oa:hasTarget--> {sptarget} --oa:hasSelector--> {selector}` 
 2. `fam:extracted-from` defines a direct relation between the `{annotation-body}` and the `{content}`. This property is used as shortcut for the following path in the  Open Annotation model: `{annotation-body} <--oa:hasBody-- {annotation} --oa:hasTarget--> {sptarget} --oa:hasSource--> {content}`
 
+Those two properties are essential for an easy consumption of Annotations assuming use cases that are driven by the annotation bodies. The following listing comparses SPARQL queries for the `{body}`, `{source}` and `{selector}`. To show the difference the first one only uses relations provided by Open Annotation while the second one is exploiting the `fam:selector` and `fam:extracted-from`.
+
+    PREFIX oa: <http://www.w3.org/ns/oa#>
+
+    SELECT ?body ?source ?selector
+    WHERE {
+        ?annotation a oa:Annotation ;
+            oa:hasBody ?body ;
+            oa:hasTarget ?sptarget .
+        ?body a fam:TextAnnotation ;
+            oa:hasBody ?body .
+        ?sptarget oa:SpecificResource ;
+            oa:hasSource ?source ;
+            oa:hasSelector ?selector .
+    }
+
+Now the simplified version using `fam:selector` and `fam:extracted-from`:
+
+    PREFIX oa: <http://www.w3.org/ns/oa#>
+    PREFIX fam: <http://vocab.fusepool.info/fam#>
+    
+    SELECT ?body ?source ?selector
+    WHERE {
+        ?body a fam:TextAnnotation ;
+            fam:extracted-from ?source ;
+            fam:selector ?selector .
+    }
+
+It is also important to note that the 2nd query will execute much faster as it only requires three joins instead of nine.
+
 Finally the core annotation modules also defines `fam:confidence` a property commonly used by all _Annotation Types_ defined in the following sections.
 Values of this property are expected to be floating point values in the range [0 .. 1] where `0` represents the lowest confidence and `1` the highest. However values MUST BE interpreted as [Rational Scale](http://en.wikipedia.org/wiki/Ordinal_scale#Ordinal_scale) meaning that only =, ≠, > and < operations may be done on confidence values. This also means that assertion such as an Annotation with an confidence of `0.8` are twice as likely to be correct as one with `0.4` are not possible.  
 
