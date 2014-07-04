@@ -14,7 +14,15 @@ Behind that namespece there is not yet a proper RDF vocabulary/ontology defined.
 
 ## Design Considerations
 
-After the evaluation of different Annotation Standards it was decided to define the Fusepool Annotation Model based on the [Open Annotation](http://www.openannotation.org/spec/core/) standard. As Apache Stanbol will contribute most of the Annotator implementations it was however also important to ensure that annotations created by Apache Stanbol con be transformed to the Fusepool Annotation Model. That means that the information provided by the [Stanbol Enhancement Structure](http://stanbol.apache.org/docs/trunk/components/enhancer/enhancementstructure) are sufficient to create Fusepool Annotations.
+For the design of the Fusepool Annotation structure [Open Annotation](http://www.openannotation.org/spec/core/), [NIF 2.0](http://persistence.uni-leipzig.org/nlp2rdf/) and [FISE](http://stanbol.apache.org/docs/trunk/components/enhancer/enhancementstructure.html) where evaluated. 
+
+Based on this evaluation the following design decisions where taken to base the Fusepool Annotation Model on Open Annotation. The main reason was that the high expressiveness of Open Annotation guarantees that all modeling requirements of envisioned usage scenario can be fulfilled. To reduce the additional complexity that comes along with the high expressiveness the Fusepool Annotation Model will introduce some "short cut" relations for typical access strategies (see the next sub-section for more details).
+
+Instead of the Selectors provided by Open Annotation NIF will be used. This is not because NIF provides a better model for selectors, but mainly because by that Fusepool can also take advantage of the capability of formally representing lower level NLP processing results where needed. Doing so using OpenAnnotation is not practical because of the high amount of triples (compared to NIF).
+
+Finally the Fusepool Annotation Model is defined so that Enhancements serialized by using the [Stanbol Enhancement Structure](http://stanbol.apache.org/docs/trunk/components/enhancer/enhancementstructure) can be transformed to the Fusepool model. This is a non functional requirement as existing Stanbol Enhancement Engiens will contribute a major part of the Fusepool transformation functionality.
+
+The following sub-sections will go into details on some of the design considerations mentioned above.
 
 ### Expressiveness vs. ease of use 
 
@@ -32,14 +40,15 @@ As a tradeoff between both the Fusepool Annotation Structure will define some sh
 
 ### Transformation from Stanbol Enhancement Structure
 
-The design of the Fusepool Annotation Model must ensure that a transformation from the [Stanbol Enhancement Structure](http://stanbol.apache.org/docs/trunk/components/enhancer/enhancementstructure) is possible. This ensures that all Enhancement Engines available for Apache Stanbol can be used as transformers in the Fusepool Plattform.
+_TODO:_ provide more information or remove this subsection
 
+The design of the Fusepool Annotation Model must ensure that a transformation from the [Stanbol Enhancement Structure](http://stanbol.apache.org/docs/trunk/components/enhancer/enhancementstructure) is possible. This ensures that all Enhancement Engines available for Apache Stanbol can be used as transformers in the Fusepool Plattform.
 
 ## Annotation Model
 
-This section describes the Annotation Model as used by Fusepool. This annotation model is build upon a core that is fully compatible to Open Annotation. On top of this core Fusepool defines multiple _Annotation Types_ used as `{annotation-body}`. _Annotation Types_ are extensible meaning that transformers capable of extracting information not covered by the _Annotation Types_ defined in this specification can define/use their own _Annotation Types_.
+This section describes the Annotation Model as used by Fusepool. The annotation model is build upon a core that is fully compatible to Open Annotation. On top of this it defines multiple _Annotation Types_ that are used as `{annotation-body}` of the core models. _Annotation Types_ are extensible meaning that transformers capable of extracting information not covered by the _Annotation Types_ defined in this specification can define/use their own _Annotation Types_. For `{selector}` the Annotation Model preferes to use NIF 2.0 instead of the selectors provided by Open Annotation as this allows to nicely combine high level annotations - described by the different _Annotation Types_ - with lower level NLP annotation that are described much more efficient by NIF.
 
-This chapter first provides the definition of the Annotation code followed by the definition of the different Annotation Types in their own sub-sections.
+This chapter first provides the definition of the Annotation code followed by the definition of the different Annotation Types in their own sub-sections. The final section describes how to use NIF in combination with the Fusepool Annotation Model.
 
 ### Annotation Core
 
@@ -51,7 +60,10 @@ As shown by the above figure each Fusepool Annotation has the following elements
 
 * an `{annotation}` resource with the `rdf:type` `oa:Annotation`. This resource also holds all metadata about the annotation process including the provenance information.
 * an `{annotation-body}` representing the actual annotation. Different annotation bodies are defined for different types of annotations (e.g. detected language, Named Entities, Linked Entities, Categorizations and Topics). This is also an extension point meaning that special Exractors can define their own annotation types.
-* Fusepool always uses a `{sptarget}` - an resource with the `rdf:type` `oa:SpecificResource` as target of annotation. This `{sptarget}` resource is to represent the n-ary relation to the `{content}` ( `source` in Open Annotation terms) and the `{selector}`. For textual resources Fusepool uses a combination of the `oa:TextPositionSelector` and the `oa:TextQuoteSelector`. That means that the selector will both provide the start/end char offsets as well as the prefix, exact and suffix information.
+* Fusepool always uses a `{sptarget}` - an resource with the `rdf:type` `oa:SpecificResource` as target of annotation. This `{sptarget}` resource is to represent the n-ary relation to the `{content}` ( `source` in Open Annotation terms) and the `{selector}`. 
+* As `{selector}` for textual resources the model allows two options:
+    1. Transformers can use a combination of the `oa:TextPositionSelector` and the `oa:TextQuoteSelector`. That means that the selector will both provide the start/end char offsets as well as the prefix, exact and suffix information.
+    2. NIF 2.0 can be used as selector. The `nif:String` class also provides beginIndex/endIndex char offsets as well as before, anchorOf and after information. However NIF also allows to very efficiently encode NLP annotations. So in use cases where such information are required it is a better alternative to the selectors as provided by Open Annotation. For more information see the final section of this chapter. For compatibility reasons Transformer that do use NIF may also choose to add the properties of the Open Annotation selectors.
 
 To make the consumption of the annotations easier the Fusepool Annotation Model defines the following two relations:
 
@@ -157,6 +169,33 @@ For the annotation of extracted topics `fam:TopicAnnotation` are used. The `fam:
 
 Additional information about linked _Topics_ should not be added to the _Topic Annotation_. If such information are desired they should be directly added to the URI of the linked _Topic_ - or in other words - used parts of the Thesaurie shall be dereferenced to the RDF graph with the annotations.
 
+### NIF 2.0 Integration
+
+This section provides information on how to use [NIF 2.0](http://persistence.uni-leipzig.org/nlp2rdf/) with the Fusepool Annotation Model. 
+
+The integration between NIF 2.0 and the Open Annotation based Fuespool Annotation Model follows the recommendation of the _NIF OA_ (NIF Open Annotation) profile. As defined by this profile the main integration point between NIF and Open Annotation is the `oa:Selector`. 
+
+The following figure outlines that integration with the Fusepool Annotation Model
+
+![Fusepool Annotation Model NIF 2.0 Integration Overview](fp-anno-nif-overview.png)
+
+ Fusepool Annotation Bodies will refer `nif:String` instances by using the `fam:selector` property. The `nif:String` instance will provide the text selection information but may also provide additional NLP annotations like lemma, pos tag, sentiment values ...
+
+NIF defines an elegant and also very efficient model for describing such NLP annotations. By only using a single `nif:Context` instance representing the text of the document as a whole and one `nif:String` instance for every annotation of a specific selection of the text.
+
+The key feature that allows this is the usage of a fixed URI Scheme to generate unique identifier based on the selected text. By using such an URI Scheme different NLP annotation components writing annotations for the same selection are guaranteed to use the same resource identifier. So information written by such components will automatically be integrated on the RDF level. This feature is nicely shown in the following figure taken from the paper [Integrating NLP using Linked Data](http://svn.aksw.org/papers/2013/ISWC_NIF/public.pdf)
+
+![Merging of NLP Information](http://svn.aksw.org/papers/2013/ISWC_NIF/public/portman_small.png)
+
+The same feature is also key for serializing the Fusepool Annotation Model as they just need to use available information about the selection to generate the `nif:String` instance used as `{selector}`
+    <#char=3,12>
+        a nif:String;
+        nif:anchorOf favourite;
+        nif:referenceContext <#char=0>;
+        nif:beginIndex "3"^^xsd:int;
+        nif:endIndex "12"^^xsd:int;
+
+Any other NLP annotation using the NIF format will be automatically be integrated with those `{selectors}` That means that the component generating the Fusepool Annotation Model is fully independent of any other components providing NIF annotations.
 
 ## Transformation of FISE to the Fusepool Annotation Model
 
@@ -181,15 +220,34 @@ As `fise:TextAnnotation` are used in Stanbol for different annotation types for 
 
 Every `fise:TextAnnotation` is also a `fise:Enhancement`. So based on the  [mapping rules for fise:Enhancements](#fiseenhancement_transformation) a `{annotation}` and a `{sptarget}` is created. The URI used by the `fise:TextAnnotation` is used for the `{annotation-body}` that is referenced by `oa:hasBody` from the `{annotation}`
 
-`fise:TextAnnotation` may select parts of the content. This is indicated by the presence of both the `fise:start` and `fise:end` property. For all `fise:TextAnnotation` that define a selection a `{selector}` resource is created and linked with `oa:hasSelector` from the `{sptarget}`. The following rules apply for `{selector}`
+`fise:TextAnnotation` may select parts of the content. This is indicated by the presence of both the `fise:start` and `fise:end` property. For all `fise:TextAnnotation` that define a selection a `{selector}` resource is created and linked with `oa:hasSelector` from the `{sptarget}`. 
 
-* The URI of the `{selector}` is generated by appending a [RFC 5147](http://tools.ietf.org/html/rfc5147) based URI fragments - as used by [NIF 2.0](http://persistence.uni-leipzig.org/nlp2rdf/) - to the URI of the `{content-item}`
+For the `{selector}` there are two possible Options. First to generate a `oa:TextPositionSelector` and `oa:TextQuoteSelector` or second to use a [NIF 2.0](http://persistence.uni-leipzig.org/nlp2rdf/) selector. Both selectors do provide similar information but different properties are used.
+
+In any case the URI of the `{selector}` is generated by appending a [RFC 5147](http://tools.ietf.org/html/rfc5147) based URI fragments - as used by [NIF 2.0](http://persistence.uni-leipzig.org/nlp2rdf/) - to the URI of the `{content-item}`
+
+In case an OpenAnnotation selector is serialized the following mapping rules apply
+
 * The `{selector}` uses the `rdf:type` `oa:TextPositionSelector` and `oa:TextQuoteSelector` types
 * `fise:start` mapped to `oa:start`
 * `fise:end` mapped to `oa:end`
 * `fise:selected-text` mapped to `oa:exact`. _NOTE_ if `fise:selection-head` and `fise:selection-tail` are used instead of `fise:selected-text` they are copied to the selector and `oa:exact` will be missing.
 * `fise:selection-prefix` mapped to `oa:prefix`
 * `fise:selection-suffix` mapped to `oa:suffix`
+
+In case an NIF 2.0 selector is serialized the following set of rules need to be used
+
+* The `{selector}` uses the `rdf:type` `nif:String`
+* `fise:start` mapped to `nif:beginIndex`
+* `fise:end` mapped to `oa:endIndex`
+* `fise:selected-text` mapped to `nif:anchorOf`. _NOTE_ in case `fise:selection-head` and `fise:selection-tail` are used instead of `fise:selected-text` the `nif:head` and `nif:tail` properties must be used instead of `nif:anchorOf`.
+* `fise:selection-prefix` mapped to `nif:before`
+* `fise:selection-suffix` mapped to `nif:after`
+* Add a `nif:referenceContext` relation to `<{content-item}#char=0>`. The `<{content-item}#char=0>` need to be created once for every `{content-Item}` with the following properties
+    * `rdf:type` set to `nif:Context` and `nif:RFC5147String`. The second type specified the used URL Scheme for all `nif:String` instances using this as a `nif:referenceContext`.
+    * `nif:sourceUrl` referring the `{content-item}`
+
+Implementors may support an option to switch between both sets of rules. In some cases it might also make sense to use both mapping sets for compatibility reasons.
 
 #### fam:LanguageAnnotation transformation
 
