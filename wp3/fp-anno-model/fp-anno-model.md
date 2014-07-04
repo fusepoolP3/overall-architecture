@@ -188,10 +188,11 @@ The key feature that allows this is the usage of a fixed URI Scheme to generate 
 ![Merging of NLP Information](http://svn.aksw.org/papers/2013/ISWC_NIF/public/portman_small.png)
 
 The same feature is also key for serializing the Fusepool Annotation Model as they just need to use available information about the selection to generate the `nif:String` instance used as `{selector}`
-    <#char=3,12>
+
+    <{source}#char=3,12>
         a nif:String;
         nif:anchorOf favourite;
-        nif:referenceContext <#char=0>;
+        nif:referenceContext <{source}#char=0>;
         nif:beginIndex "3"^^xsd:int;
         nif:endIndex "12"^^xsd:int;
 
