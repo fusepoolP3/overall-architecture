@@ -195,6 +195,8 @@ The same feature is also key for serializing the Fusepool Annotation Model as th
         nif:referenceContext <{source}#char=0>;
         nif:beginIndex "3"^^xsd:int;
         nif:endIndex "12"^^xsd:int;
+        nit:before "My "@en
+        nit:after " actress is Na"@en
 
 Any other NLP annotation using the NIF format will be automatically be integrated with those `{selectors}` That means that the component generating the Fusepool Annotation Model is fully independent of any other components providing NIF annotations.
 
