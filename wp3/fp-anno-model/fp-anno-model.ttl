@@ -1,0 +1,225 @@
+@prefix : <http://vocab.fusepool.info/fam.owl> .
+@prefix oa: <http://www.w3.org/ns/oa#> .
+@prefix fam: <http://vocab.fusepool.info/fam#> .
+@prefix nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://vocab.fusepool.info/fam#> .
+
+<http://vocab.fusepool.info/fam#> rdf:type owl:Ontology ;
+                                  rdfs:label "Fusepool P3 Annotation Model"@en ;
+                                  rdfs:seeAlso "https://github.com/fusepoolP3/overall-architecture/blob/master/wp3/fp-anno-model/fp-anno-model.md"^^xsd:anyURI ;
+                                  rdfs:comment "Fusepool P3 Annotation Model is based on Open Annotation. It defines annotation bodies for annotating the language, entity mention, keywords, linked entities, entity suggestions and topic classification. NIF (NLP Interchange Format) is used as selectors. By that NIF can also be used to integrate lover level NLP annotations. "@en .
+
+
+#################################################################
+#
+#    Annotation properties
+#
+#################################################################
+
+#################################################################
+#
+#    Datatypes
+#
+#################################################################
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://vocab.fusepool.info/fam#classification-scheme
+
+fam:classification-scheme rdf:type owl:ObjectProperty ;
+                          rdfs:label "classification scheme"@en ;
+                          rdfs:comment "Used to explicitly define the scheme used for the classification. It is recommended to use SKOS to define classification scheme. In that case the fam:classifcation-scheme links to the the skos:ConceptScheme instance. In case a Topic Classification does use multiple schemes multiple fam:classifcation-scheme will be present."@en ;
+                          rdfs:domain fam:TopicClassification .
+
+
+
+###  http://vocab.fusepool.info/fam#entity-reference
+
+fam:entity-reference rdf:type owl:ObjectProperty ;
+                     rdfs:label "entity reference"@en ;
+                     rdfs:comment "the linked entity. An fam:EntityAnnotation MUST HAVE only multiple entity-reference values if owl:sameAs relations are present between them."@en ;
+                     rdfs:domain fam:EntityAnnotation .
+
+
+###  http://vocab.fusepool.info/fam#entity-type
+
+fam:entity-type rdf:type owl:ObjectProperty ;
+                rdfs:label "entity type"@en ;
+                rdfs:comment "The type of the detected entity. In case of fam:TextAnnotation this is the type as provided by the NER component. It is recommended to use types from well established Ontologies (e.g. NERD, DBPedia, Schema.org). For fam:EntityAnnotation this is expected to link to the actual type of the Entity."@en ;
+                rdfs:domain [ rdf:type owl:Class ;
+                              owl:unionOf ( fam:EntityAnnotation
+                                            fam:EntityMention
+                                          )
+                            ] .
+
+
+
+###  http://vocab.fusepool.info/fam#extracted-from
+
+fam:extracted-from rdf:type owl:ObjectProperty ;
+                   rdfs:label "extracted from"@en ;                   
+                   rdfs:comment "links the annotation body directly with the source"@en ;
+                   rdfs:domain fam:AnnotationBody .
+
+
+###  http://vocab.fusepool.info/fam#selector
+
+fam:selector rdf:type owl:ObjectProperty ;
+             rdfs:label "selector"@en ;
+             rdfs:comment "links the annotation body directly with the selector. Can be a oa:Selector of a nif-core:String instance. Linking multiple selectors is possible if the annotation body has several mentions. The selected area is the union over all parts of the content selected by the different linked selectors"@en ;
+             rdfs:domain fam:AnnotationBody ;
+             rdfs:range oa:Selector .
+
+
+###  http://vocab.fusepool.info/fam#topic-reference
+
+fam:topic-reference rdf:type owl:ObjectProperty ;
+                    rdfs:label "topic reference"@en ;
+                    rdfs:comment "The reference to the topic"@en ;
+                    rdfs:domain fam:TopicAnnotation .
+
+
+
+#################################################################
+#
+#    Data properties
+#
+#################################################################
+
+
+###  http://vocab.fusepool.info/fam#confidence
+
+fam:confidence rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+               rdfs:comment "the confidence for the annotation body. Expected values are in the range of [0..1] where 0 stands for the lowest and 1 for the highest possible confidence"@en ;
+               rdfs:domain fam:AnnotationBody ;
+               rdfs:range xsd:double .
+
+
+###  http://vocab.fusepool.info/fam#entity-label
+
+fam:entity-label rdf:type owl:DatatypeProperty ;
+                 rdfs:comment "Used to provide the label of the linked entity. The language should match the language detected for the document. It is NOT recommended to add lanels for multiple languages and/or all labels of the referenced entity."@en ;
+                 rdfs:domain fam:EntityAnnotation .
+
+
+###  http://vocab.fusepool.info/fam#entity-mention
+
+fam:entity-mention rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+                   rdfs:comment "The lexical form of the mention in the text. This is not necessarily the exact literal of the selected section in the text but is expected to represent the mentioned name of the Entity. Examples for deviations from the mention with the selection are due to lemmatization, case corrections, ..."@en ;
+                   rdfs:domain fam:EntityMention .
+
+
+###  http://vocab.fusepool.info/fam#topic-label
+
+fam:topic-label rdf:type owl:DatatypeProperty ;
+                rdfs:label "topic label"@en ;
+                rdfs:comment "The fam:topic-label holds the label of the topic. In case extracted topics are just defined by strings (and not formally defined as concepts) Topic Annotation will just define the fam:topic-label property."@en ;
+                rdfs:domain fam:TopicAnnotation .
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+
+###  http://vocab.fusepool.info/fam#AnnotationBody
+
+fam:AnnotationBody rdf:type owl:Class ;
+                   rdfs:label "Annotation Body"@en ;
+                   rdfs:comment "Super class for all annotation bodies. Also used as domain for general purpos properties such as fam:confidence"@en .
+
+###  http://vocab.fusepool.info/fam#EntityAnnotation
+
+fam:EntityAnnotation rdf:type owl:Class ;
+                     rdfs:label "Entity Annotation"@en ;
+                     rdfs:subClassOf fam:AnnotationBody ;
+                     rdfs:comment "Entity Annotation are used to link/suggest Entities from some controlled vocabulary for mentions - annotated as Text Annotation in analysed text. Entity Annotation are typically created by Entity Linking Extractros. Those are Extractors that are configured with some form of a controlled vocabulary and can link them with Named Entities already detected by some NER Extractor or by directly looking for Entities by matching their labels with the Words in the text."@en .
+
+
+###  http://vocab.fusepool.info/fam#EntityLinkingChoice
+
+fam:EntityLinkingChoice rdf:type owl:Class ;
+                        rdfs:label "Entity Linking Choice Annotation"@en ;
+                        rdfs:subClassOf fam:EntityMention , oa:Choice ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty oa:item ;
+                                          owl:allValuesFrom fam:EntitySuggestion
+                                        ] ;
+                        
+                        rdfs:comment "An annotation describing a mention with multiple options to choose from. Such an Annotation typically requests some kind of disambiguation step to choose the correct Entity from the provided suggestions.  "@en .
+
+
+###  http://vocab.fusepool.info/fam#EntityMention
+
+fam:EntityMention rdf:type owl:Class ;
+                  rdfs:label "Entity Mention Annotation"@en ;
+                  rdfs:subClassOf fam:AnnotationBody ;
+                  rdfs:comment "Annotates a mention of an Entity. Such annotations typically originate from Named Entity Recognition (NER) components but may also be created by dirctionary lookups."@en .
+
+
+
+###  http://vocab.fusepool.info/fam#EntitySuggestion
+
+fam:EntitySuggestion rdf:type owl:Class ;
+                     rdfs:label "Entity Suggestion Annotation"@en ;
+                     rdfs:subClassOf fam:EntityAnnotation ;
+                     rdfs:comment "Suggests an Entity for an EntityMention."@en .
+
+
+###  http://vocab.fusepool.info/fam#LanguageAnnotation
+
+fam:LanguageAnnotation rdf:type owl:Class ;
+                       rdfs:label "Language Annotation"@en ;
+                       rdfs:subClassOf fam:AnnotationBody ;
+                       rdfs:comment "A Language Annotation is used to annotate the language of the parsed content or even the language of an part of the parsed content.  The detected language is provided as value of the dct:language property. A oa:Selector might be referenced in case the annotated language is only valid for a part of the text."@en .
+
+
+###  http://vocab.fusepool.info/fam#LinkedEntity
+
+fam:LinkedEntity rdf:type owl:Class ;
+                 rdfs:label "Linked Entity Annotation"@en ;
+                 rdfs:subClassOf fam:EntityAnnotation , fam:EntityMention ;
+                 rdfs:comment "A linked entity is an annotation where an Entity - defined by some vocabulary - is linked with an mention in the text. This annotation allows only to link a single entity. If one wants to annotate multipe options please use an EntitySuggestion annotation"@en .
+
+
+
+###  http://vocab.fusepool.info/fam#NifSelector
+
+fam:NifSelector rdf:type owl:Class ;
+                rdfs:label "NIF Selector"@en ;
+                rdfs:subClassOf nif:String , oa:Selector ;
+                rdfs:comment "Class representing any nif-core:String instance used as oa:Selector"@en .
+
+
+
+###  http://vocab.fusepool.info/fam#TopicAnnotation
+
+fam:TopicAnnotation rdf:type owl:Class ;
+                    rdfs:label "Topic Annotation"@en ;
+                    rdfs:subClassOf fam:AnnotationBody ;
+                    rdfs:comment "Annotates a content with a topic defined in some classification scheme. TopicAnnotation are typically referenced by a fam:TopicClassification."@en .
+
+###  http://vocab.fusepool.info/fam#TopicClassification
+
+fam:TopicClassification rdf:type owl:Class ;
+                        rdfs:label "Topic Classification"@en ;
+                        rdfs:subClassOf fam:AnnotationBody , oa:Composite ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty oa:item ;
+                                          owl:allValuesFrom fam:TopicAnnotation
+                                        ] ;
+                        rdfs:comment "A Topic Classification is a oa:Composite where all Items are TopicAnnotations. This models that a classification of the annotated content is the uion over all TopicAnnotation."@en .
+
