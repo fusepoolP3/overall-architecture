@@ -53,7 +53,7 @@ Response
        ldp:membershipResource <http://example.org/container1/>;
        ldp:hasMemberRelation ldp:member;
        ldp:insertedContentRelation ldp:MemberSubject;
-       fp:transformer <http://example.org/simple-transformer>.
+       eldp:transformer <http://example.org/simple-transformer>.
 
 The above container will process added resources using `http://example.org/simple-transformer` if their media-type matches one of the supported input formats of this transformer. If this is the case both the original resource as well as the Transformation results will be added to the container.
 
