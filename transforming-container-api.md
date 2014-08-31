@@ -49,7 +49,7 @@ Response
 
     <http://example.org/container1/>
        a ldp:DirectContainer;
-       dcterms:title "An extracting LDP Container using simple-transformer";
+       dcterms:title "A transforming LDP Container using simple-transformer";
        ldp:membershipResource <http://example.org/container1/>;
        ldp:hasMemberRelation ldp:member;
        ldp:insertedContentRelation ldp:MemberSubject;
