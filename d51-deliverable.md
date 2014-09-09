@@ -421,27 +421,27 @@ a detailed specification):
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| POST /registry                                                           |
-|                                                                          |
-| Host: demo.fusepoolp3.eu                                                 |
-|                                                                          |
-| Slug: example                                                            |
-|                                                                          |
-| Content-Type: text/turtle                                                |
-|                                                                          |
-| @prefix dct: \<http://purl.org/dc/terms/\> .                             |
-|                                                                          |
-| @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .                      |
-|                                                                          |
-| \<.\> a fp3:RegistryEntry;                                               |
-|                                                                          |
-|     fp3:entry \<http://example.org/vcard-transformer\>.                  |
-|                                                                          |
-| \<http://example.org/vcard-transformer\> a fp3:TransformationService ;   |
-|                                                                          |
-|     dct:title "An example vCard transformer"@en.                         |
-+--------------------------------------------------------------------------+
+
+    POST /registry                                                          
+                                                                            
+    Host: demo.fusepoolp3.eu                                                
+                                                                            
+    Slug: example                                                           
+                                                                            
+    Content-Type: text/turtle                                               
+                                                                            
+    @prefix dct: \<http://purl.org/dc/terms/\> .                            
+                                                                            
+    @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .                     
+                                                                            
+    \<.\> a fp3:RegistryEntry;                                              
+                                                                            
+        fp3:entry \<http://example.org/vcard-transformer\>.                 
+                                                                            
+    \<http://example.org/vcard-transformer\> a fp3:TransformationService ;  
+                                                                            
+        dct:title "An example vCard transformer"@en.                        
+
 
 the included transformer description HTTP request message body, using
 the RDF serialization specified by the Content-Type header. Then, the
@@ -449,59 +449,59 @@ response would look like:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| HTTP/1.1 201 Created                                                     |
-|                                                                          |
-| Server: FusepoolP3/0.1.0 (build 2+)                                      |
-|                                                                          |
-| Last-Modified: Mon, 16 Jun 2014 08:54:14 GMT                             |
-|                                                                          |
-| ETag: W/"1402908854000"                                                  |
-|                                                                          |
-| Location: http://demo.fusepoolp3.eu/registry/example                     |
-|                                                                          |
-| Content-Length: 0                                                        |
-|                                                                          |
-| Date: Mon, 16 Jun 2014 08:54:14 GMT                                      |
-+--------------------------------------------------------------------------+
+
+    HTTP/1.1 201 Created                                                    
+                                                                            
+    Server: FusepoolP3/0.1.0 (build 2+)                                     
+                                                                            
+    Last-Modified: Mon, 16 Jun 2014 08:54:14 GMT                            
+                                                                            
+    ETag: W/"1402908854000"                                                 
+                                                                            
+    Location: http://demo.fusepoolp3.eu/registry/example                    
+                                                                            
+    Content-Length: 0                                                       
+                                                                            
+    Date: Mon, 16 Jun 2014 08:54:14 GMT                                     
+
 
 Then, a request to the new entry:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| GET /registry/example                                                    |
-|                                                                          |
-| Host: demo.fusepoolp3.eu                                                 |
-|                                                                          |
-| Accept: text/turtle, application/rdf+xml;q=.8, \*/\*;q=.1                |
-+--------------------------------------------------------------------------+
+
+    GET /registry/example                                                   
+                                                                            
+    Host: demo.fusepoolp3.eu                                                
+                                                                            
+    Accept: text/turtle, application/rdf+xml;q=.8, \*/\*;q=.1               
+
 
 MUST return something like:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| HTTP/1.1 200 OK                                                          |
-|                                                                          |
-| Date: Mon, 16 Jun 2014 08:57:32 GMT                                      |
-|                                                                          |
-| Connection: close                                                        |
-|                                                                          |
-| Content-Type: text/turtle                                                |
-|                                                                          |
-| @prefix dct: \<http://purl.org/dc/terms/\> .                             |
-|                                                                          |
-| @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .                      |
-|                                                                          |
-| \<http://demo.fusepoolp3.eu/registry/example\> a fp3:RegistryEntry ;     |
-|                                                                          |
-|     fp3:entry \<http://example.org/vcard-transformer\> .                 |
-|                                                                          |
-| \<http://example.org/vcard-transformer\> a fp3:TransformationService ;   |
-|                                                                          |
-|     dct:title "An example vCard transformer"@en .                        |
-+--------------------------------------------------------------------------+
+
+    HTTP/1.1 200 OK                                                         
+                                                                            
+    Date: Mon, 16 Jun 2014 08:57:32 GMT                                     
+                                                                            
+    Connection: close                                                       
+                                                                            
+    Content-Type: text/turtle                                               
+                                                                            
+    @prefix dct: \<http://purl.org/dc/terms/\> .                            
+                                                                            
+    @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .                     
+                                                                            
+    \<http://demo.fusepoolp3.eu/registry/example\> a fp3:RegistryEntry ;    
+                                                                            
+        fp3:entry \<http://example.org/vcard-transformer\> .                
+                                                                            
+    \<http://example.org/vcard-transformer\> a fp3:TransformationService ;  
+                                                                            
+        dct:title "An example vCard transformer"@en .                       
+
 
 2.3.1.2 Transformer factory registry
 
@@ -547,53 +547,53 @@ to the transformers root container.
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| POST /ldp/transformation                                                 |
-|                                                                          |
-| Host: demo.fusepoolp3.eu                                                 |
-|                                                                          |
-| Slug: example                                                            |
-|                                                                          |
-| Content-Type: text/turtle                                                |
-|                                                                          |
-| @prefix dct: \<http://purl.org/dc/terms/\> .                             |
-|                                                                          |
-| @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .                      |
-|                                                                          |
-| @prefix eldp: \<http://vocab.fusepool.info/eldp\#\> .                    |
-|                                                                          |
-| \<.\> a eldp:TransformationContainer , ldp:DirectContainer ;             |
-|                                                                          |
-|     :transformer \<http://example.org/vcard-transformer\> .              |
-+--------------------------------------------------------------------------+
+
+    POST /ldp/transformation                                                
+                                                                            
+    Host: demo.fusepoolp3.eu                                                
+                                                                            
+    Slug: example                                                           
+                                                                            
+    Content-Type: text/turtle                                               
+                                                                            
+    @prefix dct: \<http://purl.org/dc/terms/\> .                            
+                                                                            
+    @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .                     
+                                                                            
+    @prefix eldp: \<http://vocab.fusepool.info/eldp\#\> .                   
+                                                                            
+    \<.\> a eldp:TransformationContainer , ldp:DirectContainer ;            
+                                                                            
+        :transformer \<http://example.org/vcard-transformer\> .             
+
 
 The server response MUST have status code 201 and MUST contain a
 location header specifying the IRI of the created resource
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| HTTP/1.1 201 Created                                                     |
-|                                                                          |
-| Server: FusepoolP3/0.1.0-SNAPSHOT (build 2+)                             |
-|                                                                          |
-| Last-Modified: Mon, 16 Jun 2014 08:54:14 GMT                             |
-|                                                                          |
-| ETag: W/"14028798789"                                                    |
-|                                                                          |
-| Location: http://demo.fusepoolp3.eu/ldp/transformation/example           |
-|                                                                          |
-| Link: \<http://p3.fusepool.eu/transformation\>; rel="describedby"        |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#Container\>; rel="type"                |
-|                                                                          |
-| Link: \<http://vocab.fusepool.info/eldp\#TransformationContainer\>;      |
-| rel="type"                                                               |
-|                                                                          |
-| Content-Length: 0                                                        |
-|                                                                          |
-| Date: Mon, 16 Jun 2014 08:54:14 GMT                                      |
-+--------------------------------------------------------------------------+
+
+    HTTP/1.1 201 Created                                                    
+                                                                            
+    Server: FusepoolP3/0.1.0-SNAPSHOT (build 2+)                            
+                                                                            
+    Last-Modified: Mon, 16 Jun 2014 08:54:14 GMT                            
+                                                                            
+    ETag: W/"14028798789"                                                   
+                                                                            
+    Location: http://demo.fusepoolp3.eu/ldp/transformation/example          
+                                                                            
+    Link: \<http://p3.fusepool.eu/transformation\>; rel="describedby"       
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#Container\>; rel="type"               
+                                                                            
+    Link: \<http://vocab.fusepool.info/eldp\#TransformationContainer\>;     
+    rel="type"                                                              
+                                                                            
+    Content-Length: 0                                                       
+                                                                            
+    Date: Mon, 16 Jun 2014 08:54:14 GMT                                     
+
 
 In the above example the response contains some additional information:
 
@@ -611,57 +611,57 @@ this:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| GET /ldp/transformation/example HTTP/1.1                                 |
-|                                                                          |
-| Host: demo.fusepoolp3.eu                                                 |
-|                                                                          |
-| Accept: text/turtle; charset=UTF-8                                       |
-|                                                                          |
-| Prefer: return=representation;                                           |
-| include="http://www.w3.org/ns/ldp\#PreferEmptyContainer"                 |
-+--------------------------------------------------------------------------+
+
+    GET /ldp/transformation/example HTTP/1.1                                
+                                                                            
+    Host: demo.fusepoolp3.eu                                                
+                                                                            
+    Accept: text/turtle; charset=UTF-8                                      
+                                                                            
+    Prefer: return=representation;                                          
+    include="http://www.w3.org/ns/ldp\#PreferEmptyContainer"                
+
 
 Response:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| HTTP/1.1 200 OK                                                          |
-|                                                                          |
-| Content-Type: text/turtle; charset=UTF-8                                 |
-|                                                                          |
-| ETag: "\_87e52ce2917987"                                                 |
-|                                                                          |
-| Content-Length: 477                                                      |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#Container\>; rel="type"                |
-|                                                                          |
-| Preference-Applied: return=representation                                |
-|                                                                          |
-| @prefix dcterms: \<http://purl.org/dc/terms/\> .                         |
-|                                                                          |
-| @prefix ldp: \<http://www.w3.org/ns/ldp\#\> .                            |
-|                                                                          |
-| @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .                      |
-|                                                                          |
-| @prefix eldp: \<http://vocab.fusepool.info/eldp\#\> .                    |
-|                                                                          |
-| \<http://demo.fusepoolp3.eu/ldp/transformation/example\>                 |
-|                                                                          |
-|   a eldp:TransformationContainer, ldp:DirectContainer ;                  |
-|                                                                          |
-|   dcterms:title "An transformation LDP Container for vCard" ;            |
-|                                                                          |
-|   ldp:membershipResource                                                 |
-| \<http://demo.fusepoolp3.eu/ldp/transformation/example\> ;               |
-|                                                                          |
-|   ldp:hasMemberRelation ldp:member ;                                     |
-|                                                                          |
-|   ldp:insertedContentRelation ldp:MemberSubject ;                        |
-|                                                                          |
-|   dp:transformer \<http://example.org/vcard-transformer\> .              |
-+--------------------------------------------------------------------------+
+
+    HTTP/1.1 200 OK                                                         
+                                                                            
+    Content-Type: text/turtle; charset=UTF-8                                
+                                                                            
+    ETag: "\_87e52ce2917987"                                                
+                                                                            
+    Content-Length: 477                                                     
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#Container\>; rel="type"               
+                                                                            
+    Preference-Applied: return=representation                               
+                                                                            
+    @prefix dcterms: \<http://purl.org/dc/terms/\> .                        
+                                                                            
+    @prefix ldp: \<http://www.w3.org/ns/ldp\#\> .                           
+                                                                            
+    @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .                     
+                                                                            
+    @prefix eldp: \<http://vocab.fusepool.info/eldp\#\> .                   
+                                                                            
+    \<http://demo.fusepoolp3.eu/ldp/transformation/example\>                
+                                                                            
+      a eldp:TransformationContainer, ldp:DirectContainer ;                 
+                                                                            
+      dcterms:title "An transformation LDP Container for vCard" ;           
+                                                                            
+      ldp:membershipResource                                                
+    \<http://demo.fusepoolp3.eu/ldp/transformation/example\> ;              
+                                                                            
+      ldp:hasMemberRelation ldp:member ;                                    
+                                                                            
+      ldp:insertedContentRelation ldp:MemberSubject ;                       
+                                                                            
+      dp:transformer \<http://example.org/vcard-transformer\> .             
+
 
 With a supported RDF format in the Accept header the request MUST yield
 to a response entity serializing a graph with at least the triple with
@@ -683,49 +683,49 @@ posts data to the LDPC:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| POST /ldp/transformation/example                                         |
-|                                                                          |
-| Host: demo.fusepoolp3.eu                                                 |
-|                                                                          |
-| Accept: text/turtle, application/rdf+xml;q=.8, \*/\*;q=.1                |
-|                                                                          |
-| Content-Type: text/vcard                                                 |
-|                                                                          |
-| Slug: corks                                                              |
-|                                                                          |
-| Content-Length: 164                                                      |
-|                                                                          |
-| BEGIN:VCARD                                                              |
-|                                                                          |
-| VERSION:4.0                                                              |
-|                                                                          |
-| FN:Corky Crystal                                                         |
-|                                                                          |
-| NICKNAME:Corks                                                           |
-|                                                                          |
-| TEL;TYPE=home,voice;VALUE=uri:tel:+61755555555                           |
-|                                                                          |
-| EMAIL:corky@example.com                                                  |
-|                                                                          |
-| REV:20080424T195243Z                                                     |
-|                                                                          |
-| END:VCARD                                                                |
-+--------------------------------------------------------------------------+
+
+    POST /ldp/transformation/example                                        
+                                                                            
+    Host: demo.fusepoolp3.eu                                                
+                                                                            
+    Accept: text/turtle, application/rdf+xml;q=.8, \*/\*;q=.1               
+                                                                            
+    Content-Type: text/vcard                                                
+                                                                            
+    Slug: corks                                                             
+                                                                            
+    Content-Length: 164                                                     
+                                                                            
+    BEGIN:VCARD                                                             
+                                                                            
+    VERSION:4.0                                                             
+                                                                            
+    FN:Corky Crystal                                                        
+                                                                            
+    NICKNAME:Corks                                                          
+                                                                            
+    TEL;TYPE=home,voice;VALUE=uri:tel:+61755555555                          
+                                                                            
+    EMAIL:corky@example.com                                                 
+                                                                            
+    REV:20080424T195243Z                                                    
+                                                                            
+    END:VCARD                                                               
+
 
 And it gets back the the IRI of the newly created resource
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| HTTP/1.1 201 OK                                                          |
-|                                                                          |
-| Date: Mon, 16 Jun 2014 09:01:52 GMT                                      |
-|                                                                          |
-| Connection: close                                                        |
-|                                                                          |
-| Location: http://demo.fusepoolp3.eu/ldp/transformation/example/corks     |
-+--------------------------------------------------------------------------+
+
+    HTTP/1.1 201 OK                                                         
+                                                                            
+    Date: Mon, 16 Jun 2014 09:01:52 GMT                                     
+                                                                            
+    Connection: close                                                       
+                                                                            
+    Location: http://demo.fusepoolp3.eu/ldp/transformation/example/corks    
+
 
 The newly created resource will immediately be a member of the
 container. The results of the transformer will be available as a member
@@ -738,55 +738,55 @@ interaction might look as follows:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| GET /ldp/transformation/example HTTP/1.1                                 |
-|                                                                          |
-| Host: demo.fusepoolp3.eu                                                 |
-|                                                                          |
-| Accept: text/turtle; charset=UTF-8                                       |
-+--------------------------------------------------------------------------+
+
+    GET /ldp/transformation/example HTTP/1.1                                
+                                                                            
+    Host: demo.fusepoolp3.eu                                                
+                                                                            
+    Accept: text/turtle; charset=UTF-8                                      
+
 
 And the response SHOULD look like:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| HTTP/1.1 200 OK                                                          |
-|                                                                          |
-| Content-Type: text/turtle; charset=UTF-8                                 |
-|                                                                          |
-| ETag: "\_87e52ce2917987"                                                 |
-|                                                                          |
-| Content-Length: 477                                                      |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#Container\>; rel="type"                |
-|                                                                          |
-| @prefix dcterms: \<http://purl.org/dc/terms/\> .                         |
-|                                                                          |
-| @prefix ldp: \<http://www.w3.org/ns/ldp\#\> .                            |
-|                                                                          |
-| @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .                      |
-|                                                                          |
-| @prefix eldp: \<http://vocab.fusepool.info/eldp\#\> .                    |
-|                                                                          |
-| \<http://demo.fusepoolp3.eu/ldp/transformers/example\>                   |
-|                                                                          |
-|    a eldp:TransformationContainer , ldp:DirectContainer;                 |
-|                                                                          |
-|    dcterms:title "An transformation LDP Container supporting vCard" ;    |
-|                                                                          |
-|    ldp:membershipResource                                                |
-| \<http://demo.fusepoolp3.eu/ldp/transformers/example\>;                  |
-|                                                                          |
-|    ldp:hasMemberRelation ldp:member ;                                    |
-|                                                                          |
-|    ldp:insertedContentRelation ldp:MemberSubject ;                       |
-|                                                                          |
-|    fp3:transformer \<http://example.org/vcard-transformer\> ;            |
-|                                                                          |
-|    ldp:member                                                            |
-| \<http://demo.fusepoolp3.eu/ldp/transformers/example/corks\> .           |
-+--------------------------------------------------------------------------+
+
+    HTTP/1.1 200 OK                                                         
+                                                                            
+    Content-Type: text/turtle; charset=UTF-8                                
+                                                                            
+    ETag: "\_87e52ce2917987"                                                
+                                                                            
+    Content-Length: 477                                                     
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#Container\>; rel="type"               
+                                                                            
+    @prefix dcterms: \<http://purl.org/dc/terms/\> .                        
+                                                                            
+    @prefix ldp: \<http://www.w3.org/ns/ldp\#\> .                           
+                                                                            
+    @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .                     
+                                                                            
+    @prefix eldp: \<http://vocab.fusepool.info/eldp\#\> .                   
+                                                                            
+    \<http://demo.fusepoolp3.eu/ldp/transformers/example\>                  
+                                                                            
+       a eldp:TransformationContainer , ldp:DirectContainer;                
+                                                                            
+       dcterms:title "An transformation LDP Container supporting vCard" ;   
+                                                                            
+       ldp:membershipResource                                               
+    \<http://demo.fusepoolp3.eu/ldp/transformers/example\>;                 
+                                                                            
+       ldp:hasMemberRelation ldp:member ;                                   
+                                                                            
+       ldp:insertedContentRelation ldp:MemberSubject ;                      
+                                                                            
+       fp3:transformer \<http://example.org/vcard-transformer\> ;           
+                                                                            
+       ldp:member                                                           
+    \<http://demo.fusepoolp3.eu/ldp/transformers/example/corks\> .          
+
 
 Asynchronous transformations are specified with detail later at Section
 3.1.
@@ -943,10 +943,10 @@ same container. If the transformation result is RDF, a new triple like:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| \<{transformation result}, eldp:transformedFrom, {transformation         |
-| source}\>                                                                |
-+--------------------------------------------------------------------------+
+
+    \<{transformation result}, eldp:transformedFrom, {transformation        
+    source}\>                                                               
+
 
 SHOULD be added to the transformation result LDPR; where {transformation
 result} is the resource representing the transformation result and
@@ -1047,54 +1047,54 @@ resources (?annotation and ?sptarget) with a SPARQL query like:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| PREFIX oa: \<http://www.w3.org/ns/oa\#\>                                 |
-|                                                                          |
-| SELECT ?body ?source ?selector                                           |
-|                                                                          |
-| WHERE {                                                                  |
-|                                                                          |
-|   ?annotation a oa:Annotation ;                                          |
-|                                                                          |
-|     oa:hasBody ?body ;                                                   |
-|                                                                          |
-|     oa:hasTarget ?sptarget .                                             |
-|                                                                          |
-|   ?body a fam:TextAnnotation ;                                           |
-|                                                                          |
-|     oa:hasBody ?body .                                                   |
-|                                                                          |
-|   ?sptarget oa:SpecificResource ;                                        |
-|                                                                          |
-|     oa:hasSource ?source ;                                               |
-|                                                                          |
-|     oa:hasSelector ?selector .                                           |
-|                                                                          |
-| }                                                                        |
-+--------------------------------------------------------------------------+
+
+    PREFIX oa: \<http://www.w3.org/ns/oa\#\>                                
+                                                                            
+    SELECT ?body ?source ?selector                                          
+                                                                            
+    WHERE {                                                                 
+                                                                            
+      ?annotation a oa:Annotation ;                                         
+                                                                            
+        oa:hasBody ?body ;                                                  
+                                                                            
+        oa:hasTarget ?sptarget .                                            
+                                                                            
+      ?body a fam:TextAnnotation ;                                          
+                                                                            
+        oa:hasBody ?body .                                                  
+                                                                            
+      ?sptarget oa:SpecificResource ;                                       
+                                                                            
+        oa:hasSource ?source ;                                              
+                                                                            
+        oa:hasSelector ?selector .                                          
+                                                                            
+    }                                                                       
+
 
  Instead they can directly retrieve the required information with a much
 simpler and faster query:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| PREFIX oa: \<http://www.w3.org/ns/oa\#\>                                 |
-|                                                                          |
-| PREFIX fam: \<http://vocab.fusepool.info/fam\#\>                         |
-|                                                                          |
-| SELECT ?body ?source ?selector                                           |
-|                                                                          |
-| WHERE {                                                                  |
-|                                                                          |
-|   ?body a fam:TextAnnotation ;                                           |
-|                                                                          |
-|     fam:extracted-from ?source ;                                         |
-|                                                                          |
-|     fam:selector ?selector .                                             |
-|                                                                          |
-| }                                                                        |
-+--------------------------------------------------------------------------+
+
+    PREFIX oa: \<http://www.w3.org/ns/oa\#\>                                
+                                                                            
+    PREFIX fam: \<http://vocab.fusepool.info/fam\#\>                        
+                                                                            
+    SELECT ?body ?source ?selector                                          
+                                                                            
+    WHERE {                                                                 
+                                                                            
+      ?body a fam:TextAnnotation ;                                          
+                                                                            
+        fam:extracted-from ?source ;                                        
+                                                                            
+        fam:selector ?selector .                                            
+                                                                            
+    }                                                                       
+
 
 In addition to this core structure model the Fusepool Annotation model
 also defines a set of Annotation Types for the annotation of different
@@ -1297,21 +1297,21 @@ resource[ ](http://www.google.com/url?q=http%3A%2F%2Fme.com%2Fbla%3A&sa=D&sntz=1
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| @prefix oplacl: \<http://www.openlinksw.com/ontology/acl\#\> .           |
-|                                                                          |
-| @prefix acl: \<http://www.w3.org/ns/auth/acl\#\> .                       |
-|                                                                          |
-| \<\#rule\> a acl:Authorization ;                                         |
-|                                                                          |
-|   oplacl:hasAccessMode oplacl:Read ;                                     |
-|                                                                          |
-|   acl:agent \<http://www.facebook.com/jsmith\> ;                         |
-|                                                                          |
-|   acl:accessTo \<http://demo.fusepoolp3.eu/assets\> ;                    |
-|                                                                          |
-|   oplacl:hasScope \<urn:myscope\> .                                      |
-+--------------------------------------------------------------------------+
+
+    @prefix oplacl: \<http://www.openlinksw.com/ontology/acl\#\> .          
+                                                                            
+    @prefix acl: \<http://www.w3.org/ns/auth/acl\#\> .                      
+                                                                            
+    \<\#rule\> a acl:Authorization ;                                        
+                                                                            
+      oplacl:hasAccessMode oplacl:Read ;                                    
+                                                                            
+      acl:agent \<http://www.facebook.com/jsmith\> ;                        
+                                                                            
+      acl:accessTo \<http://demo.fusepoolp3.eu/assets\> ;                   
+                                                                            
+      oplacl:hasScope \<urn:myscope\> .                                     
+
 
 In addition to individual person ACLs granting access to an individual,
 rules can grant access to a simple group, a conditional group, or
@@ -1403,10 +1403,10 @@ github^[[38]](#ftnt38)^, from where you should clone it:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| git clone --recursive                                                    |
-| https://github.com/fusepoolP3/platform fusepoolp3-platform               |
-+--------------------------------------------------------------------------+
+
+    git clone --recursive                                                   
+    https://github.com/fusepoolP3/platform fusepoolp3-platform              
+
 
 Then you just need to execute the integrated bash launcher, which will
 take care of building and launching all components that currently
@@ -1414,226 +1414,226 @@ compose the platform:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| \$ ./start.sh                                                            |
-|                                                                          |
-| Building platform from the source code....                               |
-|                                                                          |
-| Successfully compiled platform source code                               |
-|                                                                          |
-| Starting marmotta backend....                                            |
-|                                                                          |
-| Marmotta backend started at http://localhost:8080                        |
-|                                                                          |
-| Starting stanbol worker....                                              |
-|                                                                          |
-| Stanbol worker started at http://localhost:8081                          |
-|                                                                          |
-| Starting proxy....                                                       |
-|                                                                          |
-| LDP Transformation Proxy started at http://localhost:8181                |
-|                                                                          |
-| Successfully started Fusepool P3 platform!                               |
-|                                                                          |
-| total time: 00m 53s                                                      |
-|                                                                          |
-| logs available at target/\*.log                                          |
-+--------------------------------------------------------------------------+
+
+    \$ ./start.sh                                                           
+                                                                            
+    Building platform from the source code....                              
+                                                                            
+    Successfully compiled platform source code                              
+                                                                            
+    Starting marmotta backend....                                           
+                                                                            
+    Marmotta backend started at http://localhost:8080                       
+                                                                            
+    Starting stanbol worker....                                             
+                                                                            
+    Stanbol worker started at http://localhost:8081                         
+                                                                            
+    Starting proxy....                                                      
+                                                                            
+    LDP Transformation Proxy started at http://localhost:8181               
+                                                                            
+    Successfully started Fusepool P3 platform!                              
+                                                                            
+    total time: 00m 53s                                                     
+                                                                            
+    logs available at target/\*.log                                         
+
 
 Then you can perform some basic LDP interactions with the platform:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| \$ curl -i -X POST --data-binary @test.txt -H "Content-Type: text/plain" |
-| \\                                                                       |
-|                                                                          |
-|        -H "Slug: test" http://localhost:8181/ldp/transformation          |
-|                                                                          |
-| HTTP/1.1 201 Created                                                     |
-|                                                                          |
-| Date: Mon, 30 Jun 2014 15:26:28 GMT                                      |
-|                                                                          |
-| Server: Apache Marmotta/3.3.0-SNAPSHOT (build 2+)                        |
-|                                                                          |
-| Last-Modified: Mon, 30 Jun 2014 15:26:28 GMT                             |
-|                                                                          |
-| ETag: W/"1404141988000"                                                  |
-|                                                                          |
-| Location: http://localhost:8181/ldp/transformation/test.txt              |
-|                                                                          |
-| Link:                                                                    |
-| \<https://wiki.apache.org/marmotta/LDPImplementationReport/2014-03-11\>; |
-| rel="describedby"                                                        |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#Container\>; rel="type"                |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#Resource\>; rel="type"                 |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#RDFSource\>; rel="type"                |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#BasicContainer\>; rel="type"           |
-|                                                                          |
-| Link: \<http://vocab.fusepool.info/eldp\#TransformationContainer\>;      |
-| rel="type"                                                               |
-|                                                                          |
-| Link: \<http://localhost:8181/ldp/transformation/test\>;                 |
-| rel="describedby"                                                        |
-|                                                                          |
-| Content-Length: 0                                                        |
-+--------------------------------------------------------------------------+
+
+    \$ curl -i -X POST --data-binary @test.txt -H "Content-Type: text/plain"
+    \\                                                                      
+                                                                            
+           -H "Slug: test" http://localhost:8181/ldp/transformation         
+                                                                            
+    HTTP/1.1 201 Created                                                    
+                                                                            
+    Date: Mon, 30 Jun 2014 15:26:28 GMT                                     
+                                                                            
+    Server: Apache Marmotta/3.3.0-SNAPSHOT (build 2+)                       
+                                                                            
+    Last-Modified: Mon, 30 Jun 2014 15:26:28 GMT                            
+                                                                            
+    ETag: W/"1404141988000"                                                 
+                                                                            
+    Location: http://localhost:8181/ldp/transformation/test.txt             
+                                                                            
+    Link:                                                                   
+    \<https://wiki.apache.org/marmotta/LDPImplementationReport/2014-03-11\>;
+    rel="describedby"                                                       
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#Container\>; rel="type"               
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#Resource\>; rel="type"                
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#RDFSource\>; rel="type"               
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#BasicContainer\>; rel="type"          
+                                                                            
+    Link: \<http://vocab.fusepool.info/eldp\#TransformationContainer\>;     
+    rel="type"                                                              
+                                                                            
+    Link: \<http://localhost:8181/ldp/transformation/test\>;                
+    rel="describedby"                                                       
+                                                                            
+    Content-Length: 0                                                       
+
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| \$ curl -i http://localhost:8181/ldp/transformation/test                 |
-|                                                                          |
-| HTTP/1.1 200 OK                                                          |
-|                                                                          |
-| Date: Mon, 30 Jun 2014 15:28:07 GMT                                      |
-|                                                                          |
-| Server: Apache Marmotta/3.3.0-SNAPSHOT (build 2+)                        |
-|                                                                          |
-| Last-Modified: Mon, 30 Jun 2014 15:26:28 GMT                             |
-|                                                                          |
-| ETag: W/"1404141988000"                                                  |
-|                                                                          |
-| Link:                                                                    |
-| \<https://wiki.apache.org/marmotta/LDPImplementationReport/2014-03-11\>; |
-| rel="describedby"                                                        |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#Resource\>; rel="type"                 |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#RDFSource\>; rel="type"                |
-|                                                                          |
-| Link: \<http://localhost:8181/ldp/transformation/test.txt\>;             |
-| rel="content"                                                            |
-|                                                                          |
-| Content-Type: text/turtle                                                |
-|                                                                          |
-| Transfer-Encoding: chunked                                               |
-|                                                                          |
-| @prefix ldp: \<http://www.w3.org/ns/ldp\#\> .                            |
-|                                                                          |
-| @prefix rdf: \<http://www.w3.org/1999/02/22-rdf-syntax-ns\#\> .          |
-|                                                                          |
-| @prefix xsd: \<http://www.w3.org/2001/XMLSchema\#\> .                    |
-|                                                                          |
-| @prefix dcterms: \<http://purl.org/dc/terms/\> .                         |
-|                                                                          |
-| @prefix eldp: \<http://vocab.fusepool.info/eldp\#\> .                    |
-|                                                                          |
-| @prefix : \<http://localhost:8181/ldp/transformation/test\> .            |
-|                                                                          |
-| \<http://localhost:8181/ldp/transformation/test\>                        |
-|                                                                          |
-|        ldp:interactionModel eldp:TransformationContainer ;               |
-|                                                                          |
-|         a ldp:Resource , ldp:RDFSource ;                                 |
-|                                                                          |
-|         dcterms:modified "2014-06-30T15:26:28.000Z"\^\^xsd:dateTime ;    |
-|                                                                          |
-|         dcterms:created "2014-06-30T15:26:28.000Z"\^\^xsd:dateTime ;     |
-|                                                                          |
-|         dcterms:hasFormat                                                |
-| \<http://localhost:8181/ldp/transformation/test.txt\> .                  |
-+--------------------------------------------------------------------------+
+
+    \$ curl -i http://localhost:8181/ldp/transformation/test                
+                                                                            
+    HTTP/1.1 200 OK                                                         
+                                                                            
+    Date: Mon, 30 Jun 2014 15:28:07 GMT                                     
+                                                                            
+    Server: Apache Marmotta/3.3.0-SNAPSHOT (build 2+)                       
+                                                                            
+    Last-Modified: Mon, 30 Jun 2014 15:26:28 GMT                            
+                                                                            
+    ETag: W/"1404141988000"                                                 
+                                                                            
+    Link:                                                                   
+    \<https://wiki.apache.org/marmotta/LDPImplementationReport/2014-03-11\>;
+    rel="describedby"                                                       
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#Resource\>; rel="type"                
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#RDFSource\>; rel="type"               
+                                                                            
+    Link: \<http://localhost:8181/ldp/transformation/test.txt\>;            
+    rel="content"                                                           
+                                                                            
+    Content-Type: text/turtle                                               
+                                                                            
+    Transfer-Encoding: chunked                                              
+                                                                            
+    @prefix ldp: \<http://www.w3.org/ns/ldp\#\> .                           
+                                                                            
+    @prefix rdf: \<http://www.w3.org/1999/02/22-rdf-syntax-ns\#\> .         
+                                                                            
+    @prefix xsd: \<http://www.w3.org/2001/XMLSchema\#\> .                   
+                                                                            
+    @prefix dcterms: \<http://purl.org/dc/terms/\> .                        
+                                                                            
+    @prefix eldp: \<http://vocab.fusepool.info/eldp\#\> .                   
+                                                                            
+    @prefix : \<http://localhost:8181/ldp/transformation/test\> .           
+                                                                            
+    \<http://localhost:8181/ldp/transformation/test\>                       
+                                                                            
+           ldp:interactionModel eldp:TransformationContainer ;              
+                                                                            
+            a ldp:Resource , ldp:RDFSource ;                                
+                                                                            
+            dcterms:modified "2014-06-30T15:26:28.000Z"\^\^xsd:dateTime ;   
+                                                                            
+            dcterms:created "2014-06-30T15:26:28.000Z"\^\^xsd:dateTime ;    
+                                                                            
+            dcterms:hasFormat                                               
+    \<http://localhost:8181/ldp/transformation/test.txt\> .                 
+
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| \$ curl -i -H "Accept: text/turtle" \\                                   |
-|                                                                          |
-|        http://localhost:8181/ldp/transformation/test.txt                 |
-|                                                                          |
-| HTTP/1.1 200 OK                                                          |
-|                                                                          |
-| Date: Mon, 30 Jun 2014 15:30:05 GMT                                      |
-|                                                                          |
-| Server: Apache Marmotta/3.3.0-SNAPSHOT (build 2+)                        |
-|                                                                          |
-| Last-Modified: Mon, 30 Jun 2014 15:26:28 GMT                             |
-|                                                                          |
-| ETag: "d8e8fca2dc0f896fd7cb4cb0031ba249"                                 |
-|                                                                          |
-| Link:                                                                    |
-| \<https://wiki.apache.org/marmotta/LDPImplementationReport/2014-03-11\>; |
-| rel="describedby"                                                        |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#Resource\>; rel="type"                 |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#NonRDFSource\>; rel="type"             |
-|                                                                          |
-| Link: \<http://localhost:8181/ldp/transformation/test\>; rel="meta"      |
-|                                                                          |
-| Link: \<http://localhost:8181/ldp/transformation/test\>;                 |
-| rel="describedby"                                                        |
-|                                                                          |
-| Content-Type: text/turtle                                                |
-|                                                                          |
-| Transfer-Encoding: chunked                                               |
-|                                                                          |
-| @prefix ldp: \<http://www.w3.org/ns/ldp\#\> .                            |
-|                                                                          |
-| @prefix rdf: \<http://www.w3.org/1999/02/22-rdf-syntax-ns\#\> .          |
-|                                                                          |
-| @prefix xsd: \<http://www.w3.org/2001/XMLSchema\#\> .                    |
-|                                                                          |
-| @prefix dcterms: \<http://purl.org/dc/terms/\> .                         |
-|                                                                          |
-| @prefix : \<http://localhost:8181/ldp/transformation/test.txt\> .        |
-|                                                                          |
-| \<http://localhost:8181/ldp/transformation/test.txt\>                    |
-|                                                                          |
-|        a ldp:Resource , ldp:NonRDFSource ;                               |
-|                                                                          |
-|         dcterms:modified "2014-06-30T15:26:28.000Z"\^\^xsd:dateTime ;    |
-|                                                                          |
-|         dcterms:created "2014-06-30T15:26:28.000Z"\^\^xsd:dateTime ;     |
-|                                                                          |
-|         dcterms:format "text/plain" ;                                    |
-|                                                                          |
-|         dcterms:isFormatOf                                               |
-| \<http://localhost:8181/ldp/transformation/test\> .                      |
-+--------------------------------------------------------------------------+
+
+    \$ curl -i -H "Accept: text/turtle" \\                                  
+                                                                            
+           http://localhost:8181/ldp/transformation/test.txt                
+                                                                            
+    HTTP/1.1 200 OK                                                         
+                                                                            
+    Date: Mon, 30 Jun 2014 15:30:05 GMT                                     
+                                                                            
+    Server: Apache Marmotta/3.3.0-SNAPSHOT (build 2+)                       
+                                                                            
+    Last-Modified: Mon, 30 Jun 2014 15:26:28 GMT                            
+                                                                            
+    ETag: "d8e8fca2dc0f896fd7cb4cb0031ba249"                                
+                                                                            
+    Link:                                                                   
+    \<https://wiki.apache.org/marmotta/LDPImplementationReport/2014-03-11\>;
+    rel="describedby"                                                       
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#Resource\>; rel="type"                
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#NonRDFSource\>; rel="type"            
+                                                                            
+    Link: \<http://localhost:8181/ldp/transformation/test\>; rel="meta"     
+                                                                            
+    Link: \<http://localhost:8181/ldp/transformation/test\>;                
+    rel="describedby"                                                       
+                                                                            
+    Content-Type: text/turtle                                               
+                                                                            
+    Transfer-Encoding: chunked                                              
+                                                                            
+    @prefix ldp: \<http://www.w3.org/ns/ldp\#\> .                           
+                                                                            
+    @prefix rdf: \<http://www.w3.org/1999/02/22-rdf-syntax-ns\#\> .         
+                                                                            
+    @prefix xsd: \<http://www.w3.org/2001/XMLSchema\#\> .                   
+                                                                            
+    @prefix dcterms: \<http://purl.org/dc/terms/\> .                        
+                                                                            
+    @prefix : \<http://localhost:8181/ldp/transformation/test.txt\> .       
+                                                                            
+    \<http://localhost:8181/ldp/transformation/test.txt\>                   
+                                                                            
+           a ldp:Resource , ldp:NonRDFSource ;                              
+                                                                            
+            dcterms:modified "2014-06-30T15:26:28.000Z"\^\^xsd:dateTime ;   
+                                                                            
+            dcterms:created "2014-06-30T15:26:28.000Z"\^\^xsd:dateTime ;    
+                                                                            
+            dcterms:format "text/plain" ;                                   
+                                                                            
+            dcterms:isFormatOf                                              
+    \<http://localhost:8181/ldp/transformation/test\> .                     
+
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| \$ curl -i -H "Accept: text/plain" \\                                    |
-|                                                                          |
-|        http://localhost:8181/ldp/transformation/test.txt                 |
-|                                                                          |
-| \                                                                        |
-| HTTP/1.1 200 OK                                                          |
-|                                                                          |
-| Date: Mon, 30 Jun 2014 15:27:33 GMT                                      |
-|                                                                          |
-| Server: Apache Marmotta/3.3.0-SNAPSHOT (build 2+)                        |
-|                                                                          |
-| Last-Modified: Mon, 30 Jun 2014 15:26:28 GMT                             |
-|                                                                          |
-| ETag: "d8e8fca2dc0f896fd7cb4cb0031ba249"                                 |
-|                                                                          |
-| Link:                                                                    |
-| \<https://wiki.apache.org/marmotta/LDPImplementationReport/2014-03-11\>; |
-| rel="describedby"                                                        |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#Resource\>; rel="type"                 |
-|                                                                          |
-| Link: \<http://www.w3.org/ns/ldp\#NonRDFSource\>; rel="type"             |
-|                                                                          |
-| Link: \<http://localhost:8181/ldp/transformation/test\>; rel="meta"      |
-|                                                                          |
-| Link: \<http://localhost:8181/ldp/transformation/test\>;                 |
-| rel="describedby"                                                        |
-|                                                                          |
-| Content-Type: text/plain                                                 |
-|                                                                          |
-| Content-Length: 5                                                        |
-|                                                                          |
-| test                                                                     |
-+--------------------------------------------------------------------------+
+
+    \$ curl -i -H "Accept: text/plain" \\                                   
+                                                                            
+           http://localhost:8181/ldp/transformation/test.txt                
+                                                                            
+    \                                                                       
+    HTTP/1.1 200 OK                                                         
+                                                                            
+    Date: Mon, 30 Jun 2014 15:27:33 GMT                                     
+                                                                            
+    Server: Apache Marmotta/3.3.0-SNAPSHOT (build 2+)                       
+                                                                            
+    Last-Modified: Mon, 30 Jun 2014 15:26:28 GMT                            
+                                                                            
+    ETag: "d8e8fca2dc0f896fd7cb4cb0031ba249"                                
+                                                                            
+    Link:                                                                   
+    \<https://wiki.apache.org/marmotta/LDPImplementationReport/2014-03-11\>;
+    rel="describedby"                                                       
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#Resource\>; rel="type"                
+                                                                            
+    Link: \<http://www.w3.org/ns/ldp\#NonRDFSource\>; rel="type"            
+                                                                            
+    Link: \<http://localhost:8181/ldp/transformation/test\>; rel="meta"     
+                                                                            
+    Link: \<http://localhost:8181/ldp/transformation/test\>;                
+    rel="describedby"                                                       
+                                                                            
+    Content-Type: text/plain                                                
+                                                                            
+    Content-Length: 5                                                       
+                                                                            
+    test                                                                    
+
 
 The LDP Transformation Proxy would not perform any transformation if
 there is no transformer registered in the platform. Please, refer to
@@ -1654,17 +1654,17 @@ previously started:
 
 [](#)[](#)
 
-+--------------------------------------------------------------------------+
-| \$ ./stop.sh                                                             |
-|                                                                          |
-| stopping process 18501...                                                |
-|                                                                          |
-| stopping process 18531...                                                |
-|                                                                          |
-| stopping process 18513...                                                |
-|                                                                          |
-| Fusepool P3 platform should be stopped now                               |
-+--------------------------------------------------------------------------+
+
+    \$ ./stop.sh                                                            
+                                                                            
+    stopping process 18501...                                               
+                                                                            
+    stopping process 18531...                                               
+                                                                            
+    stopping process 18513...                                               
+                                                                            
+    Fusepool P3 platform should be stopped now                              
+
 
 As described in the section above, this deployment architecture has to
 evolve towards reducing the divergences between development and
