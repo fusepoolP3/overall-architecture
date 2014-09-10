@@ -131,13 +131,13 @@ namespaces' IRIs:
 | rdf    | [http://www.w3.org/1999/02/22-rdf-syntax-ns\#](http://www.w3.org/1999/02/22-rdf-syntax-ns)                                                                                                                                                                                                           |
 | rdfs   | [http://www.w3.org/2000/01/rdf-schema\#](http://www.w3.org/2000/01/rdf-schema)                                                                                                                                                                                                                       |
 | xsd    | [http://www.w3.org/2001/XMLSchema\#](http://www.w3.org/2001/XMLSchema)                                                                                                                                                                                                                                 |
-| dct    | [http://purl.org/dc/terms/](http://www.google.com/url?q=http%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F&sa=D&sntz=1&usg=AFQjCNEsNOCSshqRn0phU2jLXCPNHGO98Q)                                                                                                                                                                                                                                                  |
-| oa     | [http://www.w3.org/ns/oa\#](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2Fns%2Foa%23&sa=D&sntz=1&usg=AFQjCNF27pHJ-fevO2t0yFBp1xwGtFqt8w)                                                                                                                                                                                                                                                   |
-| ldp    | [http://www.w3.org/ns/](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2Fns%2Fldp%23&sa=D&sntz=1&usg=AFQjCNEojn4FVg3OQxzsF37mEXSMm25B9A)[ldp](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2Fns%2Fldp%23&sa=D&sntz=1&usg=AFQjCNEojn4FVg3OQxzsF37mEXSMm25B9A)[\#](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2Fns%2Fldp%23&sa=D&sntz=1&usg=AFQjCNEojn4FVg3OQxzsF37mEXSMm25B9A) |
-| fp3    | [http://vocab.fusepool.info/fp3\#](http://www.google.com/url?q=http%3A%2F%2Fvocab.fusepool.info%2Ffp3%23&sa=D&sntz=1&usg=AFQjCNHOlMSPxzICHOVVvVnTvzlOBL0isg)                                                                                                                                                                                                                                       |
-| eldp   | [http://vocab.fusepool.info/eldp\#](http://www.google.com/url?q=http%3A%2F%2Fvocab.fusepool.info%2Feldp%23&sa=D&sntz=1&usg=AFQjCNG1t9dvD46YDRgVR6N-XYJUuAy3YA)                                                                                                                                                                                                                                     |
-| trans  | [http://vocab.fusepool.info/transformer\#](http://www.google.com/url?q=http%3A%2F%2Fvocab.fusepool.info%2Ftransformer%23&sa=D&sntz=1&usg=AFQjCNHzHH_uK_mqhs3fMB8vBqaZVQN_gg)                                                                                                                                                                                                                       |
-| fam    | [http://vocab.fusepool.info/fam\#](http://www.google.com/url?q=http%3A%2F%2Fvocab.fusepool.info%2Ffam%23&sa=D&sntz=1&usg=AFQjCNFD8Z58uHhNO-QXcRpemFrGjUVjbQ)                                                                                                                                                                                                                                       |
+| dct    | [http://purl.org/dc/terms/](http://purl.org/dc/terms/) |
+| oa     | [http://www.w3.org/ns/oa\#](http://www.w3.org/ns/oa#)                                                                                                                                                                                                                                                   |
+| ldp    | [http://www.w3.org/ns/](http://www.w3.org/ns/ldp#)[ldp](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2Fns%2Fldp%23&sa=D&sntz=1&usg=AFQjCNEojn4FVg3OQxzsF37mEXSMm25B9A)[\#](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2Fns%2Fldp%23&sa=D&sntz=1&usg=AFQjCNEojn4FVg3OQxzsF37mEXSMm25B9A) |
+| fp3    | [http://vocab.fusepool.info/fp3\#](http://vocab.fusepool.info/fp3#)                                                                                                                                                                                                                                       |
+| eldp   | [http://vocab.fusepool.info/eldp\#](http://vocab.fusepool.info/eldp#)                                                                                                                                                                                                                                     |
+| trans  | [http://vocab.fusepool.info/transformer\#](http://vocab.fusepool.info/transformer#)                                                                                                                                                                                                                       |
+| fam    | [http://vocab.fusepool.info/fam\#](http://vocab.fusepool.info/fam#)                                                                                                                                                                                                                                       |
 
 
 
@@ -1281,10 +1281,10 @@ sponge permission on a resource, or the ability to grant these
 permissions. Custom permissions can also be defined.
 
 Below is a basic example of an ACL rule granting read access to a
-user[ ](http://www.google.com/url?q=http%3A%2F%2Fwww.facebook.com%2Ffoobar&sa=D&sntz=1&usg=AFQjCNEHL-8JeASw_CwRkaVVDQteZprlSg)authenticating
+user[ ](http://www.facebook.com/foobar)authenticating
 through their Facebook login,
-http://www.facebook.com/jsmith,[ ](http://www.google.com/url?q=http%3A%2F%2Fwww.facebook.com%2Ffoobar&sa=D&sntz=1&usg=AFQjCNEHL-8JeASw_CwRkaVVDQteZprlSg)to
-resource[ ](http://www.google.com/url?q=http%3A%2F%2Fme.com%2Fbla%3A&sa=D&sntz=1&usg=AFQjCNEjbn_dlaw160Ie3HR8pdTmgZmXXw)[http://demo.fusepoolp3.eu/assets](http://www.google.com/url?q=http%3A%2F%2Fme.com%2Fbla%3A&sa=D&sntz=1&usg=AFQjCNEjbn_dlaw160Ie3HR8pdTmgZmXXw)[:](http://www.google.com/url?q=http%3A%2F%2Fme.com%2Fbla%3A&sa=D&sntz=1&usg=AFQjCNEjbn_dlaw160Ie3HR8pdTmgZmXXw)
+http://www.facebook.com/jsmith,[ ](http://www.facebook.com/foobar)to
+resource[ ](http://me.com/bla:)[http://demo.fusepoolp3.eu/assets](http://www.google.com/url?q=http%3A%2F%2Fme.com%2Fbla%3A&sa=D&sntz=1&usg=AFQjCNEjbn_dlaw160Ie3HR8pdTmgZmXXw)[:](http://www.google.com/url?q=http%3A%2F%2Fme.com%2Fbla%3A&sa=D&sntz=1&usg=AFQjCNEjbn_dlaw160Ie3HR8pdTmgZmXXw)
 
 [](#)[](#)
 
@@ -1734,36 +1734,36 @@ Copyright Fusepool P3 Consortium              /
 
 * * * * *
 
-[[1]](#ftnt_ref1) [http://5stardata.info](http://www.google.com/url?q=http%3A%2F%2F5stardata.info&sa=D&sntz=1&usg=AFQjCNHSchKCUT_xSo9QtOXnsFBXUzaSpA)
+[[1]](#ftnt_ref1) [http://5stardata.info](http://5stardata.info)
 
 [[2]](#ftnt_ref2) [https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Foverall-architecture%2Fblob%2Fmaster%2Farchitectural-principles.md&sa=D&sntz=1&usg=AFQjCNHM0nM9en9e9GwruB4tfJBHHB95hg)
 
 [[3]](#ftnt_ref3) [https://github.com/fusepoolP3/overall-architecture/blob/master/platform-architectural-proposal-srfg.md](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Foverall-architecture%2Fblob%2Fmaster%2Fplatform-architectural-proposal-srfg.md&sa=D&sntz=1&usg=AFQjCNEg8Z24PvsuAybz8RphzE0v05b3wQ)
 
-[[4]](#ftnt_ref4) [http://marmotta.apache.org](http://www.google.com/url?q=http%3A%2F%2Fmarmotta.apache.org&sa=D&sntz=1&usg=AFQjCNFmoLP4bV6g7dgxf6UM1WHAPjSiRg)
+[[4]](#ftnt_ref4) [http://marmotta.apache.org](http://marmotta.apache.org)
 
-[[5]](#ftnt_ref5) [http://virtuoso.openlinksw.com](http://www.google.com/url?q=http%3A%2F%2Fvirtuoso.openlinksw.com&sa=D&sntz=1&usg=AFQjCNERFawXwLXURQ4mDamUn3AV6I0QDA)
+[[5]](#ftnt_ref5) [http://virtuoso.openlinksw.com](http://virtuoso.openlinksw.com)
 
 [[6]](#ftnt_ref6) For the scope of this document, the "final user" is a
 data manager who will interact with the tools produced by the project.
 
-[[7]](#ftnt_ref7) [http://www.w3.org/TR/ldp/\#ldpc-linktypehdr](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2FTR%2Fldp%2F%23ldpc-linktypehdr&sa=D&sntz=1&usg=AFQjCNEPC0f9FXmHWWBp0HxVH3Oav9iNfw)
+[[7]](#ftnt_ref7) [http://www.w3.org/TR/ldp/\#ldpc-linktypehdr](http://www.w3.org/TR/ldp/#ldpc-linktypehdr)
 
-[[8]](#ftnt_ref8) [http://wiki.opensemanticframework.org/index.php/RDFizer\_Concept](http://www.google.com/url?q=http%3A%2F%2Fwiki.opensemanticframework.org%2Findex.php%2FRDFizer_Concept&sa=D&sntz=1&usg=AFQjCNFWQzp7Y353jzSNaMG-oolNc30tgg)
+[[8]](#ftnt_ref8) [http://wiki.opensemanticframework.org/index.php/RDFizer\_Concept](http://wiki.opensemanticframework.org/index.php/RDFizer_Concept)
 
-[[9]](#ftnt_ref9) [http://openrefine.org](http://www.google.com/url?q=http%3A%2F%2Fopenrefine.org&sa=D&sntz=1&usg=AFQjCNEfRPhkdLlliApQjZYc5Upd-Xswjw)
+[[9]](#ftnt_ref9) [http://openrefine.org](http://openrefine.org)
 
-[[10]](#ftnt_ref10) [http://stanbol.apache.org](http://www.google.com/url?q=http%3A%2F%2Fstanbol.apache.org&sa=D&sntz=1&usg=AFQjCNFvLIAfE4hEJrPRFOORrLxLX-xwIw)
+[[10]](#ftnt_ref10) [http://stanbol.apache.org](http://stanbol.apache.org)
 
 [[11]](#ftnt_ref11) According the official W3C LDP Test Suite, available
 at
-[http://w3c.github.io/ldp-testsuite](http://www.google.com/url?q=http%3A%2F%2Fw3c.github.io%2Fldp-testsuite&sa=D&sntz=1&usg=AFQjCNEDTashoInWWNN24qTGcRl2oaEQmQ)
+[http://w3c.github.io/ldp-testsuite](http://w3c.github.io/ldp-testsuite)
 
-[[12]](#ftnt_ref12) [http://openrdf.callimachus.net/sesame/2.7/docs/system.docbook?view\#The\_SAIL\_API](http://www.google.com/url?q=http%3A%2F%2Fopenrdf.callimachus.net%2Fsesame%2F2.7%2Fdocs%2Fsystem.docbook%3Fview%23The_SAIL_API&sa=D&sntz=1&usg=AFQjCNFs-RWH79e3iu2LgQyOSrbBQFLHuw)
+[[12]](#ftnt_ref12) [http://openrdf.callimachus.net/sesame/2.7/docs/system.docbook?view\#The\_SAIL\_API](http://openrdf.callimachus.net/sesame/2.7/docs/system.docbook?view#The_SAIL_API)
 
-[[13]](#ftnt_ref13) [http://github.com/fusepoolP3/marmotta-virtuoso](http://www.google.com/url?q=http%3A%2F%2Fgithub.com%2FfusepoolP3%2Fmarmotta-virtuoso&sa=D&sntz=1&usg=AFQjCNExTTkkxx-_r4s2GV2FvQMfb6a_iA)
+[[13]](#ftnt_ref13) [http://github.com/fusepoolP3/marmotta-virtuoso](http://github.com/fusepoolP3/marmotta-virtuoso)
 
-[[14]](#ftnt_ref14) [http://s.apache.org/gsoc-2014-marmotta-ldp-over-sparql](http://www.google.com/url?q=http%3A%2F%2Fs.apache.org%2Fgsoc-2014-marmotta-ldp-over-sparql&sa=D&sntz=1&usg=AFQjCNEs1VvwqMM0ZOYtH-9eH0ojTmX1ng)
+[[14]](#ftnt_ref14) [http://s.apache.org/gsoc-2014-marmotta-ldp-over-sparql](http://s.apache.org/gsoc-2014-marmotta-ldp-over-sparql)
 
 [[15]](#ftnt_ref15) [https://github.com/fusepoolP3/overall-architecture/blob/2c0f3a7bdcc7174768b87f300bbd6c16a106355f/data-transformer-api.md](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Foverall-architecture%2Fblob%2F2c0f3a7bdcc7174768b87f300bbd6c16a106355f%2Fdata-transformer-api.md&sa=D&sntz=1&usg=AFQjCNGA9Syi3rnlS6-fTf1sfqz2roJhRg)
 
@@ -1777,15 +1777,15 @@ at
 
 [[20]](#ftnt_ref20) [https://www.w3.org/2012/ldp/wiki/AccessControl](https://www.google.com/url?q=https%3A%2F%2Fwww.w3.org%2F2012%2Fldp%2Fwiki%2FAccessControl&sa=D&sntz=1&usg=AFQjCNEK9ZbViSDSJEX86JOaeJFQ6RWSTw)
 
-[[21]](#ftnt_ref21)[ ](http://www.google.com/url?q=http%3A%2F%2Fmarmotta.apache.org%2Fplatform%2Fsecurity-module.html&sa=D&sntz=1&usg=AFQjCNEWUhMAuNqc_PVxWh6EqMB0FwTXwA)[http://marmotta.apache.org/platform/security-module.html](http://www.google.com/url?q=http%3A%2F%2Fmarmotta.apache.org%2Fplatform%2Fsecurity-module.html&sa=D&sntz=1&usg=AFQjCNEWUhMAuNqc_PVxWh6EqMB0FwTXwA)
+[[21]](#ftnt_ref21)[ ](http://marmotta.apache.org/platform/security-module.html)[http://marmotta.apache.org/platform/security-module.html](http://www.google.com/url?q=http%3A%2F%2Fmarmotta.apache.org%2Fplatform%2Fsecurity-module.html&sa=D&sntz=1&usg=AFQjCNEWUhMAuNqc_PVxWh6EqMB0FwTXwA)
 
-[[22]](#ftnt_ref22) [http://bitbucket.org/srfgkmt/s-watchdog](http://www.google.com/url?q=http%3A%2F%2Fbitbucket.org%2Fsrfgkmt%2Fs-watchdog&sa=D&sntz=1&usg=AFQjCNGCv-mAxWvuZxAHjUmst7_Kpon_uA)
+[[22]](#ftnt_ref22) [http://bitbucket.org/srfgkmt/s-watchdog](http://bitbucket.org/srfgkmt/s-watchdog)
 
-[[23]](#ftnt_ref23) [http://issues.apache.org/jira/browse/MARMOTTA-222](http://www.google.com/url?q=http%3A%2F%2Fissues.apache.org%2Fjira%2Fbrowse%2FMARMOTTA-222&sa=D&sntz=1&usg=AFQjCNFI0AVdQU0uO-qivCrlyKPtjFMEww)
+[[23]](#ftnt_ref23) [http://issues.apache.org/jira/browse/MARMOTTA-222](http://issues.apache.org/jira/browse/MARMOTTA-222)
 
-[[24]](#ftnt_ref24) [http://issues.apache.org/jira/browse/MARMOTTA-432](http://www.google.com/url?q=http%3A%2F%2Fissues.apache.org%2Fjira%2Fbrowse%2FMARMOTTA-432&sa=D&sntz=1&usg=AFQjCNF2x2ygsQS99stogRBKz94rYCDGoA)
+[[24]](#ftnt_ref24) [http://issues.apache.org/jira/browse/MARMOTTA-432](http://issues.apache.org/jira/browse/MARMOTTA-432)
 
-[[25]](#ftnt_ref25) [http://www.w3.org/2012/ldp/wiki/AccessControl](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2F2012%2Fldp%2Fwiki%2FAccessControl&sa=D&sntz=1&usg=AFQjCNF-RW1EDUx__HBFVA_vdl-TbnnQ-g)
+[[25]](#ftnt_ref25) [http://www.w3.org/2012/ldp/wiki/AccessControl](http://www.w3.org/2012/ldp/wiki/AccessControl)
 
 [[26]](#ftnt_ref26) Please, note that VAL is a component of Virtuoso
 Commercial Edition only, and it is not part of Virtuoso Open Source
@@ -1800,21 +1800,21 @@ required to run the open source version of the Fusepool P3 platform.
 
 [[27]](#ftnt_ref27) [https://www.w3.org/2012/ldp/wiki/AccessControl](https://www.google.com/url?q=https%3A%2F%2Fwww.w3.org%2F2012%2Fldp%2Fwiki%2FAccessControl&sa=D&sntz=1&usg=AFQjCNEK9ZbViSDSJEX86JOaeJFQ6RWSTw)
 
-[[28]](#ftnt_ref28) [http://www.w3.org/ns/auth/acl\#](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2Fns%2Fauth%2Facl%23&sa=D&sntz=1&usg=AFQjCNG8PHWE8TzE2fDwd-HD1YnZK3POvg)
+[[28]](#ftnt_ref28) [http://www.w3.org/ns/auth/acl\#](http://www.w3.org/ns/auth/acl#)
 
-[[29]](#ftnt_ref29) [http://www.openlinksw.com/ontology/acl\#](http://www.google.com/url?q=http%3A%2F%2Fwww.openlinksw.com%2Fontology%2Facl%23&sa=D&sntz=1&usg=AFQjCNGuxN3DpFwQla7-BxuRKU0pjSXr2Q)
+[[29]](#ftnt_ref29) [http://www.openlinksw.com/ontology/acl\#](http://www.openlinksw.com/ontology/acl#)
 
-[[30]](#ftnt_ref30) [http://csrc.nist.gov/projects/abac/](http://www.google.com/url?q=http%3A%2F%2Fcsrc.nist.gov%2Fprojects%2Fabac%2F&sa=D&sntz=1&usg=AFQjCNENuAI5rAbuTv-ZVXuNbfgGV68PEA)
+[[30]](#ftnt_ref30) [http://csrc.nist.gov/projects/abac/](http://csrc.nist.gov/projects/abac/)
 
 [[31]](#ftnt_ref31) [https://github.com/fusepoolP3/platform](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Fplatform&sa=D&sntz=1&usg=AFQjCNHtH6ZoOrS1qyoKEf8dEIH9DNDTuQ)
 
 [[32]](#ftnt_ref32) [https://github.com/fusepoolP3/platform/releases/tag/0.1.0](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Fplatform%2Freleases%2Ftag%2F0.1.0&sa=D&sntz=1&usg=AFQjCNFGn1RiHKQTZGf69gxrL4sH-m0xlQ)
 
-[[33]](#ftnt_ref33) [http://www.apache.org/licenses/LICENSE-2.0](http://www.google.com/url?q=http%3A%2F%2Fwww.apache.org%2Flicenses%2FLICENSE-2.0&sa=D&sntz=1&usg=AFQjCNFPaSHdvCi6VD7GwgEkKspvD3d_tw)
+[[33]](#ftnt_ref33) [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
-[[34]](#ftnt_ref34) [http://maven.apache.org](http://www.google.com/url?q=http%3A%2F%2Fmaven.apache.org&sa=D&sntz=1&usg=AFQjCNF4RKRNZi8cbru2_1yacbXr_UtaOA)
+[[34]](#ftnt_ref34) [http://maven.apache.org](http://maven.apache.org)
 
-[[35]](#ftnt_ref35) [http://stanbol.apache.org](http://www.google.com/url?q=http%3A%2F%2Fstanbol.apache.org&sa=D&sntz=1&usg=AFQjCNFvLIAfE4hEJrPRFOORrLxLX-xwIw)
+[[35]](#ftnt_ref35) [http://stanbol.apache.org](http://stanbol.apache.org)
 
 [[36]](#ftnt_ref36) [https://www.gnu.org/software/bash/](https://www.google.com/url?q=https%3A%2F%2Fwww.gnu.org%2Fsoftware%2Fbash%2F&sa=D&sntz=1&usg=AFQjCNHsF1uCSAg_BVe8e-IV6OqbKCXlWg)
 
