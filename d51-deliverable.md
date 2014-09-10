@@ -133,7 +133,7 @@ namespaces' IRIs:
 | xsd    | [http://www.w3.org/2001/XMLSchema\#](http://www.w3.org/2001/XMLSchema)                                                                                                                                                                                                                                 |
 | dct    | [http://purl.org/dc/terms/](http://purl.org/dc/terms/) |
 | oa     | [http://www.w3.org/ns/oa\#](http://www.w3.org/ns/oa#)                                                                                                                                                                                                                                                   |
-| ldp    | [http://www.w3.org/ns/](http://www.w3.org/ns/ldp#)[ldp](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2Fns%2Fldp%23&sa=D&sntz=1&usg=AFQjCNEojn4FVg3OQxzsF37mEXSMm25B9A)[\#](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2Fns%2Fldp%23&sa=D&sntz=1&usg=AFQjCNEojn4FVg3OQxzsF37mEXSMm25B9A) |
+| ldp    | [http://www.w3.org/ns/](http://www.w3.org/ns/ldp#)[ldp](http://www.w3.org/ns/ldp#)[\#](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2Fns%2Fldp%23&sa=D&sntz=1&usg=AFQjCNEojn4FVg3OQxzsF37mEXSMm25B9A) |
 | fp3    | [http://vocab.fusepool.info/fp3\#](http://vocab.fusepool.info/fp3#)                                                                                                                                                                                                                                       |
 | eldp   | [http://vocab.fusepool.info/eldp\#](http://vocab.fusepool.info/eldp#)                                                                                                                                                                                                                                     |
 | trans  | [http://vocab.fusepool.info/transformer\#](http://vocab.fusepool.info/transformer#)                                                                                                                                                                                                                       |
@@ -1284,7 +1284,7 @@ Below is a basic example of an ACL rule granting read access to a
 user[ ](http://www.facebook.com/foobar)authenticating
 through their Facebook login,
 http://www.facebook.com/jsmith,[ ](http://www.facebook.com/foobar)to
-resource[ ](http://me.com/bla:)[http://demo.fusepoolp3.eu/assets](http://www.google.com/url?q=http%3A%2F%2Fme.com%2Fbla%3A&sa=D&sntz=1&usg=AFQjCNEjbn_dlaw160Ie3HR8pdTmgZmXXw)[:](http://www.google.com/url?q=http%3A%2F%2Fme.com%2Fbla%3A&sa=D&sntz=1&usg=AFQjCNEjbn_dlaw160Ie3HR8pdTmgZmXXw)
+resource[ ](http://me.com/bla:)[http://demo.fusepoolp3.eu/assets](http://me.com/bla:)[:](http://www.google.com/url?q=http%3A%2F%2Fme.com%2Fbla%3A&sa=D&sntz=1&usg=AFQjCNEjbn_dlaw160Ie3HR8pdTmgZmXXw)
 
 [](#)[](#)
 
@@ -1736,9 +1736,9 @@ Copyright Fusepool P3 Consortium              /
 
 [[1]](#ftnt_ref1) [http://5stardata.info](http://5stardata.info)
 
-[[2]](#ftnt_ref2) [https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Foverall-architecture%2Fblob%2Fmaster%2Farchitectural-principles.md&sa=D&sntz=1&usg=AFQjCNHM0nM9en9e9GwruB4tfJBHHB95hg)
+[[2]](#ftnt_ref2) [https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md](https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md)
 
-[[3]](#ftnt_ref3) [https://github.com/fusepoolP3/overall-architecture/blob/master/platform-architectural-proposal-srfg.md](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Foverall-architecture%2Fblob%2Fmaster%2Fplatform-architectural-proposal-srfg.md&sa=D&sntz=1&usg=AFQjCNEg8Z24PvsuAybz8RphzE0v05b3wQ)
+[[3]](#ftnt_ref3) [https://github.com/fusepoolP3/overall-architecture/blob/master/platform-architectural-proposal-srfg.md](https://github.com/fusepoolP3/overall-architecture/blob/master/platform-architectural-proposal-srfg.md)
 
 [[4]](#ftnt_ref4) [http://marmotta.apache.org](http://marmotta.apache.org)
 
@@ -1765,19 +1765,19 @@ at
 
 [[14]](#ftnt_ref14) [http://s.apache.org/gsoc-2014-marmotta-ldp-over-sparql](http://s.apache.org/gsoc-2014-marmotta-ldp-over-sparql)
 
-[[15]](#ftnt_ref15) [https://github.com/fusepoolP3/overall-architecture/blob/2c0f3a7bdcc7174768b87f300bbd6c16a106355f/data-transformer-api.md](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Foverall-architecture%2Fblob%2F2c0f3a7bdcc7174768b87f300bbd6c16a106355f%2Fdata-transformer-api.md&sa=D&sntz=1&usg=AFQjCNGA9Syi3rnlS6-fTf1sfqz2roJhRg)
+[[15]](#ftnt_ref15) [https://github.com/fusepoolP3/overall-architecture/blob/2c0f3a7bdcc7174768b87f300bbd6c16a106355f/data-transformer-api.md](https://github.com/fusepoolP3/overall-architecture/blob/2c0f3a7bdcc7174768b87f300bbd6c16a106355f/data-transformer-api.md)
 
-[[16]](#ftnt_ref16) [https://github.com/fusepoolP3/overall-architecture/blob/master/data-transformer-api.md](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Foverall-architecture%2Fblob%2Fmaster%2Fdata-transformer-api.md&sa=D&sntz=1&usg=AFQjCNHRuvzBmFMM8mn5QscXLPYHL9mxsg)
+[[16]](#ftnt_ref16) [https://github.com/fusepoolP3/overall-architecture/blob/master/data-transformer-api.md](https://github.com/fusepoolP3/overall-architecture/blob/master/data-transformer-api.md)
 
-[[17]](#ftnt_ref17) [https://github.com/fusepoolP3/overall-architecture/blob/5eff446953449ec408a5c3ce87ae1f345e4f4ee2/transforming-container-api.md](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Foverall-architecture%2Fblob%2F5eff446953449ec408a5c3ce87ae1f345e4f4ee2%2Ftransforming-container-api.md&sa=D&sntz=1&usg=AFQjCNGjP8uZsS-2qeqHkKKtT6j_lZBZ6A)
+[[17]](#ftnt_ref17) [https://github.com/fusepoolP3/overall-architecture/blob/5eff446953449ec408a5c3ce87ae1f345e4f4ee2/transforming-container-api.md](https://github.com/fusepoolP3/overall-architecture/blob/5eff446953449ec408a5c3ce87ae1f345e4f4ee2/transforming-container-api.md)
 
-[[18]](#ftnt_ref18) [https://github.com/fusepoolP3/overall-architecture/blob/master/transforming-container-api.md](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Foverall-architecture%2Fblob%2Fmaster%2Ftransforming-container-api.md&sa=D&sntz=1&usg=AFQjCNG6WAtQDGug2levB9sBloEzTc2Q7Q)
+[[18]](#ftnt_ref18) [https://github.com/fusepoolP3/overall-architecture/blob/master/transforming-container-api.md](https://github.com/fusepoolP3/overall-architecture/blob/master/transforming-container-api.md)
 
-[[19]](#ftnt_ref19) [https://github.com/fusepoolP3/overall-architecture/blob/69ae9f866302cfa00ede64de77bba36a88bbbb12/wp3/fp-anno-model/fp-anno-model.md](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Foverall-architecture%2Fblob%2F69ae9f866302cfa00ede64de77bba36a88bbbb12%2Fwp3%2Ffp-anno-model%2Ffp-anno-model.md&sa=D&sntz=1&usg=AFQjCNG4_XvR-tPT38rr1t8rxwP_MsuGBA)
+[[19]](#ftnt_ref19) [https://github.com/fusepoolP3/overall-architecture/blob/69ae9f866302cfa00ede64de77bba36a88bbbb12/wp3/fp-anno-model/fp-anno-model.md](https://github.com/fusepoolP3/overall-architecture/blob/69ae9f866302cfa00ede64de77bba36a88bbbb12/wp3/fp-anno-model/fp-anno-model.md)
 
-[[20]](#ftnt_ref20) [https://www.w3.org/2012/ldp/wiki/AccessControl](https://www.google.com/url?q=https%3A%2F%2Fwww.w3.org%2F2012%2Fldp%2Fwiki%2FAccessControl&sa=D&sntz=1&usg=AFQjCNEK9ZbViSDSJEX86JOaeJFQ6RWSTw)
+[[20]](#ftnt_ref20) [https://www.w3.org/2012/ldp/wiki/AccessControl](https://www.w3.org/2012/ldp/wiki/AccessControl)
 
-[[21]](#ftnt_ref21)[ ](http://marmotta.apache.org/platform/security-module.html)[http://marmotta.apache.org/platform/security-module.html](http://www.google.com/url?q=http%3A%2F%2Fmarmotta.apache.org%2Fplatform%2Fsecurity-module.html&sa=D&sntz=1&usg=AFQjCNEWUhMAuNqc_PVxWh6EqMB0FwTXwA)
+[[21]](#ftnt_ref21)[ ](http://marmotta.apache.org/platform/security-module.html)[http://marmotta.apache.org/platform/security-module.html](http://marmotta.apache.org/platform/security-module.html)
 
 [[22]](#ftnt_ref22) [http://bitbucket.org/srfgkmt/s-watchdog](http://bitbucket.org/srfgkmt/s-watchdog)
 
@@ -1798,7 +1798,7 @@ extensions without affecting the overall pipeline. Therefore this
 commercial component is just an optional extension, which is not
 required to run the open source version of the Fusepool P3 platform.
 
-[[27]](#ftnt_ref27) [https://www.w3.org/2012/ldp/wiki/AccessControl](https://www.google.com/url?q=https%3A%2F%2Fwww.w3.org%2F2012%2Fldp%2Fwiki%2FAccessControl&sa=D&sntz=1&usg=AFQjCNEK9ZbViSDSJEX86JOaeJFQ6RWSTw)
+[[27]](#ftnt_ref27) [https://www.w3.org/2012/ldp/wiki/AccessControl](https://www.w3.org/2012/ldp/wiki/AccessControl)
 
 [[28]](#ftnt_ref28) [http://www.w3.org/ns/auth/acl\#](http://www.w3.org/ns/auth/acl#)
 
@@ -1806,9 +1806,9 @@ required to run the open source version of the Fusepool P3 platform.
 
 [[30]](#ftnt_ref30) [http://csrc.nist.gov/projects/abac/](http://csrc.nist.gov/projects/abac/)
 
-[[31]](#ftnt_ref31) [https://github.com/fusepoolP3/platform](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Fplatform&sa=D&sntz=1&usg=AFQjCNHtH6ZoOrS1qyoKEf8dEIH9DNDTuQ)
+[[31]](#ftnt_ref31) [https://github.com/fusepoolP3/platform](https://github.com/fusepoolP3/platform)
 
-[[32]](#ftnt_ref32) [https://github.com/fusepoolP3/platform/releases/tag/0.1.0](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Fplatform%2Freleases%2Ftag%2F0.1.0&sa=D&sntz=1&usg=AFQjCNFGn1RiHKQTZGf69gxrL4sH-m0xlQ)
+[[32]](#ftnt_ref32) [https://github.com/fusepoolP3/platform/releases/tag/0.1.0](https://github.com/fusepoolP3/platform/releases/tag/0.1.0)
 
 [[33]](#ftnt_ref33) [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
@@ -1816,8 +1816,8 @@ required to run the open source version of the Fusepool P3 platform.
 
 [[35]](#ftnt_ref35) [http://stanbol.apache.org](http://stanbol.apache.org)
 
-[[36]](#ftnt_ref36) [https://www.gnu.org/software/bash/](https://www.google.com/url?q=https%3A%2F%2Fwww.gnu.org%2Fsoftware%2Fbash%2F&sa=D&sntz=1&usg=AFQjCNHsF1uCSAg_BVe8e-IV6OqbKCXlWg)
+[[36]](#ftnt_ref36) [https://www.gnu.org/software/bash/](https://www.gnu.org/software/bash/)
 
-[[37]](#ftnt_ref37) [https://travis-ci.org/fusepoolP3/platform](https://www.google.com/url?q=https%3A%2F%2Ftravis-ci.org%2FfusepoolP3%2Fplatform&sa=D&sntz=1&usg=AFQjCNGktiAdrG685HU2y5OpTs4V20XG-Q)
+[[37]](#ftnt_ref37) [https://travis-ci.org/fusepoolP3/platform](https://travis-ci.org/fusepoolP3/platform)
 
-[[38]](#ftnt_ref38) [https://github.com/fusepoolP3/platform](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2FfusepoolP3%2Fplatform&sa=D&sntz=1&usg=AFQjCNHtH6ZoOrS1qyoKEf8dEIH9DNDTuQ)
+[[38]](#ftnt_ref38) [https://github.com/fusepoolP3/platform](https://github.com/fusepoolP3/platform)
