@@ -57,7 +57,7 @@ This work is licensed under the Creative Commons Attribution 4.0 International L
 
 The goal of Fusepool P3 project is to make publishing and processing of public data as linked data easy. For this purpose Fusepool P3 develops a set of of software components that integrate seemlessly by well defined API basing on Linked Data Best Practices and the Linked Data Platform standard.
 
-To ensure longevity of the code and the API developed withing Fusepool the software is designed so that the individual components can be used not only as parts of the overall software, but also individually. 
+To ensure longevity of the code and the API developed withing Fusepool the software is designed so that the individual components can be used not only as parts of the overall software, but also individually. The arhitecture is not tied to a particular runtime environment but bases exclusively on web standards. This allows components to be implemented using any language and framework.
 
 The Fusepool P3 process is divided in the following four steps: exploration, extraction, enrichment and delivery. The software provides tools for the last 3 steps:
 
