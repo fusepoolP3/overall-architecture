@@ -119,8 +119,7 @@ Specification for APIs as well as the source code of a running basic implementat
 
 
 
-Normative namespaces
-====================
+## Normative namespaces
 
 In this document the prefixes shall be used to the refer the following
 namespaces' IRIs:
@@ -128,26 +127,22 @@ namespaces' IRIs:
 
 | Prefix |                                                                                                                                                                                             Namespace                                                                                                                                                                                              |
 |--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| rdf    | [http://www.w3.org/1999/02/22-rdf-syntax-ns\#](http://www.w3.org/1999/02/22-rdf-syntax-ns)                                                                                                                                                                                                           |
-| rdfs   | [http://www.w3.org/2000/01/rdf-schema\#](http://www.w3.org/2000/01/rdf-schema)                                                                                                                                                                                                                       |
+| rdf    | [http://www.w3.org/1999/02/22-rdf-syntax-ns\#](http://www.w3.org/1999/02/22-rdf-syntax-ns)
+| rdfs   | [http://www.w3.org/2000/01/rdf-schema\#](http://www.w3.org/2000/01/rdf-schema)                                                                                                                                                                                                              |
 | xsd    | [http://www.w3.org/2001/XMLSchema\#](http://www.w3.org/2001/XMLSchema)                                                                                                                                                                                                                                 |
 | dct    | [http://purl.org/dc/terms/](http://purl.org/dc/terms/) |
-| oa     | [http://www.w3.org/ns/oa\#](http://www.w3.org/ns/oa#)                                                                                                                                                                                                                                                   |
-| ldp    | [http://www.w3.org/ns/](http://www.w3.org/ns/ldp#)[ldp](http://www.w3.org/ns/ldp#)[\#](http://www.google.com/url?q=http%3A%2F%2Fwww.w3.org%2Fns%2Fldp%23&sa=D&sntz=1&usg=AFQjCNEojn4FVg3OQxzsF37mEXSMm25B9A) |
-| fp3    | [http://vocab.fusepool.info/fp3\#](http://vocab.fusepool.info/fp3#)                                                                                                                                                                                                                                       |
-| eldp   | [http://vocab.fusepool.info/eldp\#](http://vocab.fusepool.info/eldp#)                                                                                                                                                                                                                                     |
-| trans  | [http://vocab.fusepool.info/transformer\#](http://vocab.fusepool.info/transformer#)                                                                                                                                                                                                                       |
-| fam    | [http://vocab.fusepool.info/fam\#](http://vocab.fusepool.info/fam#)                                                                                                                                                                                                                                       |
+| oa     | [http://www.w3.org/ns/oa\#](http://www.w3.org/ns/oa#)|
+| ldp    | [http://www.w3.org/ns/ldp\#](http://www.w3.org/ns/ldp#)|
+| fp3    | [http://vocab.fusepool.info/fp3\#](http://vocab.fusepool.info/fp3#) [TODO: remove]|
+| eldp   | [http://vocab.fusepool.info/eldp\#](http://vocab.fusepool.info/eldp#)   |
+| trans  | [http://vocab.fusepool.info/transformer\#](http://vocab.fusepool.info/transformer#) |
+| fam    | [http://vocab.fusepool.info/fam\#](http://vocab.fusepool.info/fam#) |
 
 
 
-1. Introduction {.c39 .c21}
-===============
+## Introduction
 
-This document describes the technical specification for the Fusepool P3
-platform, based both on high-level requirements known already at the
-beginning of the project and on the concrete requirements, not only from
-WP1, but also for all the other technical work packages.
+This document describes the technical specification for the Fusepool P3 platform. It specifies the Fusepool P3 software by describing the basic architectural design choices and at a different level of precision depending on the current status of the development of the respective components and workspaces. It aims to present an application that satisfies the high level requirements of the DoW but also the more concrete usecases developed by WP1. The described architecture is the result from discussion with all technical work packages as it affects all software deliverable of the project and not just  WP5.
 
 The main goal of the platform in the Fusepool P3 architecture is to
 provide an integrated platform where all other components can interact
@@ -1281,26 +1276,18 @@ sponge permission on a resource, or the ability to grant these
 permissions. Custom permissions can also be defined.
 
 Below is a basic example of an ACL rule granting read access to a
-user[ ](http://www.facebook.com/foobar)authenticating
-through their Facebook login,
-http://www.facebook.com/jsmith,[ ](http://www.facebook.com/foobar)to
-resource[ ](http://me.com/bla:)[http://demo.fusepoolp3.eu/assets](http://me.com/bla:)[:](http://www.google.com/url?q=http%3A%2F%2Fme.com%2Fbla%3A&sa=D&sntz=1&usg=AFQjCNEjbn_dlaw160Ie3HR8pdTmgZmXXw)
-
-[](#)[](#)
+user authenticating through their Facebook login,
+`http://www.facebook.com/jsmith`, to
+resource `http://demo.fusepoolp3.eu/assets`:
 
 
     @prefix oplacl: \<http://www.openlinksw.com/ontology/acl\#\> .
-
     @prefix acl: \<http://www.w3.org/ns/auth/acl\#\> .
 
     \<\#rule\> a acl:Authorization ;
-
       oplacl:hasAccessMode oplacl:Read ;
-
       acl:agent \<http://www.facebook.com/jsmith\> ;
-
       acl:accessTo \<http://demo.fusepoolp3.eu/assets\> ;
-
       oplacl:hasScope \<urn:myscope\> .
 
 
