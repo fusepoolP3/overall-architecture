@@ -121,8 +121,8 @@ Specification for APIs as well as the source code of a running basic implementat
 
 ## Normative namespaces
 
-In this document the prefixes shall be used to the refer the following
-namespaces' IRIs:
+In this document the prefixes used in [CURIEs](http://www.w3.org/TR/curie/) shall refer the following
+IRI prefixed:
 
 
 | Prefix |                                                                                                                                                                                             Namespace                                                                                                                                                                                              |
@@ -142,33 +142,11 @@ namespaces' IRIs:
 
 ## Introduction
 
-This document describes the technical specification for the Fusepool P3 platform. It specifies the Fusepool P3 software by describing the basic architectural design choices and at a different level of precision depending on the current status of the development of the respective components and workspaces. It aims to present an application that satisfies the high level requirements of the DoW but also the more concrete usecases developed by WP1. The described architecture is the result from discussion with all technical work packages as it affects all software deliverable of the project and not just  WP5.
+This document describes the technical specification for the Fusepool P3 platform. It specifies the Fusepool P3 software by describing the basic architectural design choices and at a different level of precision (depending on the current status of the development of the respective components and work packages) the concrete interaction APIs. It aims to present an application that satisfies the high level requirements of the DoW but also the more concrete usecases developed by WP1. The described architecture is the result of discussion with all technical work packages as it affects all software deliverable of the project and not just  WP5.
 
-The main goal of the platform in the Fusepool P3 architecture is to
-provide an integrated platform where all other components can interact
-with based on the Linked Data principles [BernersLee2006]. Therefore
-this document also specifies some of the workflows and formats involved.
-In addition, Section 4 describes an already running basic
-implementation, provided as open source software.
+The main goal of the Fusepool P3 architecture is to provide interaction protocols and pattern so that the component can be used in concert to form the Fusepool P3 Platform. The interaction is based on HTTP. For the APIs introduced in Fusepool P3 we strive to ashere to the REST design principles. Also we adhere to the Linked Data principles [BernersLee2006](#BernersLee2006). This document also describes some of the workflows to illustate how the APIs and architectural pattern are applied to satisfy concrete usecase.
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this
-document are to be interpreted as described in RFC 2119 [RFC2119]. The
-word MUST, or the terms REQUIRED or SHALL, mean that the definition is
-an absolute requirement of the specification. The phrase "MUST NOT", or
-the phrase "SHALL NOT", mean that the definition is an absolute
-prohibition of the specification. The word SHOULD, or the adjective
-"RECOMMENDED", mean that there may exist valid reasons in particular
-circumstances to ignore a particular item, but the full implications
-must be understood and carefully weighed before choosing a different
-course. The phrase "SHOULD NOT", or the phrase "NOT RECOMMENDED" mean
-that there may exist valid reasons in particular circumstances when the
-particular behavior is acceptable or even useful, but the full
-implications should be understood and the case carefully weighed before
-implementing any behavior described with this label.
-
-1.1 Uses cases summary {.c2 .c21}
-----------------------
+### Uses cases summary
 
 The Fusepool P3 project partners Provincia Autonoma di Trento and
 Regione Toscana publish Open Data and develop apps in the domain of
@@ -191,7 +169,7 @@ and its apps increases.
 
 Linked Data can help to solve these problems: Data is made available in
 a standard format (RDF) which provides among others the following
-benefits^[[1]](#ftnt1)^:
+benefits[[1]](#ftnt1):
 
 -   Every piece of information (data) has its own identifier (URI/IRI).
 -   Those identifiers can be resolved via the web (HTTP),
@@ -228,20 +206,15 @@ partners start working with the platform in an early stage and feedback
 gets directly integrated into the agile development process of Fusepool
 P3.
 
- {.c24 .c21}
 
-* * * * *
+## Architecture
 
- {.c24 .c21}
-
-2. Architecture {.c39 .c21}
-===============
 
 Based on the requirements analysis and some architectural principles
 proposals^[[2]](#ftnt2)^,^[[3]](#ftnt3)^, the following figure depicts
 the high-level architecture for the Fusepool P3 platform:
 
-![](images/image02.png)
+![Platform Diagramn](p3-platform-diagram.svg "Platform Diagram")
 
 Components drawn with blue components are generic ones that are part of
 the generic platform. The generic platform is a set generic and standard
@@ -270,13 +243,12 @@ backend services) which may be more tightly coupled between themselves
 (i.e., running under the same runtime) due to non-functional
 requirements.
 
-2.1 Components {.c2 .c21}
---------------
+### Components
 
-The Fusepool P3 platform is composed of three core components: consumer,
-transformer API and backends.
+The Fusepool P3 platform is composed of three core type of components: clients,
+transformers and backends.
 
-### 2.1.1 Consumers {.c2 .c21}
+#### Clients
 
 From the point of view of the platform, consumers will be all those
 components of the project interacting with the platform. They mainly
@@ -287,7 +259,7 @@ other interaction SHOULD NOT be accepted.
 Further details will be described in proper detail in WP4’s
 deliverables.
 
-### 2.1.2 Transformers {.c2 .c21}
+#### Transformers
 
 Data transformation components are responsible for transforming data
 from legacy formats (e.g. structured formats like vCard or Facebook
@@ -346,15 +318,14 @@ details:
     a repository of messages to which a transformer can write to and the
     UI components read from.
 
-### 2.1.4 Backends {.c2 .c21}
+#### Backends 
 
 All data is persisted to the underlying backend server, which provides
 the support for the generic interfaces (LDP and SPARQL) and where the
 data will be persisted in a RDF Triple Store. Both Marmotta and Virtuoso
 provide a concrete implementations of this generic component.
 
-2.2 Communication {.c2 .c21}
------------------
+#### Communication
 
 Components communicate via REST [Fielding2002] over HTTP [Fielding1999]
 between each other. Besides this generic mechanism, the platform
@@ -373,10 +344,10 @@ components:
     All standard serializations MAY be potentially used, although only
     Turtle [Prudhommeaux2014] MUST be supported by all components.
 
-2.3 Workflows {.c21 .c39}
--------------
+### Workflows
 
-### 2.3.1 Registering a transformer {.c39 .c21}
+
+#### Registering a transformer
 
 Registries play an important role for the integration of the components
 in the UI components driven workflows. Registries are not modeled itself
@@ -391,7 +362,7 @@ The exact vocabularies and usage have not yet been specified, the
 following should just give an idea in which direction development is
 going.
 
-2.3.1.1 Transformer registry
+##### Transformer registry
 
 The registration of transformers is done by using a regular LDP
 Interaction Model. The Fusepool P3 platform will register a LDP
@@ -489,7 +460,7 @@ MUST return something like:
         dct:title "An example vCard transformer"@en .
 
 
-2.3.1.2 Transformer factory registry
+##### Transformer factory registry
 
 Similar to the above but what is registered are the IRI of transformer
 factory. This IRI, http://service.example.org/openrefine in the example
@@ -512,7 +483,7 @@ that the choice of runtime is up to the implementation. In this
 architecture there are no requirement on the runtime environment, as
 long as it implemented the Transformation REST API.
 
-2.3.1.3 User interaction request registry
+##### User interaction request registry
 
 When a transformer or another component needs human interaction it may
 request user interaction by adding a IRI to the user interaction request
@@ -532,7 +503,7 @@ implementation MUST support the creation of containers by posting them
 to the transformers root container.
 
 [](#)[](#)
-
+<td></td>*
 
     POST /ldp/transformation
 
@@ -1692,7 +1663,7 @@ References {.c2 .c21}
 
 | Ref.             | Description |                                                                                                                                                                                                              |
 |------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| BernersLee2006   | Berners-Lee, T. (2006). Design issues: Linked Data. W3C.                                                                                                                                                     |
+| <a name="BernersLee2006"></a>BernersLee2006   | Berners-Lee, T. (2006). Design issues: Linked Data. W3C.                                                                                                                                                     |
 | Bizer2009        | Bizer, C., Heath, T., & Berners-Lee,T. (2009). Linked data-the story so far. International journal on semantic web and information systems, 5(3), 1-22.                                                      |
 | Brooks1975       | Brooks Jr, F. P. (1975). The Mythical man-month: essays on software engineering.                                                                                                                             |
 | Costabello2013   | Costabello, L., Villata, S., Rocha, O. R., & Gandon, F. (2013). Access Control for HTTP Operations on Linked Data. The Semantic Web: Semantics and Big Data, 185-199.                                        |
@@ -1721,7 +1692,7 @@ Copyright Fusepool P3 Consortium              /
 
 * * * * *
 
-[[1]](#ftnt_ref1) [http://5stardata.info](http://5stardata.info)
+[1]<a name="ftnt1"></a> [http://5stardata.info](http://5stardata.info)
 
 [[2]](#ftnt_ref2) [https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md](https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md)
 
