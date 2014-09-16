@@ -189,52 +189,43 @@ In the past years many powerful tools got developed or extended to
 support creation and maintenance of Linked Data. Also new W3C standards
 and vocabularies are developed for turning legacy data into Linked Data.
 Many of these tools and standards are developed, extended or implemented
-by Fusepool P3 project partners. What is lacking is a "cockpit" for the
-tools, a place where our project partners Provincia Autonoma di Trento
-and Regione Toscana and other potential users can easily automate those
-ETL processes and generate Linked Data.
+by Fusepool P3 project partners. The emerging Linked Data Platform Standard (LDP)[[7]](#ftnt7) provide standardized means for making collections of linked data resources 
+accessible. 
 
-The creation of this cockpit is the purpose of the Fusepool P3 project.
-The platform itself is built on top of emerging Linked Data standards
-like the Linked Data Platform (LDP) specification and integrates
-state-of-the-art tools like OpenRefine, OpenLink Virtuoso, Apache
-Stanbol, and Pundit.
+What is lacking is an integration framework that combines the data transformation to RDF, possible enhancement steps and the publishing of the Linked Data. Fusepool P3 will provide such an integration framework along with User Interface tools that serve both to model the data publication process as well as to coordinate the human interactions that might be required while the data is processed.
 
-The Fusepool P3 platform is developed and tested based on the
-requirements by Provincia Autonoma di Trento and Regione Toscana. Both
-partners start working with the platform in an early stage and feedback
+This framework will integrate state-of-the-art tools like OpenRefine, OpenLink Virtuoso, Apache Stanbol, and Pundit. The famework is developed and tested based on the requirements by our project partners Provincia Autonoma di Trento and Regione Toscana. Both partners start working with the platform in an early stage and feedback
 gets directly integrated into the agile development process of Fusepool
 P3.
 
 
 ## Architecture
 
+The architecture is based on components communicating via HTTP and exposing RESTfull APIs. This allows for components being developed in any language and hosted on any platform. After initial discussions on the architectural principles (see [[2]](#ftnt2) and [[3]](#ftnt3)) the decision was taken to have the components very loosly coupled and interacting only via HTTP, this design choice was made with the following goals:
 
-Based on the requirements analysis and some architectural principles
-proposals^[[2]](#ftnt2)^,^[[3]](#ftnt3)^, the following figure depicts
-the high-level architecture for the Fusepool P3 platform:
+- Reusability of Fusepool component is maximized
+- Distributed development is facilitated
+- It is easy for developer to understand and extend the software
+- Ensure longevity of the software
+- The software is simple to deploy and maintain in organizational IT environments (DoW 1.2.2)
+
+Once the decision was taken on how components should interact the question was were the boundaries between components should be defined and how the components build the overall platform. The following figure depicts the high-level architecture for the Fusepool P3 platform:
 
 ![Platform Diagramn](p3-platform-diagram.svg "Platform Diagram")
 
-Components drawn with blue components are generic ones that are part of
-the generic platform. The generic platform is a set generic and standard
-interfaces, mainly LDP 1.0  [Speicher2014] and SPARQL 1.1 [SPARQL11],
-that can be provided by different concrete implementations. In this
-project, the official concrete implementations that the partners bring
-into the consortium are Apache Marmotta^[[4]](#ftnt4)^ from SRFG and
-OpenLink Virtuoso^[[5]](#ftnt5)^ from OGL, also other third-party
-implementations MAY be also supported. Some more concrete requirements
-for those interfaces will be described below.
+The diagram shows how the UI and other clients access the fusepool P3 primarily via and LDP transforming Proxy which exposes a front-end conforming to the LDP specification [Speicher2014] with the addition of the Transforming Container API [TODO link]. The proxy transparently handles
+transformation processes by calling in background the actual transformers, and sending back the data to the platform once the process has finished. The clients can also directly access transformers via their REST API (transfomer API) [TODO link] or use a SPARQL 1.1 [SPARQL11] endpoint.
 
-The remained components, drawn with yellow in the previous picture, are
-the actual components that comprise the Fusepool P3 platform. Users are
-expected to consume the data via a proxy which transparently handles
-transformation processes by calling in background the actual
-transformers, and sending back the data to the platform once the process
-has finished. All these component are going to be described in
-sufficient detail in the upcoming sections.
+As the name suggests transformer data. The term ans the API are used broadly both for the functionality provided by WP 2 as well as by WP 3. It comprises the transformation from non-RDF content to RDF as well as the transformation from content without annotations to content with annotations.
 
-This architecture does not make the platform the common runtime for all
+The components drawn in blue are not actually separable components that interact via HTTP. While an LDP implementation could in principle interact with the RDF Triple Store exclusively via SPARQL and HTTP for performance reasons it is not implemented this way but is rather more tightly coupled to the implementation of the triple store. Similarly some custom services realized in T5.4 will be implemented to directly interact with the triple store; such services are only implemented if the development of the UI shows that an interaction via the standard mechanism SPARQL and LDP is not feasible or not providing an adequate level of performance.
+
+For the implementation of LDP (without the transforming container API) the concrete implementations that the partners bring into the consortium are Apache Marmotta^[[4]](#ftnt4)^ from SRFG and
+OpenLink Virtuoso^[[5]](#ftnt5)^ from OGL. With the exception of the T5.4 components any generic LDP implementation that supports read/write access can be used. Some more concrete details about the requirements for such implementations will be described below.
+
+All components are going to be described in sufficient detail in the upcoming sections.
+
+To summarize: This architecture does not make the platform the common runtime for all
 components. On the contrary, by default each component, including all
 transformers, are individual processes interacting via HTTP as the
 interaction interface. An exception to this are the backend related
@@ -245,35 +236,56 @@ requirements.
 
 ### Components
 
-The Fusepool P3 platform is composed of three core type of components: clients,
+The Fusepool P3 platform is composed of four core components: clients, the LDP Transforming Proxy,
 transformers and backends.
 
 #### Clients
 
-From the point of view of the platform, consumers will be all those
+From the point of view of the platform, clients will be all those
 components of the project interacting with the platform. They mainly
 will use standard interfaces, such as LDP or SPARQL, that allow the
-final users^[[6]](#ftnt6)^ to use the platform in a seamless way. Any
-other interaction SHOULD NOT be accepted.
+final users[[6]](#ftnt6) to use the platform in a seamless way.
 
-Further details will be described in proper detail in WP4’s
-deliverables.
+Further details will be described in WP4’s deliverables.
 
 #### Transformers
 
 Data transformation components are responsible for transforming data
 from legacy formats (e.g. structured formats like vCard or Facebook
-OpenGraph, or unstructured formats like plain text) to RDF. Data
-transformations are done by the Transformer API is a simple and
+OpenGraph, or unstructured formats like plain text) to RDF. The can also
+transform data without changing it's format such as by adding or refining annotations.
+
+As the term "transform" and the derived terms are used very broadly here; it includes processes such
+as annotating and RDFizing content. Therefore, from the nature of
+the transformation tasks, in the current scope we can differentiate
+at least two families of transformers: RDFizers which transform non-RDF data to RDF and annotators  which enrich with RDF annotations data in any format. While RDFizers
+produce RDF data using the ontologies best suited for the concrete data (e.g. FOAF for data describing persons), annotators will used a common set of ontologies as to describe annotations in a common way.
+
+Transformers are identified by an URI which is the entry point of the RESTfull transformation API. Very often a single HTTP Server will provide many related transformers. For example a server on host `translate.example.org` might provide an a transformer translating from English to German with URI `http://translate.example.org/en/de` and another transformer translating from Esperanto to Klingon at URI `http://translate.example.org/eo/tlh`. Such a software providing many transformers is called *transformer factory*.
+
+The transformer API supports both synchronous and asynchronous transformers. While a synchronous transformer return the transformation result right as the response of the transformation request asynchronous transformer will deliver their results at a later time. Asynchronous transformers might for instance require some user interaction in order to deliver their results.
+
+Transformers may invoke other transformers, we provide a pipeline 
+
+#### LDP Transforming Proxy
+
+Fusepool P3 defined the Transforming Container API. This API bases on LDP and provides a way to describe containers (LDPCs) that transform data that is added to such a container by passing it to a transformer.
+
+While it is possible for an LDP implementation to implement this API directly requiring API vendors to adapt their implementations would not be very efficient.
+
+Data transformations are done by the Transformer API is a simple and
 generic API that allows an integrated transformation process within the
 Fusepool P3 platform. Here we describe some of the key aspects of the
-transformation component - see Section 3.1 for further technical
+transformation component - see Section 3.1 [TODO chnage to title/link] for further technical
 details:
 
+
+
+
 -   A LDP Transformation Proxy that transparently allows to invoke an
-    individual transformers, or a pipeline transformer, using a LDP
-    Interaction Model^[[7]](#ftnt7)^ via HTTP. The original data posted
-    is always immediately forwarded to the underlined LDP
+    individual transformers, or a pipeline transformer, using a LDP [[7]](#ftnt7)
+    interaction patterns via HTTP. The original data posted
+    is always immediately forwarded to the underlying LDP
     implementation. In addition, the result of the transformation will
     also be posted to the same LDPC. Section 2.2.3 provides further
     technical details about this component together a sequence diagram
@@ -291,15 +303,7 @@ details:
     supports both synchronous and asynchronous request handling, as
     specified later.
 -   Different transformers implementations, that are the components
-    actually performing the transformation. The term "transform" and the
-    derived terms are used very broadly here; it includes processes such
-    as annotating and RDFizing content. Therefore, from the nature of
-    the transformation tasks, in the current scope we can differentiate
-    at least two families of transformers: RDFizers^[[8]](#ftnt8)^,
-    those which transform non-RDF data to RDF; annotators, those which
-    enrich with RDF annotations data in any format. While RDFizers
-    produce schema-less data, annotators will produce a fixed schema
-    format as output.
+    actually performing the transformation. 
 -   There is a special pipeline transformer that, implementing the same
     interface than a regular transformer, will support a more
     sophisticated data lifecycle delegating to several other
@@ -1694,18 +1698,18 @@ Copyright Fusepool P3 Consortium              /
 
 [1]<a name="ftnt1"></a> [http://5stardata.info](http://5stardata.info)
 
-[[2]](#ftnt_ref2) [https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md](https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md)
+[[2]](#ftnt2) [https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md](https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md)
 
-[[3]](#ftnt_ref3) [https://github.com/fusepoolP3/overall-architecture/blob/master/platform-architectural-proposal-srfg.md](https://github.com/fusepoolP3/overall-architecture/blob/master/platform-architectural-proposal-srfg.md)
+[[3]](#ftnt3) [https://github.com/fusepoolP3/overall-architecture/blob/20dc491a3f9ced38061fb853d8cf0789b634b755/platform-architectural-proposal-srfg.md](https://github.com/fusepoolP3/overall-architecture/blob/20dc491a3f9ced38061fb853d8cf0789b634b755/platform-architectural-proposal-srfg.md)
 
-[[4]](#ftnt_ref4) [http://marmotta.apache.org](http://marmotta.apache.org)
+[[4]](#ftnt4) [http://marmotta.apache.org](http://marmotta.apache.org)
 
-[[5]](#ftnt_ref5) [http://virtuoso.openlinksw.com](http://virtuoso.openlinksw.com)
+[[5]](#ftnt5) [http://virtuoso.openlinksw.com](http://virtuoso.openlinksw.com)
 
-[[6]](#ftnt_ref6) For the scope of this document, the "final user" is a
+[[6]](#ftnt6) For the scope of this document, the "final user" is a
 data manager who will interact with the tools produced by the project.
 
-[[7]](#ftnt_ref7) [http://www.w3.org/TR/ldp/\#ldpc-linktypehdr](http://www.w3.org/TR/ldp/#ldpc-linktypehdr)
+[[7]](#ftnt7) [http://www.w3.org/TR/ldp/](http://www.w3.org/TR/ldp/)
 
 [[8]](#ftnt_ref8) [http://wiki.opensemanticframework.org/index.php/RDFizer\_Concept](http://wiki.opensemanticframework.org/index.php/RDFizer_Concept)
 
