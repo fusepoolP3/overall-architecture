@@ -270,7 +270,7 @@
        sodipodi:linespacing="125%"
        transform="matrix(1.0034843,0,0,1.008168,49.221735,119.16237)"><tspan
          sodipodi:role="line"
-         id="tspan3031"></tspan></text>
+         id="tspan3031" /></text>
     <text
        xml:space="preserve"
        style="font-size:40.23293686px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -295,7 +295,7 @@
          sodipodi:role="line"
          x="196.18669"
          y="187.82031"
-         id="tspan3043">LDP API / Transforming Collection API</tspan></text>
+         id="tspan3043">LDP API / Transforming Container API</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:18.10482216px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
