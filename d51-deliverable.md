@@ -295,7 +295,7 @@ Interaction between the components as well as with external clients is regulated
  * Transformer API
  * Transforming Container API
  * User Interaction Request API
- * Fusepool Annotation Model
+ * Fusepool Annotation Model (FAM)
  
 Some other APIs are yet to be defined.
  
@@ -355,70 +355,20 @@ request to the Transformer LDPC. The results of the transformation will be added
 
 The Specification for the Transforming Container API is an annex to this deliverable and also available in its latest version at: [https://github.com/fusepoolP3/overall-architecture/blob/master/transforming-container-api.md](https://github.com/fusepoolP3/overall-architecture/blob/master/transforming-container-api.md)
 
+#### User Interaction Request API
 
-### 3.1.5 Data transmission {.c2 .c21}
+Some components such as transformers may require some user interaction at some points of processing. While components are free to get a users attention in any way (such as by sending emails) the user interaction request API allows to request for user attentions in a unified way allowing all requests for interaction showing up in a cockpit UI-Application.
 
-Implementations MAY honor the Prefer header [RFC7240] for the selection
-of the method used for data transmission. The Prefer header is an HTTP
-header field that can be used by a client to request that certain
-behaviors be employed by a server while processing a request. The
-Prefer request header field is used to indicate that particular server
-behaviors are preferred by the client but are not required for
-successful completion of the request. The wait preference can be used to
-establish an upper bound on the length of time, in seconds, the client
-expects it will take the server to process the request once it has been
-received. Prefer is similar in nature to the Expect header field
-[RFC7231] with the exception that servers are allowed to ignore stated
-preferences. The Preference-Applied response header MAY be included
-within a response message as an indication as to which Prefer tokens
-were honored by the server and applied to the processing of a request.
+The User Interaction Request API describes how an LDPC is used to maintain a registry of requests for interaction. Components submit a URI to this registry and remove the URI once the interaction completed. The UI component provides the user a link to the submitted URI. The component is free to present any web-application at that URI suitable to perform the required interaction.
 
-The default behaviour is upon to each concrete transformer.
-Implementations SHOULD NOT assume that a client is sending a request
-without specifying a respond-async preference prefers a synchronous
-response.
+The Specification for the User Interaction Request API is an annex to this deliverable and also available in its latest version at: [https://github.com/fusepoolP3/overall-architecture/blob/master/user-interation-request-api.md](https://github.com/fusepoolP3/overall-architecture/blob/master/user-interation-request-api.md)
 
-3.1.5.1 Synchronous data transmision
 
-If the implementations chooses to handle the request synchronously
-(Prefer: return=representation) and the transformation succeeds, it MUST
-respond with status code 200. The result of the transformation MUST be
-returned as the response entity. If the request fails because of an
-error in the POSTed entity, implementations SHOULD answer the request
-with status code 400 and a response entity explaining the error.
-
-3.1.5.2 Asynchronous data transmision
-
-If the implementation chooses to handle the request asynchronously
-(Prefer: respond-async) and the request is acceptable in that the value
-of the Accept header as the Media-Type of request entity is acceptable
-the implementations MUST respond with status code 202. The
-transformation will be executed in background, returning a
-Location header pointing to the transformation job IRI, where:
-
--   As long as the transformation has not completed implementations MUST
-    respond with status code 202 to GET requests. The response entity
-    will describe the current status of the job in RDF, where at least
-    Turtle SHOULD be supported as basic serialization. The graph
-    serialized by the response entity SHOULD contain, at least, a triple
-    with job IRI as subject, trans:status as property and
-    trans:Processing as object.
--   After the request is successfully completed, implementations MUST
-    respond to GET requests with status code 303 and Location header
-    pointing to the transformation result.
-
-If the transformation can not be processed, implementations SHOULD
-return 400 error, including with some explanation about the causes of
-the error. If the transformation failed, implementations SHOULD return
-500 error, including with some explanation about the causes of the
-error.
-
-3.2 Annotation data model {.c2 .c21}
--------------------------
+#### Fusepool Annotation Model (FAM)
 
 In Fusepool P3 annotators are expected to produce annotation from
 textual content, either unstructured or extracted from any other
-structured format. All annotators MUST produce a common annotation model
+structured format. All annotators produce RDF using a common annotation model
 as described by this section. This is important to pipe annotators,
 allowing configurations using multiple annotation services.
 
@@ -428,7 +378,7 @@ relations to ease the consumption - especially the retrieval of
 Selectors for Annotations. The following figure provides an overview on
 the chosen model.
 
-![fp-anno-model.png](images/image03.png)
+![fp-anno-model.png](wp3/fp-anno-model/fp-anno-model.png)
 
 Annotations describe (annotate) associations between related resources.
 An annotation based on the Fusepool P3 Annotation Model will consist of
@@ -448,54 +398,33 @@ two properties allow a annotation body centric consumption of annotator
 results. Then clients, instead of manually joining over the intermediate
 resources (?annotation and ?sptarget) with a SPARQL query like:
 
-[](#)[](#)
-
 
     PREFIX oa: \<http://www.w3.org/ns/oa\#\>
-
     SELECT ?body ?source ?selector
-
     WHERE {
-
       ?annotation a oa:Annotation ;
-
         oa:hasBody ?body ;
-
         oa:hasTarget ?sptarget .
-
       ?body a fam:TextAnnotation ;
-
         oa:hasBody ?body .
-
       ?sptarget oa:SpecificResource ;
-
         oa:hasSource ?source ;
-
         oa:hasSelector ?selector .
-
     }
 
 
- Instead they can directly retrieve the required information with a much
+Instead they can directly retrieve the required information with a much
 simpler and faster query:
-
-[](#)[](#)
 
 
     PREFIX oa: \<http://www.w3.org/ns/oa\#\>
-
     PREFIX fam: \<http://vocab.fusepool.info/fam\#\>
 
     SELECT ?body ?source ?selector
-
     WHERE {
-
       ?body a fam:TextAnnotation ;
-
         fam:extracted-from ?source ;
-
         fam:selector ?selector .
-
     }
 
 
@@ -523,33 +452,31 @@ allows Annotations whose analysis results are not covered by the
 predefined Annotation Types to define their own.
 
 This section defines the first version of the Fusepool P3 Annotation
-Model^[[19]](#ftnt19)^, which will be specified in detail in the future
+Model[[19]](#ftnt19), which will be specified in detail in the future
 by deliverable D5.2, Data retrieval for semantic enrichment/processing
 and semantic indexes for domain specific data retrieval.
 
+#### More specification
+
+Following an agile development approach specification of the application is an ongoing process. Currently some more specification are foreseen:
+
+ * Transformer Registry
+ * Transformer Factory Registry
+ 
+The *Transformer Factory Registry* allows the UI to point the user to a webapplication allowing the creation of Transformers, such an application might require to choose a taxonomy in the case of an entity recognizing annotator. In the case of the application to create a pipeline transformer the user will have to choose transformers and put them in the right order, this application will use the *Transformer Registry* to show the available transformers.
+
+These registries will be modeled in a similar way as the *User Interaction Request API* described above. So rather than introducing new components the regular LDP capabilities are used to maintain these registries. 
 
 
+## Workflows
 
+This section shall illustrate concrete interaction with the P3 software.
 
-### Workflows
-
-
-#### Registering a transformer
-
-Registries play an important role for the integration of the components
-in the UI components driven workflows. Registries are not modeled itself
-as components as they are the regular LDP capabilities are used to
-maintain these registries. Currently three registries are foreseen:
-
--   Transformer registry
--   Transformer factory registry
--   User interaction requests registry
+### Registration of a transformer
 
 The exact vocabularies and usage have not yet been specified, the
 following should just give an idea in which direction development is
 going.
-
-##### Transformer registry
 
 The registration of transformers is done by using a regular LDP
 Interaction Model. The Fusepool P3 platform will register a LDP
@@ -560,30 +487,18 @@ pipeline transformers.
 The following HTTP traces outline some more details about this process.
 The necessary request to register a new transformer in the platform,
 using the HTTP Slug header [RFC5023] according LDP to request "example"
-as unique identifier, would be something like (see Section 3.1 below for
-a detailed specification):
-
-[](#)[](#)
+as unique identifier, would be something like:
 
 
     POST /registry
-
     Host: demo.fusepoolp3.eu
-
     Slug: example
-
     Content-Type: text/turtle
-
-    @prefix dct: \<http://purl.org/dc/terms/\> .
-
-    @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .
-
-    \<.\> a fp3:RegistryEntry;
-
-        fp3:entry \<http://example.org/vcard-transformer\>.
-
-    \<http://example.org/vcard-transformer\> a fp3:TransformationService ;
-
+    @prefix dct: <http://purl.org/dc/terms/> .
+    @prefix fp3: <http://vocab.fusepool.info/fp3#> .
+    <> a fp3:RegistryEntry;
+        fp3:entry <http://example.org/vcard-transformer>.
+    <http://example.org/vcard-transformer> a fp3:TransformationService ;
         dct:title "An example vCard transformer"@en.
 
 
@@ -591,67 +506,43 @@ the included transformer description HTTP request message body, using
 the RDF serialization specified by the Content-Type header. Then, the
 response would look like:
 
-[](#)[](#)
-
-
     HTTP/1.1 201 Created
-
     Server: FusepoolP3/0.1.0 (build 2+)
-
     Last-Modified: Mon, 16 Jun 2014 08:54:14 GMT
-
     ETag: W/"1402908854000"
-
     Location: http://demo.fusepoolp3.eu/registry/example
-
     Content-Length: 0
-
     Date: Mon, 16 Jun 2014 08:54:14 GMT
 
 
 Then, a request to the new entry:
 
-[](#)[](#)
-
 
     GET /registry/example
-
     Host: demo.fusepoolp3.eu
-
     Accept: text/turtle, application/rdf+xml;q=.8, \*/\*;q=.1
 
 
-MUST return something like:
-
-[](#)[](#)
+will return something like:
 
 
     HTTP/1.1 200 OK
-
     Date: Mon, 16 Jun 2014 08:57:32 GMT
-
     Connection: close
-
     Content-Type: text/turtle
-
     @prefix dct: \<http://purl.org/dc/terms/\> .
-
     @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .
-
     \<http://demo.fusepoolp3.eu/registry/example\> a fp3:RegistryEntry ;
-
         fp3:entry \<http://example.org/vcard-transformer\> .
-
     \<http://example.org/vcard-transformer\> a fp3:TransformationService ;
-
         dct:title "An example vCard transformer"@en .
 
 
-##### Transformer factory registry
+### Registrering a transformer factory 
 
 Similar to the above but what is registered are the IRI of transformer
 factory. This IRI, http://service.example.org/openrefine in the example
-from Section 2.1.2, MUST dereference to a representation suitable to be
+from Section 2.1.2, dereferences to a representation suitable to be
 used by a human to create a transformer, ideally a HTML document.
 
 A transformer is identified by a IRI. While it is possible that a
@@ -670,72 +561,42 @@ that the choice of runtime is up to the implementation. In this
 architecture there are no requirement on the runtime environment, as
 long as it implemented the Transformation REST API.
 
-##### User interaction request registry
-
-When a transformer or another component needs human interaction it may
-request user interaction by adding a IRI to the user interaction request
-registry.^[[a]](#cmnt1)^^[[b]](#cmnt2)^ The IRI shall dereference to a
-resource allowing a human user to perform the requested interaction.
-Once the interaction completed the component shall remove the user
-interaction request from this registry.
-
-### 2.3.2 Creating a Transformation Container {.c2 .c21}
+### Creating a Transforming Container
 
 LDP does not specify how containers are created. Whatever means, the
 underlying LDP implementation supports to create container that as
 suitable method to create transformation containers. It should allow to
 add an fp3:transformer property linking the transformer from the created
-container.^[[c]](#cmnt3)^^[[d]](#cmnt4)^ A Fusepool P3 compliant LDP
-implementation MUST support the creation of containers by posting them
+container. A Fusepool P3 compliant LDP implementation MUST support the creation of containers by posting them
 to the transformers root container.
 
-[](#)[](#)
-<td></td>*
 
-    POST /ldp/transformation
-
+    POST /ldp
     Host: demo.fusepoolp3.eu
-
-    Slug: example
-
+    Slug: transforming-container
     Content-Type: text/turtle
-
     @prefix dct: \<http://purl.org/dc/terms/\> .
-
     @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .
-
     @prefix eldp: \<http://vocab.fusepool.info/eldp\#\> .
-
     \<.\> a eldp:TransformationContainer , ldp:DirectContainer ;
-
         :transformer \<http://example.org/vcard-transformer\> .
 
 
 The server response MUST have status code 201 and MUST contain a
 location header specifying the IRI of the created resource
 
-[](#)[](#)
 
 
     HTTP/1.1 201 Created
-
     Server: FusepoolP3/0.1.0-SNAPSHOT (build 2+)
-
     Last-Modified: Mon, 16 Jun 2014 08:54:14 GMT
-
     ETag: W/"14028798789"
-
-    Location: http://demo.fusepoolp3.eu/ldp/transformation/example
-
+    Location: http://demo.fusepoolp3.eu/ldp/transforming-container
     Link: \<http://p3.fusepool.eu/transformation\>; rel="describedby"
-
     Link: \<http://www.w3.org/ns/ldp\#Container\>; rel="type"
-
     Link: \<http://vocab.fusepool.info/eldp\#TransformationContainer\>;
     rel="type"
-
     Content-Length: 0
-
     Date: Mon, 16 Jun 2014 08:54:14 GMT
 
 
@@ -750,60 +611,38 @@ In the above example the response contains some additional information:
     a non-normative type denoting the extended interaction model.
 
 A GET request to the newly created container at
-http://demo.fusepoolp3.eu/ldp/transformation/example could look like
+http://demo.fusepoolp3.eu/ldp/transforming-container could look like
 this:
 
-[](#)[](#)
 
-
-    GET /ldp/transformation/example HTTP/1.1
-
+    GET /ldp/transforming-container HTTP/1.1
     Host: demo.fusepoolp3.eu
-
     Accept: text/turtle; charset=UTF-8
-
-    Prefer: return=representation;
-    include="http://www.w3.org/ns/ldp\#PreferEmptyContainer"
+    Prefer: return=representation; include="http://www.w3.org/ns/ldp#PreferEmptyContainer"
 
 
 Response:
 
-[](#)[](#)
-
 
     HTTP/1.1 200 OK
-
     Content-Type: text/turtle; charset=UTF-8
-
     ETag: "\_87e52ce2917987"
-
     Content-Length: 477
-
     Link: \<http://www.w3.org/ns/ldp\#Container\>; rel="type"
-
     Preference-Applied: return=representation
 
     @prefix dcterms: \<http://purl.org/dc/terms/\> .
-
     @prefix ldp: \<http://www.w3.org/ns/ldp\#\> .
-
     @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .
-
     @prefix eldp: \<http://vocab.fusepool.info/eldp\#\> .
 
-    \<http://demo.fusepoolp3.eu/ldp/transformation/example\>
-
+    <http://demo.fusepoolp3.eu/ldp/transformation/example>
       a eldp:TransformationContainer, ldp:DirectContainer ;
-
       dcterms:title "An transformation LDP Container for vCard" ;
-
       ldp:membershipResource
-    \<http://demo.fusepoolp3.eu/ldp/transformation/example\> ;
-
+    <http://demo.fusepoolp3.eu/ldp/transformation/example> ;
       ldp:hasMemberRelation ldp:member ;
-
       ldp:insertedContentRelation ldp:MemberSubject ;
-
       dp:transformer \<http://example.org/vcard-transformer\> .
 
 
@@ -811,15 +650,15 @@ With a supported RDF format in the Accept header the request MUST yield
 to a response entity serializing a graph with at least the triple with
 the fp3:transformer predicate.
 
-### 2.3.3 Adding content to a Transformer Container {.c2 .c21}
+###  Adding content to a Transformer Container 
 
 Data is ingested in the platform also using regular LDP interaction. The
 proxy transparently handles the transformation process, normally when
 posting LDP-NRs (Linked Data Platform Non-RDF Source resources) to the
 special transformation containers. The following sequence diagram
-depicts the high-level synchronous interaction:
+depicts the high-level interaction for a transforming container using a synchronous transformers:
 
-![](images/image00.png)
+![](images/proxy-flow-diagram.svg)
 
 Coming down into more detail, in the case of a synchronous
 transformation, the client HTTP interaction is rather simple. The client
