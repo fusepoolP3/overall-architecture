@@ -1,6 +1,6 @@
 # Transformer API
 
-This document defines an API for data transforming components. The term "transform" and the derived terms are used very broadly here and they include processes auch as annotating and lifting contents.
+This document defines an API for data transforming components. The term "transform" and the derived terms are used very broadly here and they include processes such as annotating and lifting contents.
 
 ## Conventions
 
@@ -20,15 +20,15 @@ The key words MUST, MUST NOT, REQUIRED, SHOULD, SHOULD NOT, RECOMMENDED, MAY, an
 This section is normative.
 
  * Transformer: A transformer is transformation service identified and accessible via an HTTP(S) URI.
- * Implementation: An implemenation is the server processing requests against the URI of Transformers.
+ * Implementation: An implementation is the server processing requests against the URI of Transformers.
 
 ## Introduction
 
 A Transformation Service (aka Transformer) is represented by an dereferenceable URI representing a resource of type `trans:Transformer`
 
-A GET request of the resource will return a description of the service. At least text/turle must be supported as format to describe the resource. A POST request does the actual transformation of the data.
+A GET request of the resource will return a description of the service. At least `text/turle` must be supported as format to describe the resource. A POST request does the actual transformation of the data.
 
-This is a very generic menchanism designed to interface simple services that can do a very specific transformation as well as services that interface a complex pipe or routing mechanism to handle many input and output formats. Such a more complex service might well delegate to more simple services that also expose the interface.
+This is a very generic mechanism designed to interface simple services that can do a very specific transformation as well as services that interface a complex pipe or routing mechanism to handle many input and output formats. Such a more complex service might well delegate to more simple services that also expose the interface.
 
 
 ## Transformers
@@ -43,19 +43,19 @@ Implementation MUST support the GET method for Transformers. Implementations MUS
 
 Implementations SHOULD return a triple with the Transformer as subject and `trans:supportedOutputFormat` as predicate and a media type as `xsd:String`value of the object for any media-type that might be the format of the result of a successful transformation.
 
-Implementations MUST support POST requests. Implementations SHOULD accept requests entities of all media-types matching a value of one of the `trans:supportedInputFormat` properties of the Extractor contained in the RDF representation returned on GET requests when interpreing this value as `media-range` the same way as the `media-range` is for accept header values as per section 14.1 of [RFC2616].
+Implementations MUST support POST requests. Implementations SHOULD accept requests entities of all media-types matching a value of one of the `trans:supportedInputFormat` properties of the Transformer contained in the RDF representation returned on GET requests when interpreing this value as `media-range` the same way as the `media-range` is for accept header values as per section 14.1 of [RFC2616].
 
-Implementations handle the request synchronously or asynchronously. If the implementations chooses to handle the request synchonously and the transformation succeeds it MUST respond with status code 200. The result of the transformation MUST be returned as the response entity. If the request fails because of an error in the POSTed entity implementation SHOULD answer the request with status code 400 and a response entity explaining the error.
+Implementations handle the request synchronously or asynchronously. If the implementations chooses to handle the request synchronously and the transformation succeeds it MUST respond with status code 200. The result of the transformation MUST be returned as the response entity. If the request fails because of an error in the POSTed entity implementation SHOULD answer the request with status code 400 and a response entity explaining the error.
 
-If the implementation chooses to handle the request asynchronously and the request is acceptable in that the value of the Accept-headers as the Media-Type of request entity is acceptable the implementations MUST respond with status code 202 and a Location header with a URI as value for which requests are handled by the implementation, in the follwing this URI will be referred to as JOB-URI.
+If the implementation chooses to handle the request asynchronously and the request is acceptable in that the value of the Accept-headers as the Media-Type of request entity is acceptable the implementations MUST respond with status code 202 and a Location header with a URI as value for which requests are handled by the implementation, in the following this URI will be referred to as JOB-URI.
 
-As long as the transformation has not completed implemenations MUST respond with status code 202 to GET requests against the JOB-URI. The response entity should be in preferred RDF serialization in the request accept header supported by the implementation, if multiple supported RDF serializations are equally preferred the response entity SHOULD by of type `text/turtle`. The graph serialized by the response entity SHOULD contain as least a triple with JOB-URI as subject, trans:status as property and trans:Processing as object.
+As long as the transformation has not completed implementations MUST respond with status code 202 to GET requests against the JOB-URI. The response entity should be in preferred RDF serialization in the request accept header supported by the implementation, if multiple supported RDF serializations are equally preferred the response entity SHOULD by of type `text/turtle`. The graph serialized by the response entity SHOULD contain as least a triple with JOB-URI as subject, trans:status as property and trans:Processing as object.
 
-After the request completed successfully implementatins MUST respond to request to the JOB-URI with status code 200 for some time. The response entity MUST be the result of the transformation. If the transformation failed implemenation should respod to requests to the JOB URI with status code 500 and a response entity explaining the error. In both cases after some time implementations MAY respond with status code 404 to request to the JOB-URI.
+After the request completed successfully implementations MUST respond to request to the JOB-URI with status code 200 for some time. The response entity MUST be the result of the transformation. If the transformation failed implementations should respond to requests to the JOB URI with status code 500 and a response entity explaining the error. In both cases after some time implementations MAY respond with status code 404 to request to the JOB-URI.
 
 The header section of the request MAY contain a `Content-Location` header, if they contain such a header implementations SHOULD use the URI specified by the value of that header when referring to the resource represented by the entity of the request.
 
-Implementations MAY honor a `Prefer` header with value `respond-async` as well as the "Wait" preference both specified in [RFC7240]. Implementations SHOULD NOT assume that a client sending a request without specifying a respond-async preference prefers a synchrnous response.
+Implementations MAY honor a `Prefer` header with value `respond-async` as well as the "Wait" preference both specified in [RFC7240]. Implementations SHOULD NOT assume that a client sending a request without specifying a respond-async preference prefers a synchronous response.
 
 ### Examples
 
@@ -85,9 +85,9 @@ Response:
 		trans:supportedOutputFormat "text/turtle";
 		trans:supportedOutputFormat "text/ld+json".
 
-This response tells the client that this is an Transformation service accepting text/vcard and able to produce text/turtle or text/ld+json.
+This response tells the client that this is an Transformation service accepting `text/vcard` and able to produce text/turtle or text/ld+json.
 
-Parameters of the media type might further narrow the format using media type parmeters, e.g. application/json;app=foobar%version=2.1. It the input format is specified with parameters the submitted data format must be qualified with all these parameters, the submitted data format may be qualified with additional parameters.
+Parameters of the media type might further narrow the format using media type parameters, e.g. application/json;app=foobar%version=2.1. It the input format is specified with parameters the submitted data format must be qualified with all these parameters, the submitted data format may be qualified with additional parameters.
 
 The media type might also contain wildcars, analogously to the accept header in HTTP.
 
@@ -208,14 +208,13 @@ Eventually the client gets a 200 Response code with the RDF representation of th
 
 ### Remarks
 
-The asynchronous transformer does not need to be a separate transformer from its synchronous counterpart. It can be the same transformer from the user perspective, i.e. have the same URI. This transformer can then support both sync and async behaviour. The exact behaviour can be triggered based on the lenght of the POSTed content, for example.
+The asynchronous transformer does not need to be a separate transformer from its synchronous counterpart. It can be the same transformer from the user perspective, i.e. have the same URI. This transformer can then support both sync and async behaviour. The exact behaviour can be triggered based on the length of the POSTed content, for example.
 
-It is undefined by this specification how long an Transformation result shall remain available for retrieval. The transformer should not delete the Transformation result on the first GET request, repeating the GET request shortly after should yield to the same results. Typical the time a result is available depends on the required processing time. The result of a job that took only a few seconds might remain available for several minutes, the result of a job that took several hours might remain available for several days. When a result is no longer available the server returns status code 404. A restart of the transformer will typically cause the Transformation results to become unavailable. Even though some transformers might keep the result available permantently, clients should never rely on this.
+It is undefined by this specification how long an Transformation result shall remain available for retrieval. The transformer should not delete the Transformation result on the first GET request, repeating the GET request shortly after should yield to the same results. Typical the time a result is available depends on the required processing time. The result of a job that took only a few seconds might remain available for several minutes, the result of a job that took several hours might remain available for several days. When a result is no longer available the server returns status code 404. A restart of the transformer will typically cause the Transformation results to become unavailable. Even though some transformers might keep the result available permanently, clients should never rely on this.
 
 
 ### Open issues
 
-- Name hints: can one give name hint for the extracted resource?
 - Using hydra?
 
 [RFC2119]: http://www.ietf.org/rfc/rfc2119
