@@ -265,88 +265,341 @@ Transformers are identified by an URI which is the entry point of the RESTfull t
 
 The transformer API supports both synchronous and asynchronous transformers. While a synchronous transformer return the transformation result right as the response of the transformation request asynchronous transformer will deliver their results at a later time. Asynchronous transformers might for instance require some user interaction in order to deliver their results.
 
-Transformers may invoke other transformers, we provide a pipeline 
+Transformers may invoke other transformers, we provide a transformer factory to create pipeline transformers. A pipeline transformers invokes a list of transformers in sequence passing the output of one tranformer as input to the next transformer and at the end retuning the output of the last transformer. For example this allows to chain a transformer translating the content with a transformer that does named entity extraction, which would be useful if no entity labels are available in the original language.
 
 #### LDP Transforming Proxy
 
 Fusepool P3 defined the Transforming Container API. This API bases on LDP and provides a way to describe containers (LDPCs) that transform data that is added to such a container by passing it to a transformer.
 
-While it is possible for an LDP implementation to implement this API directly requiring API vendors to adapt their implementations would not be very efficient.
+While it is possible for an LDP implementation to implement this API directly it would be hard to convince vendors of LDP implementations to add support for Transforming Containers, especially as long as this API is hardly known and there are few transformers available. As the API won't become more widely known as long as it is isn't supported this is a prototypical catch-22 situation.
 
-Data transformations are done by the Transformer API is a simple and
-generic API that allows an integrated transformation process within the
-Fusepool P3 platform. Here we describe some of the key aspects of the
-transformation component - see Section 3.1 [TODO chnage to title/link] for further technical
-details:
-
-
-
-
--   A LDP Transformation Proxy that transparently allows to invoke an
-    individual transformers, or a pipeline transformer, using a LDP [[7]](#ftnt7)
-    interaction patterns via HTTP. The original data posted
-    is always immediately forwarded to the underlying LDP
-    implementation. In addition, the result of the transformation will
-    also be posted to the same LDPC. Section 2.2.3 provides further
-    technical details about this component together a sequence diagram
-    describing how it interacts with the underlying LDP implementation.
--   Extended LDP Interaction Model for Transformation: Fusepool P3
-    provides an extended LDP Interaction Model to transform data via the
-    LDP Transformation Proxy with Fusepool P3. It is a way to associate
-    a transformer to an LDPC and a specification on what the client can
-    expect when posting contents to such a transformation container. It
-    is described as a set of ontological terms under the normative
-    namespace http://vocab.fusepool.info/eldp\# .
--   A simple and generic Transformer REST API that all transformers must
-    implement. This API provides both description of the transformers as
-    well as actual invocation of the transformation services. It
-    supports both synchronous and asynchronous request handling, as
-    specified later.
--   Different transformers implementations, that are the components
-    actually performing the transformation. 
--   There is a special pipeline transformer that, implementing the same
-    interface than a regular transformer, will support a more
-    sophisticated data lifecycle delegating to several other
-    transformers allowing for pipes and possibly other processing
-    schemes; for instance performing a transformation with
-    OpenRefine^[[9]](#ftnt9)^, that later with be enriched with
-    annotations from Stanbol^[[10]](#ftnt10)^.
--   A transformer is identified by a IRI. While it is possible that a
-    transformer is an individual implementation it is also common that
-    the implementation is rather a transformer factory, that is a
-    service that requires additional configuration for actually
-    providing a transformer. Section 2.3.1.2 provides further details
-    about the naming conventions in this transformer factory.
--   A transformer may request the user to interact with an HTTP resource
-    that is provided via a User Interaction Request. The LDPC is used as
-    a repository of messages to which a transformer can write to and the
-    UI components read from.
+To break out of this dilemma we implemented th P3 Transforming Proxy. This is an HTTP Proxy that is used as a reverse proxy in front of an LDP Server and adds the capabilities described by the Transforming Container LDPC to the proxied instance. The proxy intercepts POST requests: if the request is against an LDPC marked as Transforming Container the proxy will not only forward the request to the proxied LDP instance but also send the contents to the transformer associated to the container. Once the result of the transformation is available the results will also be posted to the LDPC. Of course, the LDPC can be associated to a pipeline transformer if multiple transformers should be executed.
 
 #### Backends 
 
 All data is persisted to the underlying backend server, which provides
 the support for the generic interfaces (LDP and SPARQL) and where the
 data will be persisted in a RDF Triple Store. Both Marmotta and Virtuoso
-provide a concrete implementations of this generic component.
+will provide a concrete implementations of this generic component.
 
-#### Communication
+
+### APIs and specifications
 
 Components communicate via REST [Fielding2002] over HTTP [Fielding1999]
-between each other. Besides this generic mechanism, the platform
-establishes some more concrete communications between some core
-components:
+between each other. RDF is used as data model and exchange format in most communications (SPARQL is an exception of this rule). All standard serializations may be potentially used, Turtle [Prudhommeaux2014] is supported by all components implemented within the project.
 
--   Components consuming data communicate with the platform mainly using
-    LDP via the LDP Transformation Proxy using the Extended LDP
-    Interaction Model for Transformation. In addition, SPARQL is also
-    provided for some other operations that require query capabilities,
-    as well of some custom web services if required.
--   The LDP transformation Proxy communicates with all transformers,
-    either regular or pipeline, using the Transformer REST API specified
-    at Section 3.1.
--   RDF is used as data model and exchange format in all communications.
-    All standard serializations MAY be potentially used, although only
-    Turtle [Prudhommeaux2014] MUST be supported by all components.
+Interaction between the components as well as with external clients is regulated by the following specifications:
+
+ * LDP
+ * SPARQL
+ * Transformer API
+ * Transforming Container API
+ * User Interaction Request API
+ * Fusepool Annotation Model
+ 
+Some other APIs are yet to be defined.
+ 
+
+#### LDP
+
+Linked Data Platform 1.0 [Speicher2014], commonly abbreviated as LDP, is
+a W3C technology which proposes to use HTTP for accessing, updating,
+creating and deleting resources from servers that expose their resources
+as Linked Data. It provides clarifications and extensions of the rules
+of Linked Data [BernersLee2006]. LDP uses standard HTTP and RDF
+techniques for constructing clients and servers that create, read, and
+write Linked Data Platform Resources (LDPR). The specification defines a
+special type of Linked Data Platform Resource: a Container (LDPC).
+Containers are very useful in building application models involving
+collections of resources, often homogeneous ones. Resources can be added
+to containers using the standard HTTP POST method.
+
+Besides a general purpose LDP 1.0 implementation compliant with the
+specification[[11]](#ftnt11), for the concrete needs of the project it
+has to provide at least:
+
+-   Implementation must support the creation of (nested) containers by posting
+    them to an existing container.
+-   In addition to the normative LDP properties, the description of an LDPC shall be allowed
+    to contain arbitrary properties.
+-   Further more, the underlying LDP implementation has to support to
+    transparently run behind the LDP Proxy, concretely this means the
+    LDPC must not assume the requested IRI to reflect the port it is
+    listening to.
+    
+LDP Specification: [http://www.w3.org/TR/ldp/](http://www.w3.org/TR/ldp/)
+
+#### SPARQL 1.1
+
+All Data in the RDF Graphs managed by a Fusepool P3 platform backend can be accessed via SPARQL 1.1 [SPARQL11]. SPARQL is the standard query language for RDF triple stores. While the LDP access allows for browsing the data SPARQL allows to run queries of arbitrary complexity against the data. 
+
+Sparql Specifications: [http://www.w3.org/TR/sparql11-overview/](http://www.w3.org/TR/sparql11-overview/)
+
+
+#### Transformation API
+
+This section defines an API for data transforming components. This
+section describes the first version of the Transformation
+API^[[15]](#ftnt15)^, which may evolve in the future at
+github^[[16]](#ftnt16)^.
+
+The term "transform" and the derived terms are used very broadly here;
+it includes processes such as annotating and RDFizing content.
+Therefore, a transformer is transformation service identified and
+accessible via an HTTP(S) IRI, while an implementation is the actual
+server processing requests against a transformer IRI.
+
+### 3.1.1 Introduction {.c2 .c21}
+
+A Transformation Service (aka Transformer) is represented by an
+dereferenceable IRI, representing a resource of type trans:Transformer.
+A GET request of the resource will return a description of the service.
+At least Turtle [Prudhommeaux2014] MUST be supported as base format to
+describe RDF resources, although other RDF serialization could be also
+supported. A POST request does the actual transformation of the
+data. This is a very generic mechanism designed to interface simple
+services that can do a very specific transformation as well as services
+that interface a complex pipe or routing mechanism to handle many input
+and output formats. Such a more complex service might well delegate to
+more simple services that also expose the interface.
+
+### 3.1.2 Transformers {.c2 .c21}
+
+Implementation MUST support the GET method for Transformers.
+Implementations MUST accept at least requests for text/turtle
+representations. Implementations MAY support other RDF and non-RDF
+formats. If an acceptable request is answered with a response entity in
+a format serializing an RDF graph this graph must contain at least:
+
+-   Exactly one triple with the Transformer as subject, rdf:type as
+    predicate and trans:Transformer as object.
+-   At least one triple with the Transformer as subject and
+    trans:supportedInputFormat as predicate.
+-   At least one triple with the Transformer as subject and
+    trans:supportedOutputFormat as predicate.
+
+Implementations SHOULD return a triple with the Transformer as subject
+and trans:supportedOutputFormat as predicate and a media type as
+xsd:StringValue of the object for any media-type that might be the
+format of the result of a successful transformation.
+
+Implementations  support POST requests, where SHOULD accept request
+entities of all media-types matching a value of one of
+the trans:supportedInputFormat properties of the Transformer contained
+in the RDF representation returned on GET requests when interpreting
+this value as media-range the same way as the media-range is for
+Accept header values as per section 14.1 of RFC2616 [RFC2616].
+
+In the case of a piped transformation, a special transformer will be
+provided including the required capabilities. Such transformer would
+allow to pipe together different transformations.
+
+### 3.1.3 Integration with LDP {.c39 .c21}
+
+The integration of the Transformer API with the the underlying LDP
+implementation is defined as an extension to the LDP specification to
+allow special containers to execute a transformation task when a member
+resource is added via a POST request. This section describes the first
+version^[[17]](#ftnt17)^,  which may evolve in the future at
+github^[[18]](#ftnt18)^.
+
+Basically the process is such: if the representation contains a triple
+with the LDPC as subject and eldp:transformer as predicate, an
+implementation MUST invoke the trans:Transformer identified by the
+object of this triple whenever a LDP-NR is created following a POST
+request to the Transformer LDPC. The request against the
+trans:Transformer SHOULD be executed using the data transmission
+specified below. The POST request SHOULD return according to section
+5.2.3.1 of LDP without waiting for the Transformer to complete. If the
+transformation successful completes, the results SHOULD be added to the
+same container. If the transformation result is RDF, a new triple like:
+
+[](#)[](#)
+
+
+    \<{transformation result}, eldp:transformedFrom, {transformation
+    source}\>
+
+
+SHOULD be added to the transformation result LDPR; where {transformation
+result} is the resource representing the transformation result and
+{transformation source} is the original LDP-NR that was used a source of
+the transformation.
+
+### 3.1.5 Data transmission {.c2 .c21}
+
+Implementations MAY honor the Prefer header [RFC7240] for the selection
+of the method used for data transmission. The Prefer header is an HTTP
+header field that can be used by a client to request that certain
+behaviors be employed by a server while processing a request. The
+Prefer request header field is used to indicate that particular server
+behaviors are preferred by the client but are not required for
+successful completion of the request. The wait preference can be used to
+establish an upper bound on the length of time, in seconds, the client
+expects it will take the server to process the request once it has been
+received. Prefer is similar in nature to the Expect header field
+[RFC7231] with the exception that servers are allowed to ignore stated
+preferences. The Preference-Applied response header MAY be included
+within a response message as an indication as to which Prefer tokens
+were honored by the server and applied to the processing of a request.
+
+The default behaviour is upon to each concrete transformer.
+Implementations SHOULD NOT assume that a client is sending a request
+without specifying a respond-async preference prefers a synchronous
+response.
+
+3.1.5.1 Synchronous data transmision
+
+If the implementations chooses to handle the request synchronously
+(Prefer: return=representation) and the transformation succeeds, it MUST
+respond with status code 200. The result of the transformation MUST be
+returned as the response entity. If the request fails because of an
+error in the POSTed entity, implementations SHOULD answer the request
+with status code 400 and a response entity explaining the error.
+
+3.1.5.2 Asynchronous data transmision
+
+If the implementation chooses to handle the request asynchronously
+(Prefer: respond-async) and the request is acceptable in that the value
+of the Accept header as the Media-Type of request entity is acceptable
+the implementations MUST respond with status code 202. The
+transformation will be executed in background, returning a
+Location header pointing to the transformation job IRI, where:
+
+-   As long as the transformation has not completed implementations MUST
+    respond with status code 202 to GET requests. The response entity
+    will describe the current status of the job in RDF, where at least
+    Turtle SHOULD be supported as basic serialization. The graph
+    serialized by the response entity SHOULD contain, at least, a triple
+    with job IRI as subject, trans:status as property and
+    trans:Processing as object.
+-   After the request is successfully completed, implementations MUST
+    respond to GET requests with status code 303 and Location header
+    pointing to the transformation result.
+
+If the transformation can not be processed, implementations SHOULD
+return 400 error, including with some explanation about the causes of
+the error. If the transformation failed, implementations SHOULD return
+500 error, including with some explanation about the causes of the
+error.
+
+3.2 Annotation data model {.c2 .c21}
+-------------------------
+
+In Fusepool P3 annotators are expected to produce annotation from
+textual content, either unstructured or extracted from any other
+structured format. All annotators MUST produce a common annotation model
+as described by this section. This is important to pipe annotators,
+allowing configurations using multiple annotation services.
+
+The base structure of this Annotation Model will be fully compatible
+with Open Annotation [Sanderson2013], but defining some additional
+relations to ease the consumption - especially the retrieval of
+Selectors for Annotations. The following figure provides an overview on
+the chosen model.
+
+![fp-anno-model.png](images/image03.png)
+
+Annotations describe (annotate) associations between related resources.
+An annotation based on the Fusepool P3 Annotation Model will consist of
+the following parts:
+
+-   oa:Annotation providing metadata and provenance information about
+    the produced annotations
+-   oa:SpecialResource acting as mediator between the optional
+    oa:Selector and the source
+-   the source represented by the IRI of the annotated text
+-   an annotation body that formally describes the annotation
+
+A fam:selector property is introduced to provide a shortcut between the
+annotation body and the 0..\* selectors. The fam:extracted-from property
+provides a direct link between the annotation body and the source. Those
+two properties allow a annotation body centric consumption of annotator
+results. Then clients, instead of manually joining over the intermediate
+resources (?annotation and ?sptarget) with a SPARQL query like:
+
+[](#)[](#)
+
+
+    PREFIX oa: \<http://www.w3.org/ns/oa\#\>
+
+    SELECT ?body ?source ?selector
+
+    WHERE {
+
+      ?annotation a oa:Annotation ;
+
+        oa:hasBody ?body ;
+
+        oa:hasTarget ?sptarget .
+
+      ?body a fam:TextAnnotation ;
+
+        oa:hasBody ?body .
+
+      ?sptarget oa:SpecificResource ;
+
+        oa:hasSource ?source ;
+
+        oa:hasSelector ?selector .
+
+    }
+
+
+ Instead they can directly retrieve the required information with a much
+simpler and faster query:
+
+[](#)[](#)
+
+
+    PREFIX oa: \<http://www.w3.org/ns/oa\#\>
+
+    PREFIX fam: \<http://vocab.fusepool.info/fam\#\>
+
+    SELECT ?body ?source ?selector
+
+    WHERE {
+
+      ?body a fam:TextAnnotation ;
+
+        fam:extracted-from ?source ;
+
+        fam:selector ?selector .
+
+    }
+
+
+In addition to this core structure model the Fusepool Annotation model
+also defines a set of Annotation Types for the annotation of different
+analysis results:
+
+1.  Language Annotation: used to describe the Language of the analysed
+    text
+2.  Text Annotation: used to describe Named Entities detected in the
+    text. Such entities can originate from Named Entity Recognition
+    (NER) tools annotators that detect mentions of Entities based on
+    Dictionaries
+3.  Entity Annotation: used to suggest Entities part of some kind of
+    controlled vocabulary for mentions in the text. Entity Annotations
+    are suggestions for Text Annotations. The oa:Choice construct is
+    used for modelling those
+4.  Topic Annotation: used to classify a document along topics defined
+    in some classification scheme (e.g. skos:Concepts part of a
+    skos:ConceptScheme)
+
+All those Annotation Types will act as annotation bodies as defined in
+the core annotation structure. Annotation Types are extensible. This
+allows Annotations whose analysis results are not covered by the
+predefined Annotation Types to define their own.
+
+This section defines the first version of the Fusepool P3 Annotation
+Model^[[19]](#ftnt19)^, which will be specified in detail in the future
+by deliverable D5.2, Data retrieval for semantic enrichment/processing
+and semantic indexes for domain specific data retrieval.
+
+
+
+
 
 ### Workflows
 
@@ -760,330 +1013,6 @@ on top of some standard technologies implemented (LDP 1.0, SPARQL 1.1,
 etc), where some concrete non-functional requirements need to be
 satisfied
 
-### 2.4.1 LDP {.c2 .c21}
-
-Linked Data Platform 1.0 [Speicher2014], commonly abbreviated as LDP, is
-a W3C technology which proposes to use HTTP for accessing, updating,
-creating and deleting resources from servers that expose their resources
-as Linked Data. It provides clarifications and extensions of the rules
-of Linked Data [BernersLee2006]. LDP uses standard HTTP and RDF
-techniques for constructing clients and servers that create, read, and
-write Linked Data Platform Resources (LDPR). The specification defines a
-special type of Linked Data Platform Resource: a Container (LDPC).
-Containers are very useful in building application models involving
-collections of resources, often homogeneous ones. Resources can be added
-to containers using standard HTTP operations like POST.
-
-Besides a general purpose LDP 1.0 implementation compliant with the
-specification^[[11]](#ftnt11)^, for the concrete needs of the project it
-has to provide at least:
-
--   Implementation MUST support the creation of containers by posting
-    them to a transformation container.
--   In addition to the normative LDP properties, it MUST be allowed to
-    post arbitrary properties to a LDPC.
--   Further more, the underlying LDP implementation has to support to
-    transparently run behind the LDP Proxy, concretely this means the
-    LDPC must not assume the requested IRI to reflect the port it is
-    listening to.
-
-### 2.4.2 Persistence {.c2 .c21}
-
-Concrete implementations of the Fusepool P3 platform backends must
-supports LDP 1.0 [Speicher2014] and SPARQL 1.1 [SPARQL11] to provide
-persistence support to all components of the Fusepool P3 platform.
-
-Internal implementation details are out of the scope of this document.
-But it is encouraged that implementations may support standard
-mechanisms, such as the Sesame SAIL API^[[12]](#ftnt12)^, to support
-different storage solutions. That is one the mechanisms the project is
-currently working to provide LDP support via Marmotta over the Virtuoso
-triplestore^[[13]](#ftnt13)^, for example. In addition, the project is
-also developing some mixed approaches, such as providing LDP support
-over SPARQL 1.1^[[14]](#ftnt14)^. But so far these are just experiments
-to lower the level of requirements required by the platform beyond these
-formal requirements.
-
-All these details will be further described in the deliverable D5.3,
-Data storage access via generic RDF API.
-
-### 2.4.3 Other requirements {.c2 .c21}
-
-All non-functional requirements are out of the scope of this document.
-Broader functional project requirements are described in details by
-deliverable D1.1 (Use cases and data specified, data modelled and
-prepared).
-
- {.c24 .c21}
-
-* * * * *
-
- {.c24 .c21}
-
-3. Specifications {.c39 .c21}
-=================
-
-3.1 Transformation API {.c2 .c21}
-----------------------
-
-This section defines an API for data transforming components. This
-section describes the first version of the Transformation
-API^[[15]](#ftnt15)^, which may evolve in the future at
-github^[[16]](#ftnt16)^.
-
-The term "transform" and the derived terms are used very broadly here;
-it includes processes such as annotating and RDFizing content.
-Therefore, a transformer is transformation service identified and
-accessible via an HTTP(S) IRI, while an implementation is the actual
-server processing requests against a transformer IRI.
-
-### 3.1.1 Introduction {.c2 .c21}
-
-A Transformation Service (aka Transformer) is represented by an
-dereferenceable IRI, representing a resource of type trans:Transformer.
-A GET request of the resource will return a description of the service.
-At least Turtle [Prudhommeaux2014] MUST be supported as base format to
-describe RDF resources, although other RDF serialization could be also
-supported. A POST request does the actual transformation of the
-data. This is a very generic mechanism designed to interface simple
-services that can do a very specific transformation as well as services
-that interface a complex pipe or routing mechanism to handle many input
-and output formats. Such a more complex service might well delegate to
-more simple services that also expose the interface.
-
-### 3.1.2 Transformers {.c2 .c21}
-
-Implementation MUST support the GET method for Transformers.
-Implementations MUST accept at least requests for text/turtle
-representations. Implementations MAY support other RDF and non-RDF
-formats. If an acceptable request is answered with a response entity in
-a format serializing an RDF graph this graph must contain at least:
-
--   Exactly one triple with the Transformer as subject, rdf:type as
-    predicate and trans:Transformer as object.
--   At least one triple with the Transformer as subject and
-    trans:supportedInputFormat as predicate.
--   At least one triple with the Transformer as subject and
-    trans:supportedOutputFormat as predicate.
-
-Implementations SHOULD return a triple with the Transformer as subject
-and trans:supportedOutputFormat as predicate and a media type as
-xsd:StringValue of the object for any media-type that might be the
-format of the result of a successful transformation.
-
-Implementations  support POST requests, where SHOULD accept request
-entities of all media-types matching a value of one of
-the trans:supportedInputFormat properties of the Transformer contained
-in the RDF representation returned on GET requests when interpreting
-this value as media-range the same way as the media-range is for
-Accept header values as per section 14.1 of RFC2616 [RFC2616].
-
-In the case of a piped transformation, a special transformer will be
-provided including the required capabilities. Such transformer would
-allow to pipe together different transformations.
-
-### 3.1.3 Integration with LDP {.c39 .c21}
-
-The integration of the Transformer API with the the underlying LDP
-implementation is defined as an extension to the LDP specification to
-allow special containers to execute a transformation task when a member
-resource is added via a POST request. This section describes the first
-version^[[17]](#ftnt17)^,  which may evolve in the future at
-github^[[18]](#ftnt18)^.
-
-Basically the process is such: if the representation contains a triple
-with the LDPC as subject and eldp:transformer as predicate, an
-implementation MUST invoke the trans:Transformer identified by the
-object of this triple whenever a LDP-NR is created following a POST
-request to the Transformer LDPC. The request against the
-trans:Transformer SHOULD be executed using the data transmission
-specified below. The POST request SHOULD return according to section
-5.2.3.1 of LDP without waiting for the Transformer to complete. If the
-transformation successful completes, the results SHOULD be added to the
-same container. If the transformation result is RDF, a new triple like:
-
-[](#)[](#)
-
-
-    \<{transformation result}, eldp:transformedFrom, {transformation
-    source}\>
-
-
-SHOULD be added to the transformation result LDPR; where {transformation
-result} is the resource representing the transformation result and
-{transformation source} is the original LDP-NR that was used a source of
-the transformation.
-
-### 3.1.5 Data transmission {.c2 .c21}
-
-Implementations MAY honor the Prefer header [RFC7240] for the selection
-of the method used for data transmission. The Prefer header is an HTTP
-header field that can be used by a client to request that certain
-behaviors be employed by a server while processing a request. The
-Prefer request header field is used to indicate that particular server
-behaviors are preferred by the client but are not required for
-successful completion of the request. The wait preference can be used to
-establish an upper bound on the length of time, in seconds, the client
-expects it will take the server to process the request once it has been
-received. Prefer is similar in nature to the Expect header field
-[RFC7231] with the exception that servers are allowed to ignore stated
-preferences. The Preference-Applied response header MAY be included
-within a response message as an indication as to which Prefer tokens
-were honored by the server and applied to the processing of a request.
-
-The default behaviour is upon to each concrete transformer.
-Implementations SHOULD NOT assume that a client is sending a request
-without specifying a respond-async preference prefers a synchronous
-response.
-
-3.1.5.1 Synchronous data transmision
-
-If the implementations chooses to handle the request synchronously
-(Prefer: return=representation) and the transformation succeeds, it MUST
-respond with status code 200. The result of the transformation MUST be
-returned as the response entity. If the request fails because of an
-error in the POSTed entity, implementations SHOULD answer the request
-with status code 400 and a response entity explaining the error.
-
-3.1.5.2 Asynchronous data transmision
-
-If the implementation chooses to handle the request asynchronously
-(Prefer: respond-async) and the request is acceptable in that the value
-of the Accept header as the Media-Type of request entity is acceptable
-the implementations MUST respond with status code 202. The
-transformation will be executed in background, returning a
-Location header pointing to the transformation job IRI, where:
-
--   As long as the transformation has not completed implementations MUST
-    respond with status code 202 to GET requests. The response entity
-    will describe the current status of the job in RDF, where at least
-    Turtle SHOULD be supported as basic serialization. The graph
-    serialized by the response entity SHOULD contain, at least, a triple
-    with job IRI as subject, trans:status as property and
-    trans:Processing as object.
--   After the request is successfully completed, implementations MUST
-    respond to GET requests with status code 303 and Location header
-    pointing to the transformation result.
-
-If the transformation can not be processed, implementations SHOULD
-return 400 error, including with some explanation about the causes of
-the error. If the transformation failed, implementations SHOULD return
-500 error, including with some explanation about the causes of the
-error.
-
-3.2 Annotation data model {.c2 .c21}
--------------------------
-
-In Fusepool P3 annotators are expected to produce annotation from
-textual content, either unstructured or extracted from any other
-structured format. All annotators MUST produce a common annotation model
-as described by this section. This is important to pipe annotators,
-allowing configurations using multiple annotation services.
-
-The base structure of this Annotation Model will be fully compatible
-with Open Annotation [Sanderson2013], but defining some additional
-relations to ease the consumption - especially the retrieval of
-Selectors for Annotations. The following figure provides an overview on
-the chosen model.
-
-![fp-anno-model.png](images/image03.png)
-
-Annotations describe (annotate) associations between related resources.
-An annotation based on the Fusepool P3 Annotation Model will consist of
-the following parts:
-
--   oa:Annotation providing metadata and provenance information about
-    the produced annotations
--   oa:SpecialResource acting as mediator between the optional
-    oa:Selector and the source
--   the source represented by the IRI of the annotated text
--   an annotation body that formally describes the annotation
-
-A fam:selector property is introduced to provide a shortcut between the
-annotation body and the 0..\* selectors. The fam:extracted-from property
-provides a direct link between the annotation body and the source. Those
-two properties allow a annotation body centric consumption of annotator
-results. Then clients, instead of manually joining over the intermediate
-resources (?annotation and ?sptarget) with a SPARQL query like:
-
-[](#)[](#)
-
-
-    PREFIX oa: \<http://www.w3.org/ns/oa\#\>
-
-    SELECT ?body ?source ?selector
-
-    WHERE {
-
-      ?annotation a oa:Annotation ;
-
-        oa:hasBody ?body ;
-
-        oa:hasTarget ?sptarget .
-
-      ?body a fam:TextAnnotation ;
-
-        oa:hasBody ?body .
-
-      ?sptarget oa:SpecificResource ;
-
-        oa:hasSource ?source ;
-
-        oa:hasSelector ?selector .
-
-    }
-
-
- Instead they can directly retrieve the required information with a much
-simpler and faster query:
-
-[](#)[](#)
-
-
-    PREFIX oa: \<http://www.w3.org/ns/oa\#\>
-
-    PREFIX fam: \<http://vocab.fusepool.info/fam\#\>
-
-    SELECT ?body ?source ?selector
-
-    WHERE {
-
-      ?body a fam:TextAnnotation ;
-
-        fam:extracted-from ?source ;
-
-        fam:selector ?selector .
-
-    }
-
-
-In addition to this core structure model the Fusepool Annotation model
-also defines a set of Annotation Types for the annotation of different
-analysis results:
-
-1.  Language Annotation: used to describe the Language of the analysed
-    text
-2.  Text Annotation: used to describe Named Entities detected in the
-    text. Such entities can originate from Named Entity Recognition
-    (NER) tools annotators that detect mentions of Entities based on
-    Dictionaries
-3.  Entity Annotation: used to suggest Entities part of some kind of
-    controlled vocabulary for mentions in the text. Entity Annotations
-    are suggestions for Text Annotations. The oa:Choice construct is
-    used for modelling those
-4.  Topic Annotation: used to classify a document along topics defined
-    in some classification scheme (e.g. skos:Concepts part of a
-    skos:ConceptScheme)
-
-All those Annotation Types will act as annotation bodies as defined in
-the core annotation structure. Annotation Types are extensible. This
-allows Annotations whose analysis results are not covered by the
-predefined Annotation Types to define their own.
-
-This section defines the first version of the Fusepool P3 Annotation
-Model^[[19]](#ftnt19)^, which will be specified in detail in the future
-by deliverable D5.2, Data retrieval for semantic enrichment/processing
-and semantic indexes for domain specific data retrieval.
 
 3.3 Access control {.c39 .c21}
 ------------------
@@ -1711,13 +1640,13 @@ data manager who will interact with the tools produced by the project.
 
 [[7]](#ftnt7) [http://www.w3.org/TR/ldp/](http://www.w3.org/TR/ldp/)
 
-[[8]](#ftnt_ref8) [http://wiki.opensemanticframework.org/index.php/RDFizer\_Concept](http://wiki.opensemanticframework.org/index.php/RDFizer_Concept)
+[[8]](#ftnt8) [http://wiki.opensemanticframework.org/index.php/RDFizer\_Concept](http://wiki.opensemanticframework.org/index.php/RDFizer_Concept)
 
-[[9]](#ftnt_ref9) [http://openrefine.org](http://openrefine.org)
+[[9]](#ftnt9) [http://openrefine.org](http://openrefine.org)
 
-[[10]](#ftnt_ref10) [http://stanbol.apache.org](http://stanbol.apache.org)
+[[10]](#ftnt10) [http://stanbol.apache.org](http://stanbol.apache.org)
 
-[[11]](#ftnt_ref11) According the official W3C LDP Test Suite, available
+[[11]](#ftnt11) According the official W3C LDP Test Suite, available
 at
 [http://w3c.github.io/ldp-testsuite](http://w3c.github.io/ldp-testsuite)
 
