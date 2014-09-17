@@ -336,95 +336,25 @@ All Data in the RDF Graphs managed by a Fusepool P3 platform backend can be acce
 Sparql Specifications: [http://www.w3.org/TR/sparql11-overview/](http://www.w3.org/TR/sparql11-overview/)
 
 
-#### Transformation API
+#### Transformer API
 
-This section defines an API for data transforming components. This
-section describes the first version of the Transformation
-API^[[15]](#ftnt15)^, which may evolve in the future at
-github^[[16]](#ftnt16)^.
+The transformer API defines a RESTfull and RDF based API for data transforming components. It supports both synchronous and asynchronous execution of the data transformation tasks. While similar APIs aree provided by other projects such as by Apache Any23 ([Apache Any23 REST Service](http://any23.apache.org/service.html)) or by Apache Stanbol ([Apache Stanbol Enhancer RESTful API](http://stanbol.apache.org/docs/trunk/components/enhancer/#RESTful_API)) none of these APIs offered the required flexibility. We hope that the advantages of the API we propose, like the RDF service description and the possibility of asynchronous execution will convince other communities to adopt it or might contribute to a new and more broadly accepted standard.
 
-The term "transform" and the derived terms are used very broadly here;
-it includes processes such as annotating and RDFizing content.
-Therefore, a transformer is transformation service identified and
-accessible via an HTTP(S) IRI, while an implementation is the actual
-server processing requests against a transformer IRI.
+The Specification for the Transformer API is an annex to this deliverable and also available in its latest version at: [https://github.com/fusepoolP3/overall-architecture/blob/master/transformer-api.md](https://github.com/fusepoolP3/overall-architecture/blob/master/transformer-api.md)
 
-### 3.1.1 Introduction {.c2 .c21}
+#### Transforming Container API
 
-A Transformation Service (aka Transformer) is represented by an
-dereferenceable IRI, representing a resource of type trans:Transformer.
-A GET request of the resource will return a description of the service.
-At least Turtle [Prudhommeaux2014] MUST be supported as base format to
-describe RDF resources, although other RDF serialization could be also
-supported. A POST request does the actual transformation of the
-data. This is a very generic mechanism designed to interface simple
-services that can do a very specific transformation as well as services
-that interface a complex pipe or routing mechanism to handle many input
-and output formats. Such a more complex service might well delegate to
-more simple services that also expose the interface.
-
-### 3.1.2 Transformers {.c2 .c21}
-
-Implementation MUST support the GET method for Transformers.
-Implementations MUST accept at least requests for text/turtle
-representations. Implementations MAY support other RDF and non-RDF
-formats. If an acceptable request is answered with a response entity in
-a format serializing an RDF graph this graph must contain at least:
-
--   Exactly one triple with the Transformer as subject, rdf:type as
-    predicate and trans:Transformer as object.
--   At least one triple with the Transformer as subject and
-    trans:supportedInputFormat as predicate.
--   At least one triple with the Transformer as subject and
-    trans:supportedOutputFormat as predicate.
-
-Implementations SHOULD return a triple with the Transformer as subject
-and trans:supportedOutputFormat as predicate and a media type as
-xsd:StringValue of the object for any media-type that might be the
-format of the result of a successful transformation.
-
-Implementations  support POST requests, where SHOULD accept request
-entities of all media-types matching a value of one of
-the trans:supportedInputFormat properties of the Transformer contained
-in the RDF representation returned on GET requests when interpreting
-this value as media-range the same way as the media-range is for
-Accept header values as per section 14.1 of RFC2616 [RFC2616].
-
-In the case of a piped transformation, a special transformer will be
-provided including the required capabilities. Such transformer would
-allow to pipe together different transformations.
-
-### 3.1.3 Integration with LDP {.c39 .c21}
-
-The integration of the Transformer API with the the underlying LDP
-implementation is defined as an extension to the LDP specification to
-allow special containers to execute a transformation task when a member
-resource is added via a POST request. This section describes the first
-version^[[17]](#ftnt17)^,  which may evolve in the future at
-github^[[18]](#ftnt18)^.
+The Transforming Container API is defined as an extension to the LDP specification to allow special containers to execute a Transformer when a member
+resource is added via a POST request. This allows to automatically Transform documents when they are added to a Linked Data Platform Container (LDPC).
 
 Basically the process is such: if the representation contains a triple
 with the LDPC as subject and eldp:transformer as predicate, an
-implementation MUST invoke the trans:Transformer identified by the
+implementation invokes the trans:Transformer identified by the
 object of this triple whenever a LDP-NR is created following a POST
-request to the Transformer LDPC. The request against the
-trans:Transformer SHOULD be executed using the data transmission
-specified below. The POST request SHOULD return according to section
-5.2.3.1 of LDP without waiting for the Transformer to complete. If the
-transformation successful completes, the results SHOULD be added to the
-same container. If the transformation result is RDF, a new triple like:
+request to the Transformer LDPC. The results of the transformation will be added to the same container.
 
-[](#)[](#)
+The Specification for the Transforming Container API is an annex to this deliverable and also available in its latest version at: [https://github.com/fusepoolP3/overall-architecture/blob/master/transforming-container-api.md](https://github.com/fusepoolP3/overall-architecture/blob/master/transforming-container-api.md)
 
-
-    \<{transformation result}, eldp:transformedFrom, {transformation
-    source}\>
-
-
-SHOULD be added to the transformation result LDPR; where {transformation
-result} is the resource representing the transformation result and
-{transformation source} is the original LDP-NR that was used a source of
-the transformation.
 
 ### 3.1.5 Data transmission {.c2 .c21}
 
