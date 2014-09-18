@@ -128,8 +128,8 @@ IRI prefixed:
 | Prefix |                                                                                                                                                                                             Namespace                                                                                                                                                                                              |
 |--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | rdf    | [http://www.w3.org/1999/02/22-rdf-syntax-ns\#](http://www.w3.org/1999/02/22-rdf-syntax-ns)
-| rdfs   | [http://www.w3.org/2000/01/rdf-schema\#](http://www.w3.org/2000/01/rdf-schema)                                                                                                                                                                                                              |
-| xsd    | [http://www.w3.org/2001/XMLSchema\#](http://www.w3.org/2001/XMLSchema)                                                                                                                                                                                                                                 |
+| rdfs   | [http://www.w3.org/2000/01/rdf-schema\#](http://www.w3.org/2000/01/rdf-schema) |
+| xsd    | [http://www.w3.org/2001/XMLSchema\#](http://www.w3.org/2001/XMLSchema)     |
 | dct    | [http://purl.org/dc/terms/](http://purl.org/dc/terms/) |
 | oa     | [http://www.w3.org/ns/oa\#](http://www.w3.org/ns/oa#)|
 | ldp    | [http://www.w3.org/ns/ldp\#](http://www.w3.org/ns/ldp#)|
@@ -1343,58 +1343,58 @@ Copyright Fusepool P3 Consortium              /
 
 [1]<a name="ftnt1"></a> [http://5stardata.info](http://5stardata.info)
 
-[[2]](#ftnt2) [https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md](https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md)
+[2]<a name="ftnt2"></a> [https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md](https://github.com/fusepoolP3/overall-architecture/blob/master/architectural-principles.md)
 
-[[3]](#ftnt3) [https://github.com/fusepoolP3/overall-architecture/blob/20dc491a3f9ced38061fb853d8cf0789b634b755/platform-architectural-proposal-srfg.md](https://github.com/fusepoolP3/overall-architecture/blob/20dc491a3f9ced38061fb853d8cf0789b634b755/platform-architectural-proposal-srfg.md)
+[3]<a name="ftnt3"></a> [https://github.com/fusepoolP3/overall-architecture/blob/20dc491a3f9ced38061fb853d8cf0789b634b755/platform-architectural-proposal-srfg.md](https://github.com/fusepoolP3/overall-architecture/blob/20dc491a3f9ced38061fb853d8cf0789b634b755/platform-architectural-proposal-srfg.md)
 
-[[4]](#ftnt4) [http://marmotta.apache.org](http://marmotta.apache.org)
+[4]<a name="ftnt4"></a> [http://marmotta.apache.org](http://marmotta.apache.org)
 
-[[5]](#ftnt5) [http://virtuoso.openlinksw.com](http://virtuoso.openlinksw.com)
+[5]<a name="ftnt5"></a> [http://virtuoso.openlinksw.com](http://virtuoso.openlinksw.com)
 
-[[6]](#ftnt6) For the scope of this document, the "final user" is a
+[6]<a name="ftnt6"></a> For the scope of this document, the "final user" is a
 data manager who will interact with the tools produced by the project.
 
-[[7]](#ftnt7) [http://www.w3.org/TR/ldp/](http://www.w3.org/TR/ldp/)
+[7]<a name="ftnt7"></a> [http://www.w3.org/TR/ldp/](http://www.w3.org/TR/ldp/)
 
-[[8]](#ftnt8) [http://wiki.opensemanticframework.org/index.php/RDFizer\_Concept](http://wiki.opensemanticframework.org/index.php/RDFizer_Concept)
+[8]<a name="ftnt8"></a> [http://wiki.opensemanticframework.org/index.php/RDFizer\_Concept](http://wiki.opensemanticframework.org/index.php/RDFizer_Concept)
 
-[[9]](#ftnt9) [http://openrefine.org](http://openrefine.org)
+[9]<a name="ftnt9"></a> [http://openrefine.org](http://openrefine.org)
 
-[[10]](#ftnt10) [http://stanbol.apache.org](http://stanbol.apache.org)
+[10]<a name="ftnt10"></a> [http://stanbol.apache.org](http://stanbol.apache.org)
 
-[[11]](#ftnt11) According the official W3C LDP Test Suite, available
+[11]<a name="ftnt11"></a> According the official W3C LDP Test Suite, available
 at
 [http://w3c.github.io/ldp-testsuite](http://w3c.github.io/ldp-testsuite)
 
-[[12]](#ftnt_ref12) [http://openrdf.callimachus.net/sesame/2.7/docs/system.docbook?view\#The\_SAIL\_API](http://openrdf.callimachus.net/sesame/2.7/docs/system.docbook?view#The_SAIL_API)
+[12]<a name="ftnt12"></a> [http://openrdf.callimachus.net/sesame/2.7/docs/system.docbook?view\#The\_SAIL\_API](http://openrdf.callimachus.net/sesame/2.7/docs/system.docbook?view#The_SAIL_API)
 
-[[13]](#ftnt_ref13) [http://github.com/fusepoolP3/marmotta-virtuoso](http://github.com/fusepoolP3/marmotta-virtuoso)
+[13]<a name="ftnt13"></a> [http://github.com/fusepoolP3/marmotta-virtuoso](http://github.com/fusepoolP3/marmotta-virtuoso)
 
-[[14]](#ftnt_ref14) [http://s.apache.org/gsoc-2014-marmotta-ldp-over-sparql](http://s.apache.org/gsoc-2014-marmotta-ldp-over-sparql)
+[14]<a name="ftnt14"></a> [http://s.apache.org/gsoc-2014-marmotta-ldp-over-sparql](http://s.apache.org/gsoc-2014-marmotta-ldp-over-sparql)
 
-[[15]](#ftnt_ref15) [https://github.com/fusepoolP3/overall-architecture/blob/2c0f3a7bdcc7174768b87f300bbd6c16a106355f/data-transformer-api.md](https://github.com/fusepoolP3/overall-architecture/blob/2c0f3a7bdcc7174768b87f300bbd6c16a106355f/data-transformer-api.md)
+[15]<a name="ftnt15"></a> [https://github.com/fusepoolP3/overall-architecture/blob/2c0f3a7bdcc7174768b87f300bbd6c16a106355f/data-transformer-api.md](https://github.com/fusepoolP3/overall-architecture/blob/2c0f3a7bdcc7174768b87f300bbd6c16a106355f/data-transformer-api.md)
 
-[[16]](#ftnt_ref16) [https://github.com/fusepoolP3/overall-architecture/blob/master/data-transformer-api.md](https://github.com/fusepoolP3/overall-architecture/blob/master/data-transformer-api.md)
+[16]<a name="ftnt16"></a> [https://github.com/fusepoolP3/overall-architecture/blob/master/data-transformer-api.md](https://github.com/fusepoolP3/overall-architecture/blob/master/data-transformer-api.md)
 
-[[17]](#ftnt_ref17) [https://github.com/fusepoolP3/overall-architecture/blob/5eff446953449ec408a5c3ce87ae1f345e4f4ee2/transforming-container-api.md](https://github.com/fusepoolP3/overall-architecture/blob/5eff446953449ec408a5c3ce87ae1f345e4f4ee2/transforming-container-api.md)
+[17]<a name="ftnt17"></a> [https://github.com/fusepoolP3/overall-architecture/blob/5eff446953449ec408a5c3ce87ae1f345e4f4ee2/transforming-container-api.md](https://github.com/fusepoolP3/overall-architecture/blob/5eff446953449ec408a5c3ce87ae1f345e4f4ee2/transforming-container-api.md)
 
-[[18]](#ftnt_ref18) [https://github.com/fusepoolP3/overall-architecture/blob/master/transforming-container-api.md](https://github.com/fusepoolP3/overall-architecture/blob/master/transforming-container-api.md)
+[18]<a name="ftnt18"></a> [https://github.com/fusepoolP3/overall-architecture/blob/master/transforming-container-api.md](https://github.com/fusepoolP3/overall-architecture/blob/master/transforming-container-api.md)
 
-[[19]](#ftnt_ref19) [https://github.com/fusepoolP3/overall-architecture/blob/69ae9f866302cfa00ede64de77bba36a88bbbb12/wp3/fp-anno-model/fp-anno-model.md](https://github.com/fusepoolP3/overall-architecture/blob/69ae9f866302cfa00ede64de77bba36a88bbbb12/wp3/fp-anno-model/fp-anno-model.md)
+[19]<a name="ftnt19"></a> [https://github.com/fusepoolP3/overall-architecture/blob/69ae9f866302cfa00ede64de77bba36a88bbbb12/wp3/fp-anno-model/fp-anno-model.md](https://github.com/fusepoolP3/overall-architecture/blob/69ae9f866302cfa00ede64de77bba36a88bbbb12/wp3/fp-anno-model/fp-anno-model.md)
 
-[[20]](#ftnt_ref20) [https://www.w3.org/2012/ldp/wiki/AccessControl](https://www.w3.org/2012/ldp/wiki/AccessControl)
+[20]<a name="ftnt20"></a> [https://www.w3.org/2012/ldp/wiki/AccessControl](https://www.w3.org/2012/ldp/wiki/AccessControl)
 
-[[21]](#ftnt_ref21)[ ](http://marmotta.apache.org/platform/security-module.html)[http://marmotta.apache.org/platform/security-module.html](http://marmotta.apache.org/platform/security-module.html)
+[21]<a name="ftnt21"></a>[ ](http://marmotta.apache.org/platform/security-module.html)[http://marmotta.apache.org/platform/security-module.html](http://marmotta.apache.org/platform/security-module.html)
 
-[[22]](#ftnt_ref22) [http://bitbucket.org/srfgkmt/s-watchdog](http://bitbucket.org/srfgkmt/s-watchdog)
+[22]<a name="ftnt22"></a> [http://bitbucket.org/srfgkmt/s-watchdog](http://bitbucket.org/srfgkmt/s-watchdog)
 
-[[23]](#ftnt_ref23) [http://issues.apache.org/jira/browse/MARMOTTA-222](http://issues.apache.org/jira/browse/MARMOTTA-222)
+[23]<a name="ftnt23"></a> [http://issues.apache.org/jira/browse/MARMOTTA-222](http://issues.apache.org/jira/browse/MARMOTTA-222)
 
-[[24]](#ftnt_ref24) [http://issues.apache.org/jira/browse/MARMOTTA-432](http://issues.apache.org/jira/browse/MARMOTTA-432)
+[24]<a name="ftnt24"></a> [http://issues.apache.org/jira/browse/MARMOTTA-432](http://issues.apache.org/jira/browse/MARMOTTA-432)
 
-[[25]](#ftnt_ref25) [http://www.w3.org/2012/ldp/wiki/AccessControl](http://www.w3.org/2012/ldp/wiki/AccessControl)
+[25]<a name="ftnt25"></a> [http://www.w3.org/2012/ldp/wiki/AccessControl](http://www.w3.org/2012/ldp/wiki/AccessControl)
 
-[[26]](#ftnt_ref26) Please, note that VAL is a component of Virtuoso
+[26]<a name="ftnt26"></a> Please, note that VAL is a component of Virtuoso
 Commercial Edition only, and it is not part of Virtuoso Open Source
 Edition.  If required, OpenLink would allow the Fusepool P3 consortium
 to use Virtuoso commercial edition with a time limited license for the
@@ -1405,26 +1405,26 @@ extensions without affecting the overall pipeline. Therefore this
 commercial component is just an optional extension, which is not
 required to run the open source version of the Fusepool P3 platform.
 
-[[27]](#ftnt_ref27) [https://www.w3.org/2012/ldp/wiki/AccessControl](https://www.w3.org/2012/ldp/wiki/AccessControl)
+[27]<a name="ftnt27"></a> [https://www.w3.org/2012/ldp/wiki/AccessControl](https://www.w3.org/2012/ldp/wiki/AccessControl)
 
-[[28]](#ftnt_ref28) [http://www.w3.org/ns/auth/acl\#](http://www.w3.org/ns/auth/acl#)
+[28]<a name="ftnt28"></a> [http://www.w3.org/ns/auth/acl\#](http://www.w3.org/ns/auth/acl#)
 
-[[29]](#ftnt_ref29) [http://www.openlinksw.com/ontology/acl\#](http://www.openlinksw.com/ontology/acl#)
+[29]<a name="ftnt29"></a> [http://www.openlinksw.com/ontology/acl\#](http://www.openlinksw.com/ontology/acl#)
 
-[[30]](#ftnt_ref30) [http://csrc.nist.gov/projects/abac/](http://csrc.nist.gov/projects/abac/)
+[30]<a name="ftnt30"></a> [http://csrc.nist.gov/projects/abac/](http://csrc.nist.gov/projects/abac/)
 
-[[31]](#ftnt_ref31) [https://github.com/fusepoolP3/platform](https://github.com/fusepoolP3/platform)
+[31]<a name="ftnt31"></a> [https://github.com/fusepoolP3/platform](https://github.com/fusepoolP3/platform)
 
-[[32]](#ftnt_ref32) [https://github.com/fusepoolP3/platform/releases/tag/0.1.0](https://github.com/fusepoolP3/platform/releases/tag/0.1.0)
+[32]<a name="ftnt32"></a> [https://github.com/fusepoolP3/platform/releases/tag/0.1.0](https://github.com/fusepoolP3/platform/releases/tag/0.1.0)
 
-[[33]](#ftnt_ref33) [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+[33]<a name="ftnt33"></a> [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
-[[34]](#ftnt_ref34) [http://maven.apache.org](http://maven.apache.org)
+[34]<a name="ftnt34"></a> [http://maven.apache.org](http://maven.apache.org)
 
-[[35]](#ftnt_ref35) [http://stanbol.apache.org](http://stanbol.apache.org)
+[35]<a name="ftnt35"></a> [http://stanbol.apache.org](http://stanbol.apache.org)
 
-[[36]](#ftnt_ref36) [https://www.gnu.org/software/bash/](https://www.gnu.org/software/bash/)
+[36]<a name="ftnt36"></a> [https://www.gnu.org/software/bash/](https://www.gnu.org/software/bash/)
 
-[[37]](#ftnt_ref37) [https://travis-ci.org/fusepoolP3/platform](https://travis-ci.org/fusepoolP3/platform)
+[37]<a name="ftnt37"></a> [https://travis-ci.org/fusepoolP3/platform](https://travis-ci.org/fusepoolP3/platform)
 
-[[38]](#ftnt_ref38) [https://github.com/fusepoolP3/platform](https://github.com/fusepoolP3/platform)
+[38]<a name="ftnt38"></a> [https://github.com/fusepoolP3/platform](https://github.com/fusepoolP3/platform)
