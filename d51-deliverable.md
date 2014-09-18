@@ -189,8 +189,8 @@ In the past years many powerful tools got developed or extended to
 support creation and maintenance of Linked Data. Also new W3C standards
 and vocabularies are developed for turning legacy data into Linked Data.
 Many of these tools and standards are developed, extended or implemented
-by Fusepool P3 project partners. The emerging Linked Data Platform Standard (LDP)[[7]](#ftnt7) provide standardized means for making collections of linked data resources 
-accessible. 
+by Fusepool P3 project partners. The emerging Linked Data Platform Standard (LDP)[[7]](#ftnt7) provide standardized means for making collections of linked data resources
+accessible.
 
 What is lacking is an integration framework that combines the data transformation to RDF, possible enhancement steps and the publishing of the Linked Data. Fusepool P3 will provide such an integration framework along with User Interface tools that serve both to model the data publication process as well as to coordinate the human interactions that might be required while the data is processed.
 
@@ -275,7 +275,7 @@ While it is possible for an LDP implementation to implement this API directly it
 
 To break out of this dilemma we implemented th P3 Transforming Proxy. This is an HTTP Proxy that is used as a reverse proxy in front of an LDP Server and adds the capabilities described by the Transforming Container LDPC to the proxied instance. The proxy intercepts POST requests: if the request is against an LDPC marked as Transforming Container the proxy will not only forward the request to the proxied LDP instance but also send the contents to the transformer associated to the container. Once the result of the transformation is available the results will also be posted to the LDPC. Of course, the LDPC can be associated to a pipeline transformer if multiple transformers should be executed.
 
-#### Backends 
+#### Backends
 
 All data is persisted to the underlying backend server, which provides
 the support for the generic interfaces (LDP and SPARQL) and where the
@@ -296,9 +296,9 @@ Interaction between the components as well as with external clients is regulated
  * Transforming Container API
  * User Interaction Request API
  * Fusepool Annotation Model (FAM)
- 
+
 Some other APIs are yet to be defined.
- 
+
 
 #### LDP
 
@@ -326,12 +326,12 @@ has to provide at least:
     transparently run behind the LDP Proxy, concretely this means the
     LDPC must not assume the requested IRI to reflect the port it is
     listening to.
-    
+
 LDP Specification: [http://www.w3.org/TR/ldp/](http://www.w3.org/TR/ldp/)
 
 #### SPARQL 1.1
 
-All Data in the RDF Graphs managed by a Fusepool P3 platform backend can be accessed via SPARQL 1.1 [SPARQL11]. SPARQL is the standard query language for RDF triple stores. While the LDP access allows for browsing the data SPARQL allows to run queries of arbitrary complexity against the data. 
+All Data in the RDF Graphs managed by a Fusepool P3 platform backend can be accessed via SPARQL 1.1 [SPARQL11]. SPARQL is the standard query language for RDF triple stores. While the LDP access allows for browsing the data SPARQL allows to run queries of arbitrary complexity against the data.
 
 Sparql Specifications: [http://www.w3.org/TR/sparql11-overview/](http://www.w3.org/TR/sparql11-overview/)
 
@@ -462,10 +462,201 @@ Following an agile development approach specification of the application is an o
 
  * Transformer Registry
  * Transformer Factory Registry
- 
+
 The *Transformer Factory Registry* allows the UI to point the user to a webapplication allowing the creation of Transformers, such an application might require to choose a taxonomy in the case of an entity recognizing annotator. In the case of the application to create a pipeline transformer the user will have to choose transformers and put them in the right order, this application will use the *Transformer Registry* to show the available transformers.
 
-These registries will be modeled in a similar way as the *User Interaction Request API* described above. So rather than introducing new components the regular LDP capabilities are used to maintain these registries. 
+These registries will be modeled in a similar way as the *User Interaction Request API* described above. So rather than introducing new components the regular LDP capabilities are used to maintain these registries.
+
+## Access control
+
+Access Control is a mechanism through which an agent (in this case the
+platform) permits to perform certain operations on resources as
+specified by concrete policies. Within this document, the resources are
+RDF resources, exposed either by LDP or SPARQL, and the access control
+will not operate at a different granularity (graphs or triples). When
+access control come into play, the platform must restrict some
+operations on some resources. These operations are the typically
+described by the RESTful principles.
+
+Access control is a recognized open issue when interacting with RDF /
+Linked Data using HTTP methods [Costabello2013], and LDP 1.0 is not yet
+seriously addressing such issue^[[20]](#ftnt20)^. Therefore please
+notice that the platform will not go beyond the state of the art on this
+aspect; i.e., we are not going to provide a new access control proposal.
+But the Fusepool P3 platform is just going to implement the best
+possible solution for the goals of the project among the different
+alternatives already available out there.
+
+Given the proposed architecture, where all the interaction to the
+platform is done via the LDP Transformation Proxy Layer (further details
+can be found at Sections 2.1 and 3.1), access control not relying on
+HTTP Headers (e.g. WebID) must be at least partially be handled by a
+proxy handling the requests as they come in^[[e]](#cmnt5)^. This means
+that a HTTPS proxy might handle the request before the requests are
+processed by the LDP Transformation Proxy described above. This HTTPS
+Proxy can of course rely on information stored in the proxied LDP
+implementation describing the users and their rights. Following the
+design principle of Separation of Concerns (SoC) the LDP Transformation
+Proxy only implements HTTP, no TLS/SSL support over HTTPS.
+^[[f]](#cmnt6)^^[[g]](#cmnt7)^^[[h]](#cmnt8)^^[[i]](#cmnt9)^Therefore
+such circumstance needs to be properly handled when designing the access
+control mechanisms. For all these reasons, access controls is not yet
+part of the basic implementation delivered together with this report.
+There are still many issues to clarify before we would be able to
+provide a specification that could fit in the overall architecture.
+
+The access control mechanisms of the particular Linked Data Platform
+(Apache Marmotta or OpenLink Virtuoso) providing the base layers of the
+FP3 framework (the blue components in the architecture diagram on
+Section 2), are likely to be vendor specific to some degree. The
+following sections describe the concrete access control features which
+could be used by the Fusepool platform. Whether a generic access control
+interface could be defined for the FP3 platform remains an item for
+discussion^[[j]](#cmnt10)^. Such a generic interface would seek to hide
+differences in access control configuration between the alternative
+Linked Data platforms which might provide the base storage layer. In the
+absence of a generic interface, the access control configuration might
+remain platform specific, but the effects of the access control as seen
+by the client, for example the reporting of access restrictions, should
+be consistent irrespective of the chosen storage platform.
+
+#### Marmotta access control
+
+Apache Marmotta implements some basic mechanisms for access control. By
+default HTTP Basic authentication [Fielding1999] is used for
+authentication and authorization^[[21]](#ftnt21)^, both for all web
+services (SPARQL, LDP, etc) and the administration user interface. The
+configuration is based on ACL rules, using users and roles, grouped in
+profiles for simplifying permission management.
+
+In addition, Marmotta also has experimental support for fine-grained
+access-control within the RDF triples^[[22]](#ftnt22)^ by providing
+access control over a Sesame SAIL using PPO [Sacco2011]. Although in
+principle such granularity level of access control would not be required
+by the project, as discussed above. The roadmap of the project also
+includes other authentication technologies, such as
+WebID^[[23]](#ftnt23)^ or OAuth^[[24]](#ftnt24)^, which also could be
+addressed with the implementation of the Fusepool P3 platform. In the
+end the evolution of the requirements, both internal in the project and
+external^[[25]](#ftnt25)^, should guide that process.
+
+#### Virtuoso access control
+
+Virtuoso provides numerous options for access control - some specific to
+a particular realm. For instance:
+
+-   Protected SPARQL endpoints associated with specific authentication
+    methods, e.g. /sparql-auth, /sparql-oauth, /sparql-webid
+    [Fielding1999, Hardt2012, Story2009, Recordon2006].
+-   SPARQL roles restrict the types of SPARQL commands a database user
+    may perform.
+-   Graph level security allows the setting of permissions bit masks to
+    set the read/write (and sponge) permissions on specific RDF graphs
+    to control public access or specific users.
+
+However, OpenLink’s preferred generic access control mechanism for
+Virtuoso is VAL, its Virtualized Authentication Layer^[[26]](#ftnt26)^.
+VAL provides a virtualized layer that loosely couples: Identifiers
+(WebIDs  that denote Agents), Identification (WebID-Profile documents
+that describe Agents), Authentication (WebID-TLS and other protocols for
+Identification claims verification), and Authorization (via the use of
+ACLs or Data Access policies represented in RDF). VAL enables protection
+of any HTTP and SQL (via ODBC or JDBC connections) accessible
+resource(s). Thus, it provides the basis for controlling access to LDP
+resources exposed by the Virtuoso LDP, for protecting Virtuoso SPARQL
+endpoints or specific RDF store named graphs, or WebDAV resources etc.
+
+##### VAL vs LDP WG Requirements for Access Control
+
+VAL offers a superset of the LDP access control requirements outlined by
+the Linked Data Platform Working Group^[[27]](#ftnt27)^. It broadly
+supports the following W3C requirements:
+
+-   Access Control Graphs - which describe which agents have access to
+    which resources and the modes of access allowed.
+-   Access control on HTTP manipulation of resources.
+-   Editability of access control rules using HTTP.
+-   Agents can authenticate themselves to the server with an identifier
+    or as the owner of a token.
+-   Ability to specify access privileges at a fine-grained level.
+-   Ability to specify a collection of agents or resources, identified
+    by IRIs or IRI patterns.
+
+##### Virtuoso Authentication Layer (VAL)
+
+VAL provides both authentication and access control services through an
+internal Virtuoso API or by two public HTTP APIs, a ‘standard’ HTTP API
+and a RESTful variant, which manage rules and groups via their URLs.
+Both are Turtle-based. All the VAL authentication mechanisms are
+supported.
+
+Users attempting to access a VAL-protected resource must first login and
+authenticate themselves through a VAL-supplied authentication dialog.
+After establishing a VAL session, their access permissions on the
+resource are checked. Virtuoso LDP resources and containers could be
+protected in this way, once the required VAL hooks are in place.
+
+The supported authentication methods are:
+
+-   HTTP authentication (for Virtuoso SQL and WebDAV user accounts)
+-   Basic PKI, BrowserID, OpenID, WebID-TLS
+-   Third party OAuth services:
+
+-   Numerous services including Facebook, Twitter, LinkedIn and Google.
+-   Note: Not all OAuth services require a Virtuoso SSL endpoint. Such
+    services would remove the need for the LDP Transformation Proxy to
+    support HTTPS.
+
+VAL’s generic ACL layer is based in its entirety on RDF statements and
+entity relations logic, so rules, groups, authorization grants etc., are
+all in the form of RDF statements persisted to  private graphs in the
+RDF store. Authorization rules are described using terms from the  W3C
+ACL ontology^[[28]](#ftnt28)^ and the OpenLink ACL
+ontology^[[29]](#ftnt29)^. This system also supports restrictions which
+restrict arbitrary values based on the authenticated user. These can be
+used to limit the number of query results, enforce quotas etc.
+
+VAL ACL Rule System Overview
+
+The ACL rule system allows any authenticated person (including any
+3rd-party service IDs which have no corresponding Virtuoso SQL account)
+to create ACL rules for any resource they own or they have grant rights
+for. A resource is any entity identified by a IRI. This could be an LDPR
+or LDPC, or an transformer. VAL manages and reports the permissions on
+the resource, but the logic supporting the resource access is
+responsible for enforcing those permissions.
+
+Rules and groups are stored in private named graphs within the triple
+store, as are resource ownership details. The rules grant read, write or
+sponge permission on a resource, or the ability to grant these
+permissions. Custom permissions can also be defined.
+
+Below is a basic example of an ACL rule granting read access to a
+user authenticating through their Facebook login,
+`http://www.facebook.com/jsmith`, to
+resource `http://demo.fusepoolp3.eu/assets`:
+
+
+    @prefix oplacl: \<http://www.openlinksw.com/ontology/acl\#\> .
+    @prefix acl: \<http://www.w3.org/ns/auth/acl\#\> .
+
+    \<\#rule\> a acl:Authorization ;
+      oplacl:hasAccessMode oplacl:Read ;
+      acl:agent \<http://www.facebook.com/jsmith\> ;
+      acl:accessTo \<http://demo.fusepoolp3.eu/assets\> ;
+      oplacl:hasScope \<urn:myscope\> .
+
+
+In addition to individual person ACLs granting access to an individual,
+rules can grant access to a simple group, a conditional group, or
+everyone, i.e. make a resource public. Rather than consisting of a list
+of members, conditional groups define a set of conditions. These
+conditions typically test attributes of the X.509 client certificate
+provided by the authenticated user’s WebID, but can also be conditions
+evaluated as part of a SPARQL ASK query. Every authenticated person
+matching these conditions is seen as part of the group. VAL’s
+Conditional Groups feature provides the basis for Attribute Based Access
+Control (ABAC^[[30]](#ftnt30)^).
 
 
 ## Workflows
@@ -538,7 +729,7 @@ will return something like:
         dct:title "An example vCard transformer"@en .
 
 
-### Registrering a transformer factory 
+### Registrering a transformer factory
 
 Similar to the above but what is registered are the IRI of transformer
 factory. This IRI, http://service.example.org/openrefine in the example
@@ -650,7 +841,7 @@ With a supported RDF format in the Accept header the request MUST yield
 to a response entity serializing a graph with at least the triple with
 the fp3:transformer predicate.
 
-###  Adding content to a Transformer Container 
+###  Adding content to a Transformer Container
 
 Data is ingested in the platform also using regular LDP interaction. The
 proxy transparently handles the transformation process, normally when
@@ -664,49 +855,28 @@ Coming down into more detail, in the case of a synchronous
 transformation, the client HTTP interaction is rather simple. The client
 posts data to the LDPC:
 
-[](#)[](#)
-
 
     POST /ldp/transformation/example
-
     Host: demo.fusepoolp3.eu
-
     Accept: text/turtle, application/rdf+xml;q=.8, \*/\*;q=.1
-
     Content-Type: text/vcard
-
     Slug: corks
-
     Content-Length: 164
-
     BEGIN:VCARD
-
     VERSION:4.0
-
     FN:Corky Crystal
-
     NICKNAME:Corks
-
     TEL;TYPE=home,voice;VALUE=uri:tel:+61755555555
-
     EMAIL:corky@example.com
-
     REV:20080424T195243Z
-
     END:VCARD
 
 
 And it gets back the the IRI of the newly created resource
 
-[](#)[](#)
-
-
     HTTP/1.1 201 OK
-
     Date: Mon, 16 Jun 2014 09:01:52 GMT
-
     Connection: close
-
     Location: http://demo.fusepoolp3.eu/ldp/transformation/example/corks
 
 
@@ -719,261 +889,38 @@ the concrete transformer, and the storage of the data.
 So when a GET request is sent after transformation completed the
 interaction might look as follows:
 
-[](#)[](#)
-
 
     GET /ldp/transformation/example HTTP/1.1
-
     Host: demo.fusepoolp3.eu
-
     Accept: text/turtle; charset=UTF-8
 
 
 And the response SHOULD look like:
 
-[](#)[](#)
-
 
     HTTP/1.1 200 OK
-
     Content-Type: text/turtle; charset=UTF-8
-
     ETag: "\_87e52ce2917987"
-
     Content-Length: 477
-
     Link: \<http://www.w3.org/ns/ldp\#Container\>; rel="type"
 
     @prefix dcterms: \<http://purl.org/dc/terms/\> .
-
     @prefix ldp: \<http://www.w3.org/ns/ldp\#\> .
-
     @prefix fp3: \<http://vocab.fusepool.info/fp3\#\> .
-
     @prefix eldp: \<http://vocab.fusepool.info/eldp\#\> .
 
     \<http://demo.fusepoolp3.eu/ldp/transformers/example\>
-
        a eldp:TransformationContainer , ldp:DirectContainer;
-
        dcterms:title "An transformation LDP Container supporting vCard" ;
-
        ldp:membershipResource
     \<http://demo.fusepoolp3.eu/ldp/transformers/example\>;
-
        ldp:hasMemberRelation ldp:member ;
-
        ldp:insertedContentRelation ldp:MemberSubject ;
-
        fp3:transformer \<http://example.org/vcard-transformer\> ;
-
        ldp:member
     \<http://demo.fusepoolp3.eu/ldp/transformers/example/corks\> .
 
 
-Asynchronous transformations are specified with detail later at Section
-3.1.
-
-2.4 Requirements {.c39 .c21}
-----------------
-
-As the general architecture describes, the Fusepool P3 platform is built
-on top of some standard technologies implemented (LDP 1.0, SPARQL 1.1,
-etc), where some concrete non-functional requirements need to be
-satisfied
-
-
-3.3 Access control {.c39 .c21}
-------------------
-
-Access Control is a mechanism through which an agent (in this case the
-platform) permits to perform certain operations on resources as
-specified by concrete policies. Within this document, the resources are
-RDF resources, exposed either by LDP or SPARQL, and the access control
-will not operate at a different granularity (graphs or triples). When
-access control come into play, the platform must restrict some
-operations on some resources. These operations are the typically
-described by the RESTful principles.
-
-Access control is a recognized open issue when interacting with RDF /
-Linked Data using HTTP methods [Costabello2013], and LDP 1.0 is not yet
-seriously addressing such issue^[[20]](#ftnt20)^. Therefore please
-notice that the platform will not go beyond the state of the art on this
-aspect; i.e., we are not going to provide a new access control proposal.
-But the Fusepool P3 platform is just going to implement the best
-possible solution for the goals of the project among the different
-alternatives already available out there.
-
-Given the proposed architecture, where all the interaction to the
-platform is done via the LDP Transformation Proxy Layer (further details
-can be found at Sections 2.1 and 3.1), access control not relying on
-HTTP Headers (e.g. WebID) must be at least partially be handled by a
-proxy handling the requests as they come in^[[e]](#cmnt5)^. This means
-that a HTTPS proxy might handle the request before the requests are
-processed by the LDP Transformation Proxy described above. This HTTPS
-Proxy can of course rely on information stored in the proxied LDP
-implementation describing the users and their rights. Following the
-design principle of Separation of Concerns (SoC) the LDP Transformation
-Proxy only implements HTTP, no TLS/SSL support over HTTPS.
-^[[f]](#cmnt6)^^[[g]](#cmnt7)^^[[h]](#cmnt8)^^[[i]](#cmnt9)^Therefore
-such circumstance needs to be properly handled when designing the access
-control mechanisms. For all these reasons, access controls is not yet
-part of the basic implementation delivered together with this report.
-There are still many issues to clarify before we would be able to
-provide a specification that could fit in the overall architecture.
-
-The access control mechanisms of the particular Linked Data Platform
-(Apache Marmotta or OpenLink Virtuoso) providing the base layers of the
-FP3 framework (the blue components in the architecture diagram on
-Section 2), are likely to be vendor specific to some degree. The
-following sections describe the concrete access control features which
-could be used by the Fusepool platform. Whether a generic access control
-interface could be defined for the FP3 platform remains an item for
-discussion^[[j]](#cmnt10)^. Such a generic interface would seek to hide
-differences in access control configuration between the alternative
-Linked Data platforms which might provide the base storage layer. In the
-absence of a generic interface, the access control configuration might
-remain platform specific, but the effects of the access control as seen
-by the client, for example the reporting of access restrictions, should
-be consistent irrespective of the chosen storage platform.
-
-### 3.3.1 Marmotta access control {.c2 .c21}
-
-Apache Marmotta implements some basic mechanisms for access control. By
-default HTTP Basic authentication [Fielding1999] is used for
-authentication and authorization^[[21]](#ftnt21)^, both for all web
-services (SPARQL, LDP, etc) and the administration user interface. The
-configuration is based on ACL rules, using users and roles, grouped in
-profiles for simplifying permission management.
-
-In addition, Marmotta also has experimental support for fine-grained
-access-control within the RDF triples^[[22]](#ftnt22)^ by providing
-access control over a Sesame SAIL using PPO [Sacco2011]. Although in
-principle such granularity level of access control would not be required
-by the project, as discussed above. The roadmap of the project also
-includes other authentication technologies, such as
-WebID^[[23]](#ftnt23)^ or OAuth^[[24]](#ftnt24)^, which also could be
-addressed with the implementation of the Fusepool P3 platform. In the
-end the evolution of the requirements, both internal in the project and
-external^[[25]](#ftnt25)^, should guide that process.
-
-### 3.3.2 Virtuoso access control {.c2 .c21}
-
-Virtuoso provides numerous options for access control - some specific to
-a particular realm. For instance:
-
--   Protected SPARQL endpoints associated with specific authentication
-    methods, e.g. /sparql-auth, /sparql-oauth, /sparql-webid
-    [Fielding1999, Hardt2012, Story2009, Recordon2006].
--   SPARQL roles restrict the types of SPARQL commands a database user
-    may perform.
--   Graph level security allows the setting of permissions bit masks to
-    set the read/write (and sponge) permissions on specific RDF graphs
-    to control public access or specific users.
-
-However, OpenLink’s preferred generic access control mechanism for
-Virtuoso is VAL, its Virtualized Authentication Layer^[[26]](#ftnt26)^.
-VAL provides a virtualized layer that loosely couples: Identifiers
-(WebIDs  that denote Agents), Identification (WebID-Profile documents
-that describe Agents), Authentication (WebID-TLS and other protocols for
-Identification claims verification), and Authorization (via the use of
-ACLs or Data Access policies represented in RDF). VAL enables protection
-of any HTTP and SQL (via ODBC or JDBC connections) accessible
-resource(s). Thus, it provides the basis for controlling access to LDP
-resources exposed by the Virtuoso LDP, for protecting Virtuoso SPARQL
-endpoints or specific RDF store named graphs, or WebDAV resources etc.
-
-3.3.2.1 VAL vs LDP WG Requirements for Access Control
-
-VAL offers a superset of the LDP access control requirements outlined by
-the Linked Data Platform Working Group^[[27]](#ftnt27)^. It broadly
-supports the following W3C requirements:
-
--   Access Control Graphs - which describe which agents have access to
-    which resources and the modes of access allowed.
--   Access control on HTTP manipulation of resources.
--   Editability of access control rules using HTTP.
--   Agents can authenticate themselves to the server with an identifier
-    or as the owner of a token.
--   Ability to specify access privileges at a fine-grained level.
--   Ability to specify a collection of agents or resources, identified
-    by IRIs or IRI patterns.
-
-3.3.2.2 Virtuoso Authentication Layer (VAL)
-
-VAL provides both authentication and access control services through an
-internal Virtuoso API or by two public HTTP APIs, a ‘standard’ HTTP API
-and a RESTful variant, which manage rules and groups via their URLs.
-Both are Turtle-based. All the VAL authentication mechanisms are
-supported.
-
-Users attempting to access a VAL-protected resource must first login and
-authenticate themselves through a VAL-supplied authentication dialog.
-After establishing a VAL session, their access permissions on the
-resource are checked. Virtuoso LDP resources and containers could be
-protected in this way, once the required VAL hooks are in place.
-
-The supported authentication methods are:
-
--   HTTP authentication (for Virtuoso SQL and WebDAV user accounts)
--   Basic PKI, BrowserID, OpenID, WebID-TLS
--   Third party OAuth services:
-
--   Numerous services including Facebook, Twitter, LinkedIn and Google.
--   Note: Not all OAuth services require a Virtuoso SSL endpoint. Such
-    services would remove the need for the LDP Transformation Proxy to
-    support HTTPS.
-
-VAL’s generic ACL layer is based in its entirety on RDF statements and
-entity relations logic, so rules, groups, authorization grants etc., are
-all in the form of RDF statements persisted to  private graphs in the
-RDF store. Authorization rules are described using terms from the  W3C
-ACL ontology^[[28]](#ftnt28)^ and the OpenLink ACL
-ontology^[[29]](#ftnt29)^. This system also supports restrictions which
-restrict arbitrary values based on the authenticated user. These can be
-used to limit the number of query results, enforce quotas etc.
-
-VAL ACL Rule System Overview
-
-The ACL rule system allows any authenticated person (including any
-3rd-party service IDs which have no corresponding Virtuoso SQL account)
-to create ACL rules for any resource they own or they have grant rights
-for. A resource is any entity identified by a IRI. This could be an LDPR
-or LDPC, or an transformer. VAL manages and reports the permissions on
-the resource, but the logic supporting the resource access is
-responsible for enforcing those permissions.
-
-Rules and groups are stored in private named graphs within the triple
-store, as are resource ownership details. The rules grant read, write or
-sponge permission on a resource, or the ability to grant these
-permissions. Custom permissions can also be defined.
-
-Below is a basic example of an ACL rule granting read access to a
-user authenticating through their Facebook login,
-`http://www.facebook.com/jsmith`, to
-resource `http://demo.fusepoolp3.eu/assets`:
-
-
-    @prefix oplacl: \<http://www.openlinksw.com/ontology/acl\#\> .
-    @prefix acl: \<http://www.w3.org/ns/auth/acl\#\> .
-
-    \<\#rule\> a acl:Authorization ;
-      oplacl:hasAccessMode oplacl:Read ;
-      acl:agent \<http://www.facebook.com/jsmith\> ;
-      acl:accessTo \<http://demo.fusepoolp3.eu/assets\> ;
-      oplacl:hasScope \<urn:myscope\> .
-
-
-In addition to individual person ACLs granting access to an individual,
-rules can grant access to a simple group, a conditional group, or
-everyone, i.e. make a resource public. Rather than consisting of a list
-of members, conditional groups define a set of conditions. These
-conditions typically test attributes of the X.509 client certificate
-provided by the authenticated user’s WebID, but can also be conditions
-evaluated as part of a SPARQL ASK query. Every authenticated person
-matching these conditions is seen as part of the group. VAL’s
-Conditional Groups feature provides the basis for Attribute Based Access
-Control (ABAC^[[30]](#ftnt30)^).
 
 * * * * *
 
