@@ -7,7 +7,7 @@
     |                                                                          |
     | **Reto Gmür**                                                            |
     |                                                                          |
-    | **0.7-MD 2.2.2014**                                                         |
+    | **0.7-MD 2.2.2014**                                                      |
     +--------------------------------------------------------------------------+
     | **Bern University of Applied Sciences**                                  |
     |                                                                          |
@@ -27,7 +27,7 @@ and tools that will be used (Marmotta, Clerezza, Stanbol, OpenRefine)
 that will be used. For the interaction of the components the DoW
 specifies that the server side Java components will use OSGi and that
 all components must be able to consume and produce RDF through a REST
-API [DoW 2.1]. At the kickoff meeting if has been argued that if the
+API [DoW 2.1]. At the kickoff meeting it has been argued that if the
 component interacting via REST API are small enough componentization via
 OSGi may not be needed.
 
@@ -99,7 +99,7 @@ See [data-extractor-importer-api.md](data-extractor-importer-api.md) as an examp
 2.2 Linked Data Platform 
 ------------------------
 
-The Linked Data Patform (LDP) is a specification currently being
+The Linked Data Platform (LDP) is a specification currently being
 developed by a W3C working group. The specification shall describe
 RESTFull application integration patterns using read/write Linked Data.
 The API described in the current draft pretty much conforms to the
