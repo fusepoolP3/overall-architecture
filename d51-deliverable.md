@@ -15,7 +15,7 @@ Deliverable 5.1 and 5.3
 | v0.2               | Sergio Fernández, Jakob Frank, Reto Gmür | 05.06.2014         | Added content to some main sections  |
 | v0.3               | Carl Blakeley, Kingsley Idehen, Rupert Westenthaler, Sergio Fernández   | 16.06.2014         | Integrated contributions from other authors         |
 | v0.5|Sergio Fernández, Reto Gmür|25.06.2024|First internal review version|
-| v0.6|Sebastian Schaffert, Sarven Capadisli|29.06.201|First internal review|
+| v0.6|Sebastian Schaffert, Sarven Capadisli|29.06.201|First intenal review|
 | v0.7|All|30.6.2014|Addressed review comments|
 | v0.8|Reto Gmür| 8.9.2014 | Reworked overall structure|
 
@@ -55,17 +55,19 @@ This work is licensed under the Creative Commons Attribution 4.0 International L
 
 ## Executive Summary
 
-The goal of Fusepool P3 project is to make publishing and processing of public data as linked data easy. For this purpose Fusepool P3 develops a set of of software components that integrate seamlessly by well defined API basing on Linked Data Best Practices and the Linked Data Platform standard.
+The goal of Fusepool P3 project is to make publishing and processing of public data as linked data easy. For this purpose Fusepool P3 develops a set of of software components that integrate seemlessly by well defined API basing on Linked Data Best Practices and the Linked Data Platform standard.
 
-To ensure longevity of the code and the API developed within Fusepool the software is designed so that the individual components can be used not only as parts of the overall software, but also individually. The architecture is not tied to a particular runtime environment but bases exclusively on web standards. This allows components to be implemented using any language and framework.
+To ensure longevity of the code and the API developed withing Fusepool the software is designed so that the individual components can be used not only as parts of the overall software, but also individually. The arhitecture is not tied to a particular runtime environment but bases exclusively on web standards. This allows components to be implemented using any language and framework.
+
+As a consequence of this the focus of the platform is not to build a central application into which the components are added as plugins but mainly specifying generic API to allow the interaction of loosly coupled modules. This is the reason why this document covers both D5.1 (Technical platform specifications and basic implementation) as well as D5.3 (Data storage access via generic RDF API). The platform is what emerges from components communicating with generic RESTfull RDF API.
 
 The Fusepool P3 process is divided in the following four steps: exploration, extraction, enrichment and delivery. The software provides tools for the last 3 steps:
 
- * Extraction: Data from various sources and formats is transformed to RDF and thus made usable in the Lined Open Data (LOD) Cloud.
+ * Extraction: Data from various sources and formats is transformed to RDF and thus made usable in the Lined Opend Data (LOD) Cloud.
  * Enrichment: Entity recognition, Natural Language Processing (NLP), Interlinking as well as human processing such as by Crowdsourcing allow to enrich the available data increasing its value to its and to application builders.
- * Delivery: The actual delivery of the data can be separated into making it available via Lined Data standards and the actual presentation to the user with apps on desktops and mobile devices.
+ * Delivery: The actual delivery of the data can be separated into makinf it available via Lined Data standards and the actual presentation to the user with apps on desktops and mobile devices.
 
-This document describes the modular architecture of the Fusepool P3 platform. It describes the modularization, the available and planned implementations of modules and shows how the modules play together to implement the use cases and provide the toolkit envisaged by the DOW.
+This document describes the modular architecture of the Fusepool P3 platform. It describes the modularization, the available and planned implementations of modules and shows how the modules play together to implement the usecases and provide the toolkit envisaged by the DOW.
 
 Specification for APIs as well as the source code of a running basic implementation form an integral part of this deliverable.
 
@@ -142,9 +144,10 @@ IRI prefixed:
 
 ## Introduction
 
-This document describes the technical specification for the Fusepool P3 platform. It specifies the Fusepool P3 software by describing the basic architectural design choices and at a different level of precision (depending on the current status of the development of the respective components and work packages) the concrete interaction APIs. It aims to present an application that satisfies the high level requirements of the DoW but also the more concrete use cases developed by WP1. The described architecture is the result of discussion with all technical work packages as it affects all software deliverable of the project and not just  WP5.
+This document describes the technical specification for the Fusepool P3 platform. It specifies the Fusepool P3 software by describing the basic architectural design choices and at a different level of precision (depending on the current status of the development of the respective components and work packages) the concrete interaction APIs. It aims to present an application that satisfies the high level requirements of the DoW but also the more concrete usecases developed by WP1. The described architecture is the result of discussion with all technical work packages as it affects all software deliverable of the project and not just  WP5.
 
 The main goal of the Fusepool P3 architecture is to provide interaction protocols and pattern so that the component can be used in concert to form the Fusepool P3 Platform. The interaction is based on HTTP. For the APIs introduced in Fusepool P3 we strive to adhere to the REST design principles. Also we adhere to the Linked Data principles [BernersLee2006](#BernersLee2006). This document also describes some of the workflows to illustrate how the APIs and architectural pattern are applied to satisfy concrete use case.
+
 
 ### Uses cases summary
 
@@ -174,7 +177,7 @@ benefits[[1]](#ftnt1):
 -   Every piece of information (data) has its own identifier (URI/IRI).
 -   Those identifiers can be resolved via the web (HTTP),
 -   which acts as a generalized API for developers.
--   Standardized vocabularies describe the meaning of the data,
+-   Standardised vocabularies describe the meaning of the data,
 -   and allow to relate information with each other.
 
 The Linked Data technology stack [Bizer2009] provides many ways to
@@ -194,17 +197,17 @@ accessible.
 
 What is lacking is an integration framework that combines the data transformation to RDF, possible enhancement steps and the publishing of the Linked Data. Fusepool P3 will provide such an integration framework along with User Interface tools that serve both to model the data publication process as well as to coordinate the human interactions that might be required while the data is processed.
 
-This framework will integrate state-of-the-art tools like OpenRefine, OpenLink Virtuoso, Apache Stanbol, and Pundit. The framework is developed and tested based on the requirements by our project partners Provincia Autonoma di Trento and Regione Toscana. Both partners start working with the platform in an early stage and feedback
+This framework will integrate state-of-the-art tools like OpenRefine, OpenLink Virtuoso, Apache Stanbol, and Pundit. The famework is developed and tested based on the requirements by our project partners Provincia Autonoma di Trento and Regione Toscana. Both partners start working with the platform in an early stage and feedback
 gets directly integrated into the agile development process of Fusepool
 P3.
 
 ## Methodology
 
-The platform is implemented with an agile framework inspired by Scrum [Schwaber2011]. We follow the philosophy of "release early, release often"
-[Raymond1999]: every iteration results in potentially shippable increments of functionality. Many of these results are indeed shipped, i.e. releases to open source software repositories and as such made available to the community. At the time of this writing several libraries have already been releases and deployed to the Maven Central Repository, the biggest repository for Java libraries. Other components are available for download on Github.
+The platform is implemented with an agile farmework inpired by Scrum [Schwaber2011]. We follow the philosophy of "release early, release often"
+[Raymond1999]: every iteration results in potentially shipable increments of functionality. Many of these results are indeed shipped, i.e. releases to open source software repositories and as such made available to the community. At the time of this writing several libraries have already been releases and deployed to the Maven Central Repository, the biggest repository for Java libraries. Other components are available for download on Github.
 
 The agile methodology minimizes the risk associated with software development. Far too often the outdated engineering concept of "always throw the prototype away" [Brooks1995] resulted in software being thrown away twice. We are aware that many decisions may be wrong. Or even if
-they are right we have produced a bad implementation out of it. But we keep components as loosely coupled as possible and release what we have, hoping it will be of use to our users and the community but always ready to improve the components and evolve the platform as a joint effort of all technical work packages.
+they are right we have produced a bad implementation out of it. But we keep components as loosly coupled as possible and release what we have, hoping it will be of use to our users and the community but always ready to improve the components and evolve the platform as a joint effort of all technical work packages.
 
 Once the first milestone of the project was accomplished, the project
 already has a working platform, something that is ready to be used for
@@ -215,11 +218,11 @@ iterations. The Scrum methodology [Takeuchi1986] internally used for the
 project development will try deliver quickly and respond to all these
 emerging requirements.
 
-Our methodology is heavily inspired by the twelfe-factor app [Wiggings2012] principles. This results in a platform composed of many standalone applications. These applications can be implemented used any language and communicate only via well defined protocols. There are no shared dependencies that might cause the entire system to break on an incompatible change, every module includes all the dependencies it needs to run.
+Our methodology is heavily inspired by the twelfe-factor app [Wiggings2012] principles. This results in a platform composed of many standalone applications. These applications can be implemented used any language and communicate only ia well defined protocols. There are no shared dependencies that might cause the entire system to break on an incompatible change, every module includes all the dependencies it needs to run.
 
 ## Architecture
 
-The architecture is based on components communicating via HTTP and exposing RESTfull APIs. This allows for components being developed in any language and hosted on any platform. After initial discussions on the architectural principles (see [[2]](#ftnt2) and [[3]](#ftnt3)) the decision was taken to have the components very loosely coupled and interacting only via HTTP, this design choice was made with the following goals:
+The architecture is based on components communicating via HTTP and exposing RESTfull APIs. This allows for components being developed in any language and hosted on any platform. After initial discussions on the architectural principles (see [[2]](#ftnt2) and [[3]](#ftnt3)) the decision was taken to have the components very loosly coupled and interacting only via HTTP, this design choice was made with the following goals:
 
 - Reusability of Fusepool component is maximized
 - Distributed development is facilitated
@@ -229,10 +232,10 @@ The architecture is based on components communicating via HTTP and exposing REST
 
 Once the decision was taken on how components should interact the question was were the boundaries between components should be defined and how the components build the overall platform. The following figure depicts the high-level architecture for the Fusepool P3 platform:
 
-![Platform Diagram](p3-platform-diagram.svg "Platform Diagram")
+![Platform Diagramn](p3-platform-diagram.svg "Platform Diagram")
 
 The diagram shows how the UI and other clients access the fusepool P3 primarily via and LDP transforming Proxy which exposes a front-end conforming to the LDP specification [Speicher2014] with the addition of the Transforming Container API [TODO link]. The proxy transparently handles
-transformation processes by calling in background the actual transformers, and sending back the data to the platform once the process has finished. The clients can also directly access transformers via their REST API (transformer API) [TODO link] or use a SPARQL 1.1 [SPARQL11] endpoint.
+transformation processes by calling in background the actual transformers, and sending back the data to the platform once the process has finished. The clients can also directly access transformers via their REST API (transfomer API) [TODO link] or use a SPARQL 1.1 [SPARQL11] endpoint.
 
 As the name suggests transformer data. The term ans the API are used broadly both for the functionality provided by WP 2 as well as by WP 3. It comprises the transformation from non-RDF content to RDF as well as the transformation from content without annotations to content with annotations.
 
@@ -283,7 +286,7 @@ Transformers are identified by an URI which is the entry point of the RESTfull t
 
 The transformer API supports both synchronous and asynchronous transformers. While a synchronous transformer return the transformation result right as the response of the transformation request asynchronous transformer will deliver their results at a later time. Asynchronous transformers might for instance require some user interaction in order to deliver their results.
 
-Transformers may invoke other transformers, we provide a transformer factory to create pipeline transformers. A pipeline transformers invokes a list of transformers in sequence passing the output of one transformer as input to the next transformer and at the end retuning the output of the last transformer. For example this allows to chain a transformer translating the content with a transformer that does named entity extraction, which would be useful if no entity labels are available in the original language.
+Transformers may invoke other transformers, we provide a transformer factory to create pipeline transformers. A pipeline transformers invokes a list of transformers in sequence passing the output of one tranformer as input to the next transformer and at the end retuning the output of the last transformer. For example this allows to chain a transformer translating the content with a transformer that does named entity extraction, which would be useful if no entity labels are available in the original language.
 
 #### LDP Transforming Proxy
 
