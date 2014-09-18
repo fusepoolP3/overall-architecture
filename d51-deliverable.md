@@ -59,6 +59,8 @@ The goal of Fusepool P3 project is to make publishing and processing of public d
 
 To ensure longevity of the code and the API developed within Fusepool the software is designed so that the individual components can be used not only as parts of the overall software, but also individually. The architecture is not tied to a particular runtime environment but bases exclusively on web standards. This allows components to be implemented using any language and framework.
 
+As a consequence of this the focus of the platform is not to build a central application into which the components are added as plugins but mainly specifying generic API to allow the interaction of loosly coupled modules. This is the reason why this document covers both D5.1 (Technical platform specifications and basic implementation) as well as D5.3 (Data storage access via generic RDF API). The platform is what emerges from components communicating with generic RESTful RDF API.
+
 The Fusepool P3 process is divided in the following four steps: exploration, extraction, enrichment and delivery. The software provides tools for the last 3 steps:
 
  * Extraction: Data from various sources and formats is transformed to RDF and thus made usable in the Lined Open Data (LOD) Cloud.
