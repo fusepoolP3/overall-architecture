@@ -144,7 +144,7 @@ IRI prefixed:
 
 This document describes the technical specification for the Fusepool P3 platform. It specifies the Fusepool P3 software by describing the basic architectural design choices and at a different level of precision (depending on the current status of the development of the respective components and work packages) the concrete interaction APIs. It aims to present an application that satisfies the high level requirements of the DoW but also the more concrete use cases developed by WP1. The described architecture is the result of discussion with all technical work packages as it affects all software deliverable of the project and not just  WP5.
 
-The main goal of the Fusepool P3 architecture is to provide interaction protocols and pattern so that the component can be used in concert to form the Fusepool P3 Platform. The interaction is based on HTTP. For the APIs introduced in Fusepool P3 we strive to ashere to the REST design principles. Also we adhere to the Linked Data principles [BernersLee2006](#BernersLee2006). This document also describes some of the workflows to illustrate how the APIs and architectural pattern are applied to satisfy concrete use case.
+The main goal of the Fusepool P3 architecture is to provide interaction protocols and pattern so that the component can be used in concert to form the Fusepool P3 Platform. The interaction is based on HTTP. For the APIs introduced in Fusepool P3 we strive to adhere to the REST design principles. Also we adhere to the Linked Data principles [BernersLee2006](#BernersLee2006). This document also describes some of the workflows to illustrate how the APIs and architectural pattern are applied to satisfy concrete use case.
 
 ### Uses cases summary
 
@@ -291,7 +291,7 @@ Fusepool P3 defined the Transforming Container API. This API bases on LDP and pr
 
 While it is possible for an LDP implementation to implement this API directly it would be hard to convince vendors of LDP implementations to add support for Transforming Containers, especially as long as this API is hardly known and there are few transformers available. As the API won't become more widely known as long as it is isn't supported this is a prototypical catch-22 situation.
 
-To break out of this dilemma we implemented th P3 Transforming Proxy. This is an HTTP Proxy that is used as a reverse proxy in front of an LDP Server and adds the capabilities described by the Transforming Container LDPC to the proxied instance. The proxy intercepts POST requests: if the request is against an LDPC marked as Transforming Container the proxy will not only forward the request to the proxied LDP instance but also send the contents to the transformer associated to the container. Once the result of the transformation is available the results will also be posted to the LDPC. Of course, the LDPC can be associated to a pipeline transformer if multiple transformers should be executed.
+To break out of this dilemma we implemented the P3 Transforming Proxy. This is an HTTP Proxy that is used as a reverse proxy in front of an LDP Server and adds the capabilities described by the Transforming Container LDPC to the proxied instance. The proxy intercepts POST requests: if the request is against an LDPC marked as Transforming Container the proxy will not only forward the request to the proxied LDP instance but also send the contents to the transformer associated to the container. Once the result of the transformation is available the results will also be posted to the LDPC. Of course, the LDPC can be associated to a pipeline transformer if multiple transformers should be executed.
 
 #### Backends
 
@@ -356,7 +356,7 @@ Sparql Specifications: [http://www.w3.org/TR/sparql11-overview/](http://www.w3.o
 
 #### Transformer API
 
-The transformer API defines a RESTfull and RDF based API for data transforming components. It supports both synchronous and asynchronous execution of the data transformation tasks. While similar APIs aree provided by other projects such as by Apache Any23 ([Apache Any23 REST Service](http://any23.apache.org/service.html)) or by Apache Stanbol ([Apache Stanbol Enhancer RESTful API](http://stanbol.apache.org/docs/trunk/components/enhancer/#RESTful_API)) none of these APIs offered the required flexibility. We hope that the advantages of the API we propose, like the RDF service description and the possibility of asynchronous execution will convince other communities to adopt it or might contribute to a new and more broadly accepted standard.
+The transformer API defines a RESTfull and RDF based API for data transforming components. It supports both synchronous and asynchronous execution of the data transformation tasks. While similar APIs are provided by other projects such as by Apache Any23 ([Apache Any23 REST Service](http://any23.apache.org/service.html)) or by Apache Stanbol ([Apache Stanbol Enhancer RESTful API](http://stanbol.apache.org/docs/trunk/components/enhancer/#RESTful_API)) none of these APIs offered the required flexibility. We hope that the advantages of the API we propose, like the RDF service description and the possibility of asynchronous execution will convince other communities to adopt it or might contribute to a new and more broadly accepted standard.
 
 The Specification for the Transformer API is an annex to this deliverable and also available in its latest version at: [https://github.com/fusepoolP3/overall-architecture/blob/master/transformer-api.md](https://github.com/fusepoolP3/overall-architecture/blob/master/transformer-api.md)
 
@@ -450,7 +450,7 @@ In addition to this core structure model the Fusepool Annotation model
 also defines a set of Annotation Types for the annotation of different
 analysis results:
 
-1.  Language Annotation: used to describe the Language of the analysed
+1.  Language Annotation: used to describe the Language of the analyzed
     text
 2.  Text Annotation: used to describe Named Entities detected in the
     text. Such entities can originate from Named Entity Recognition
@@ -459,7 +459,7 @@ analysis results:
 3.  Entity Annotation: used to suggest Entities part of some kind of
     controlled vocabulary for mentions in the text. Entity Annotations
     are suggestions for Text Annotations. The oa:Choice construct is
-    used for modelling those
+    used for modeling those
 4.  Topic Annotation: used to classify a document along topics defined
     in some classification scheme (e.g. skos:Concepts part of a
     skos:ConceptScheme)
@@ -481,7 +481,7 @@ Following an agile development approach specification of the application is an o
  * Transformer Registry
  * Transformer Factory Registry
 
-The *Transformer Factory Registry* allows the UI to point the user to a webapplication allowing the creation of Transformers, such an application might require to choose a taxonomy in the case of an entity recognizing annotator. In the case of the application to create a pipeline transformer the user will have to choose transformers and put them in the right order, this application will use the *Transformer Registry* to show the available transformers.
+The *Transformer Factory Registry* allows the UI to point the user to a web application allowing the creation of Transformers, such an application might require to choose a taxonomy in the case of an entity recognizing annotator. In the case of the application to create a pipeline transformer the user will have to choose transformers and put them in the right order, this application will use the *Transformer Registry* to show the available transformers.
 
 These registries will be modeled in a similar way as the *User Interaction Request API* described above. So rather than introducing new components the regular LDP capabilities are used to maintain these registries.
 
@@ -746,7 +746,7 @@ will return something like:
         dct:title "An example vCard transformer"@en .
 
 
-### Registrering a transformer factory
+### Registering a transformer factory
 
 Similar to the above but what is registered are the IRI of transformer
 factory. This IRI, http://service.example.org/openrefine in the example
@@ -758,7 +758,7 @@ transformer is an individual implementation, it is also common that the
 implementation is rather a transformer factory, that is a service that
 requires additional configuration for actually providing a transformer.
 This additional configuration is typically encoded in the IRI of the
-resulting transformers. For example a tranformer for the OpenRefine rule
+resulting transformers. For example a transformer for the OpenRefine rule
 file located at http://example.org/rules might have the IRI
 http://service.example.org/openrefine?rules=http://example.org/rules the
 transformer factory could have the  IRI:
@@ -941,18 +941,18 @@ And the response SHOULD look like:
 
 ##  Basic Implementation
 
-All the code developed within Fusepool P3 is available on GitHub [[31]](#ftnt31). Currently we provide some first implementation of all components except he UI. Also we provide libraries to easily develop Transformers in Java, usage of this library is documented in a How-To [39](#ftnt39). To make development of clients easier we also provide a client-library, the library abstracts away the differences of the synchonous and the asynchronous interaction protocol.
+All the code developed within Fusepool P3 is available on GitHub [[31]](#ftnt31). Currently we provide some first implementation of all components except he UI. Also we provide libraries to easily develop Transformers in Java, usage of this library is documented in a How-To [39](#ftnt39). To make development of clients easier we also provide a client-library, the library abstracts away the differences of the synchronous and the asynchronous interaction protocol.
 
 We provide an LDP server based he Marmotta that has been tested to work together with the LDP Proxy we provide.
 
 Apart from the Pipeline Transformer mentioned above we have implemented several transformers such as for:
 
-- Openrefine
+- OpenRefine
 - Silk
 - Regex (as an example in How-To)
-- Entity recognizion based on SKOS Taxonomies
+- Entity recognition based on SKOS Taxonomies
 
-Also several Virtuoso Sponger Cartriges are available as Transformer, making Virtuoso enhancers avaible with the Transfomer API is work in progress.
+Also several Virtuoso Sponger Cartridges are available as Transformer, making Virtuoso enhancers available with the Transformer API is work in progress.
 
 ## Deployment architecture
 
@@ -965,9 +965,9 @@ A et of basic bash scripts is provided to startup all components on Unix-based e
 ## Conclusions and future work
 
 This deliverable provides the initial architectural specification
-and basic implementation of the Fusepool P3 platform. The focus was set on clean ntewraction pattern to allow productive development on in a team using disparate technologies and to allow deployment in various infrastructural settings and for different needs.
+and basic implementation of the Fusepool P3 platform. The focus was set on clean interaction pattern to allow productive development on in a team using disparate technologies and to allow deployment in various infrastructural settings and for different needs.
 We are aware that several questions still need to be defined. For example, this first version triggers the discussion of some core aspects, such as access control.
-Also the debuggability and logging of of the process may need to be standardized to accomodate future use cases, this may include data staging on each transformation performed, rollback and provenance.
+Also the debuggability and logging of of the process may need to be standardized to accommodate future use cases, this may include data staging on each transformation performed, rollback and provenance.
 We are confident that the basic architecture as well as our methodology provides a robust framework to address these issues.
 
 The main goal was of this document to set the basic pillars where the

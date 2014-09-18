@@ -30,7 +30,7 @@ D5.1, scheduled to be delivered by M6 of the project (June 2014).
 # Scope
 
 The scope of this document is limited to the platform architecture. Overall project
-architecture is not a responsability of WP5.
+architecture is not a responsibility of WP5.
 
 ## Components
 **TODO:** What are "Components"
@@ -41,7 +41,7 @@ arise that the simple concepts proposed to
 [interact with the extractors](https://github.com/fusepoolP3/overall-architecture/blob/master/data-extractor-importer-api.md)
 wouldn't be enough: OpenRefine [requires several calls](https://docs.google.com/a/spaziodati.eu/document/d/18Dup7hT2DMMCK6MP8IpnKSEM9YjKSY-cVTjC36P9_Kw), 
 even pull or callbacks; Virtuoso Sponger implements something completely different,
-where data is stasteful stored. Therefore the interaction will be more complex
+where data is stateful stored. Therefore the interaction will be more complex
 in many scenarios.
 
 \[OpenLink\]

@@ -208,7 +208,7 @@ Eventually the client gets a 200 Response code with the RDF representation of th
 
 ### Remarks
 
-The asynchronous transformer does not need to be a separate transformer from its synchronous counterpart. It can be the same transformer from the user perspective, i.e. have the same URI. This transformer can then support both sync and async behaviour. The exact behaviour can be triggered based on the length of the POSTed content, for example.
+The asynchronous transformer does not need to be a separate transformer from its synchronous counterpart. It can be the same transformer from the user perspective, i.e. have the same URI. This transformer can then support both sync and async behavior. The exact behavior can be triggered based on the length of the POSTed content, for example.
 
 It is undefined by this specification how long an Transformation result shall remain available for retrieval. The transformer should not delete the Transformation result on the first GET request, repeating the GET request shortly after should yield to the same results. Typical the time a result is available depends on the required processing time. The result of a job that took only a few seconds might remain available for several minutes, the result of a job that took several hours might remain available for several days. When a result is no longer available the server returns status code 404. A restart of the transformer will typically cause the Transformation results to become unavailable. Even though some transformers might keep the result available permanently, clients should never rely on this.
 
