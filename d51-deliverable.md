@@ -198,6 +198,24 @@ This framework will integrate state-of-the-art tools like OpenRefine, OpenLink V
 gets directly integrated into the agile development process of Fusepool
 P3.
 
+## Methodology
+
+The platform is implemented with an agile farmework inpired by Scrum [Schwaber2011]. We follow the philosophy of "release early, release often"
+[Raymond1999]: every iteration results in potentially shipable increments of functionality. Many of these results are indeed shipped, i.e. releases to open source software repositories and as such made available to the community. At the time of this writing several libraries have already been releases and deployed to the Maven Central Repository, the biggest repository for Java libraries. Other components are available for download on Github.
+
+The agile methodology minimizes the risk associated with software development. Far too often the outdated engineering concept of "always throw the prototype away" [Brooks1995] resulted in software being thrown away twice. We are aware that many decisions may be wrong. Or even if
+they are right we have produced a bad implementation out of it. But we keep components as loosly coupled as possible and release what we have, hoping it will be of use to our users and the community but always ready to improve the components and evolve the platform as a joint effort of all technical work packages.
+
+Once the first milestone of the project was accomplished, the project
+already has a working platform, something that is ready to be used for
+stating to develop and integrate all the other components. In parallel,
+the platform will be also evaluated by external stakeholders that will
+provide the necessary feedback to feed the following development
+iterations. The Scrum methodology [Takeuchi1986] internally used for the
+project development will try deliver quickly and respond to all these
+emerging requirements.
+
+Our methodology is heavily inspired by the twelfe-factor app [Wiggings2012] principles. This results in a platform composed of many standalone applications. These applications can be implemented used any language and communicate only ia well defined protocols. There are no shared dependencies that might cause the entire system to break on an incompatible change, every module includes all the dependencies it needs to run.
 
 ## Architecture
 
@@ -480,7 +498,7 @@ described by the RESTful principles.
 
 Access control is a recognized open issue when interacting with RDF /
 Linked Data using HTTP methods [Costabello2013], and LDP 1.0 is not yet
-seriously addressing such issue^[[20]](#ftnt20)^. Therefore please
+seriously addressing such issue[[20]](#ftnt20). Therefore please
 notice that the platform will not go beyond the state of the art on this
 aspect; i.e., we are not going to provide a new access control proposal.
 But the Fusepool P3 platform is just going to implement the best
@@ -497,8 +515,7 @@ processed by the LDP Transformation Proxy described above. This HTTPS
 Proxy can of course rely on information stored in the proxied LDP
 implementation describing the users and their rights. Following the
 design principle of Separation of Concerns (SoC) the LDP Transformation
-Proxy only implements HTTP, no TLS/SSL support over HTTPS.
-^[[f]](#cmnt6)^^[[g]](#cmnt7)^^[[h]](#cmnt8)^^[[i]](#cmnt9)^Therefore
+Proxy only implements HTTP, no TLS/SSL support over HTTPS. Therefore
 such circumstance needs to be properly handled when designing the access
 control mechanisms. For all these reasons, access controls is not yet
 part of the basic implementation delivered together with this report.
@@ -512,7 +529,7 @@ Section 2), are likely to be vendor specific to some degree. The
 following sections describe the concrete access control features which
 could be used by the Fusepool platform. Whether a generic access control
 interface could be defined for the FP3 platform remains an item for
-discussion^[[j]](#cmnt10)^. Such a generic interface would seek to hide
+discussion. Such a generic interface would seek to hide
 differences in access control configuration between the alternative
 Linked Data platforms which might provide the base storage layer. In the
 absence of a generic interface, the access control configuration might
@@ -524,21 +541,21 @@ be consistent irrespective of the chosen storage platform.
 
 Apache Marmotta implements some basic mechanisms for access control. By
 default HTTP Basic authentication [Fielding1999] is used for
-authentication and authorization^[[21]](#ftnt21)^, both for all web
+authentication and authorization [[21]](#ftnt21), both for all web
 services (SPARQL, LDP, etc) and the administration user interface. The
 configuration is based on ACL rules, using users and roles, grouped in
 profiles for simplifying permission management.
 
 In addition, Marmotta also has experimental support for fine-grained
-access-control within the RDF triples^[[22]](#ftnt22)^ by providing
+access-control within the RDF triples [[22]](#ftnt22) by providing
 access control over a Sesame SAIL using PPO [Sacco2011]. Although in
 principle such granularity level of access control would not be required
 by the project, as discussed above. The roadmap of the project also
 includes other authentication technologies, such as
-WebID^[[23]](#ftnt23)^ or OAuth^[[24]](#ftnt24)^, which also could be
+WebID [[23]](#ftnt23) or OAuth [[24]](#ftnt24), which also could be
 addressed with the implementation of the Fusepool P3 platform. In the
 end the evolution of the requirements, both internal in the project and
-external^[[25]](#ftnt25)^, should guide that process.
+external [[25]](#ftnt25), should guide that process.
 
 #### Virtuoso access control
 
@@ -569,7 +586,7 @@ endpoints or specific RDF store named graphs, or WebDAV resources etc.
 ##### VAL vs LDP WG Requirements for Access Control
 
 VAL offers a superset of the LDP access control requirements outlined by
-the Linked Data Platform Working Group^[[27]](#ftnt27)^. It broadly
+the Linked Data Platform Working Group [[27]](#ftnt27). It broadly
 supports the following W3C requirements:
 
 -   Access Control Graphs - which describe which agents have access to
@@ -611,8 +628,8 @@ VAL’s generic ACL layer is based in its entirety on RDF statements and
 entity relations logic, so rules, groups, authorization grants etc., are
 all in the form of RDF statements persisted to  private graphs in the
 RDF store. Authorization rules are described using terms from the  W3C
-ACL ontology^[[28]](#ftnt28)^ and the OpenLink ACL
-ontology^[[29]](#ftnt29)^. This system also supports restrictions which
+ACL ontology [[28]](#ftnt28) and the OpenLink ACL
+ontology [[29]](#ftnt29). This system also supports restrictions which
 restrict arbitrary values based on the authenticated user. These can be
 used to limit the number of query results, enforce quotas etc.
 
@@ -656,7 +673,7 @@ provided by the authenticated user’s WebID, but can also be conditions
 evaluated as part of a SPARQL ASK query. Every authenticated person
 matching these conditions is seen as part of the group. VAL’s
 Conditional Groups feature provides the basis for Attribute Based Access
-Control (ABAC^[[30]](#ftnt30)^).
+Control (ABAC [[30]](#ftnt30)).
 
 
 ## Workflows
@@ -924,74 +941,26 @@ And the response SHOULD look like:
 
 ##  Basic Implementation
 
-- Library
-- Client Library
-- Proxy
+All the code developed within Fusepool P3 is available on GitHub [[31]](#ftnt31). Currently we provide some first implementation of all components except he UI. Also we provide libraries to easily develop Transformers in Java, usage of this library is documented in a How-To [39](#ftnt39). To make development of clients easier we also provide a client-library, the library abstracts away the differences of the synchonous and the asynchronous interaction protocol.
+
+We provide an LDP server based he Marmotta that has been tested to work together with the LDP Proxy we provide.
+
+Apart from the Pipeline Transformer mentioned above we have implemented several transformers such as for:
+
 - Openrefine
 - Silk
-- Regex (in Howto)
-- Pipeline
-- Sponger
-- Entity recognizion
+- Regex (as an example in How-To)
+- Entity recognizion based on SKOS Taxonomies
 
-The basic implementation of the Fusepool P3 platform can be found at
-GitHub^[[31]](#ftnt31)^, and the first release (0.1.0) has been recently
-published there^[[32]](#ftnt32)^. It is available under a
-business-friendly open source license^[[33]](#ftnt33)^, and consists on
-a Apache Maven^[[34]](#ftnt34)^ multi-module project that manages the
-overall development lifecycle of all required components:
+Also several Virtuoso Sponger Cartriges are available as Transformer, making Virtuoso enhancers avaible with the Transfomer API is work in progress.
 
--   LDP Transformation Proxy.
--   Transformation libraries and interfaces definitions.
--   Generic workers, such as Apache Stanbol^[[35]](#ftnt35)^ for
-    information extraction tasks.
--   Actual platform backends, such as Apache Marmotta or other that will
-    come.
--   A basic bash-based^[[36]](#ftnt36)^ launcher to start/stop all
-    integrated components in a seamless way.
-
-In addition a public continuous integration server [Fowler2006] is
-available^[[37]](#ftnt37)^, continuously building the platform on every
-new commit to the code, automatically reporting the results to the
-developers.
-
-4.1 Methodology {.c39 .c21}
----------------
-
-The working plan for the platform is based on the common software
-engineering concept of "always throw the prototype away" [Brooks1975] in
-conjunction with the philosophy of "release early, release often"
-[Raymond1999]. We are aware that many decisions may be wrong. Or even if
-they are right we have produced a bad implementation out of it. But the
-main idea was to quickly prototype a platform that would not blocked the
-work of the other parts in the project. The idea is to incrementally
-build and evolve the platform together with the other  technical work
-packages.
-
-Once the first milestone of the project was accomplished, the project
-already has a working platform, something that is ready to be used for
-stating to develop and integrate all the other components. In parallel,
-the platform will be also evaluated by external stakeholders that will
-provide the necessary feedback to feed the following development
-iterations. The Scrum methodology [Takeuchi1986] internally used for the
-project development will try deliver quickly and respond to all these
-emerging requirements.
-
-4.2 Deployment architecture {.c2 .c21 .c32}
----------------------------
+## Deployment architecture
 
 All component can run on any platform that can expose HTTP services. The
 components of the reference implementation may require some common
 runtimes readily available on common platforms.
 
-In the initial development iterations a set of basic bash scripts is
-provided to startup the whole platform on Unix-based environments. But
-in the mid/long-term the divergences between development and production
-environments should be reduced. That means a refinement of these initial
-relaxed deployment requirements, allowing the deployment platform on
-proper production environment; i.e., an environment without shell
-access. But this is part of the natural evolution of any software
-product.
+A et of basic bash scripts is provided to startup all components on Unix-based environments. 
 
 4.3 Get started {.c2 .c32 .c21}
 ---------------
@@ -1321,7 +1290,7 @@ References {.c2 .c21}
 |------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <a name="BernersLee2006"></a>BernersLee2006   | Berners-Lee, T. (2006). Design issues: Linked Data. W3C.                                                                                                                                                     |
 | Bizer2009        | Bizer, C., Heath, T., & Berners-Lee,T. (2009). Linked data-the story so far. International journal on semantic web and information systems, 5(3), 1-22.                                                      |
-| Brooks1975       | Brooks Jr, F. P. (1975). The Mythical man-month: essays on software engineering.                                                                                                                             |
+| Brooks1995       | Brooks Jr, F. P. (1995). The Mythical Man-Month: Essays on Software Engineering, Anniversary Edition (2nd Edition)                                      |
 | Costabello2013   | Costabello, L., Villata, S., Rocha, O. R., & Gandon, F. (2013). Access Control for HTTP Operations on Linked Data. The Semantic Web: Semantics and Big Data, 185-199.                                        |
 | Cyganiak2014     | Cyganiak, R., Wood, D., & Lanthaler,M. (2014). RDF 1.1 concepts and abstract syntax. Recommendation, W3C.                                                                                                    |
 | Fielding1999     | Fielding, R., Gettys, J., Mogul, J.,Frystyk, H., Masinter, L., Leach, P., et al. (1999). Hypertext transfer protocol–HTTP/1.1. RFC 2616, June.                                                               |
@@ -1339,9 +1308,11 @@ References {.c2 .c21}
 | Sacco2011        | Sacco, O., & Passant, A. (2011). A Privacy Preference Ontology (PPO) for Linked Data. LDOW 2011.                                                                                                             |
 | Sanderson2013    | Sanderson, R., Ciccarese, P., Van deSompel, H. (2013). Open Annotation Data Model. Community Draft, W3C. http://www.openannotation.org/spec/core/                                                            |
 | SPARQL11         | The W3C SPARQL Working Group (2013).SPARQL 1.1 Overview. Recommendation,W3C. http://www.w3.org/TR/sparql11-overview/                                                                                         |
+| Schwaber2011     | Schwaber, K,  Sutherland, J (2011). The Scrum Guide                                                                               |
 | Speicher2014     | Speicher, S., Arwe, J., Malhotra, A.(2014). Linked Data Platform 1.0. Candidate Recommendation, W3C. http://www.w3.org/TR/ldp/                                                                               |
 | Story2009        | Story, H., Harbulot, B., Jacobi, I.,& Jones, M. (2009). FOAF+SSL: Restful authentication for the social web. Proceedings of the FirstWorkshop on Trust and Privacy on theSocial and Semantic Web (SPOT2009). |
 | Takeuchi1986     | Takeuchi, H., & Nonaka, I. (1986). The new new product development game. Harvard business review, 64(1), 137-146.                                                                                            |
+| Wiggings2012     | Wiggins, A.  (2012). The twelve-factor app. [http://12factor.net/](http://12factor.net/)    |
 
 
 Copyright Fusepool P3 Consortium              /
@@ -1420,7 +1391,7 @@ required to run the open source version of the Fusepool P3 platform.
 
 [30]<a name="ftnt30"></a> [http://csrc.nist.gov/projects/abac/](http://csrc.nist.gov/projects/abac/)
 
-[31]<a name="ftnt31"></a> [https://github.com/fusepoolP3/platform](https://github.com/fusepoolP3/platform)
+[31]<a name="ftnt31"></a> [https://github.com/fusepoolP3](https://github.com/fusepoolP3)
 
 [32]<a name="ftnt32"></a> [https://github.com/fusepoolP3/platform/releases/tag/0.1.0](https://github.com/fusepoolP3/platform/releases/tag/0.1.0)
 
@@ -1435,3 +1406,6 @@ required to run the open source version of the Fusepool P3 platform.
 [37]<a name="ftnt37"></a> [https://travis-ci.org/fusepoolP3/platform](https://travis-ci.org/fusepoolP3/platform)
 
 [38]<a name="ftnt38"></a> [https://github.com/fusepoolP3/platform](https://github.com/fusepoolP3/platform)
+
+[39]<a name="ftnt39"></a>
+[https://github.com/fusepoolP3/p3-transformer-howto/blob/master/transformer-howto.md](https://github.com/fusepoolP3/p3-transformer-howto/blob/master/transformer-howto.md)
