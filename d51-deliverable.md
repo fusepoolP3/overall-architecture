@@ -1,7 +1,7 @@
-# Technical platform specifications and basic implementation
+# Technical platform specifications basic implementation and generic RDF API
 
 
-Deliverable 5.1
+Deliverable 5.1 and 5.3
 
 
 
@@ -133,7 +133,7 @@ IRI prefixed:
 | dct    | [http://purl.org/dc/terms/](http://purl.org/dc/terms/) |
 | oa     | [http://www.w3.org/ns/oa\#](http://www.w3.org/ns/oa#)|
 | ldp    | [http://www.w3.org/ns/ldp\#](http://www.w3.org/ns/ldp#)|
-| fp3    | [http://vocab.fusepool.info/fp3\#](http://vocab.fusepool.info/fp3#) [TODO: remove]|
+| fp3    | [http://vocab.fusepool.info/fp3\#](http://vocab.fusepool.info/fp3#)|
 | eldp   | [http://vocab.fusepool.info/eldp\#](http://vocab.fusepool.info/eldp#)   |
 | trans  | [http://vocab.fusepool.info/transformer\#](http://vocab.fusepool.info/transformer#) |
 | fam    | [http://vocab.fusepool.info/fam\#](http://vocab.fusepool.info/fam#) |
@@ -922,10 +922,17 @@ And the response SHOULD look like:
 
 
 
-* * * * *
+##  Basic Implementation
 
-4. Basic Implementation {.c2 .c21}
-=======================
+- Library
+- Client Library
+- Proxy
+- Openrefine
+- Silk
+- Regex (in Howto)
+- Pipeline
+- Sponger
+- Entity recognizion
 
 The basic implementation of the Fusepool P3 platform can be found at
 GitHub^[[31]](#ftnt31)^, and the first release (0.1.0) has been recently
