@@ -954,7 +954,7 @@ Apart from the Pipeline Transformer mentioned above we have implemented several 
 - Regex (as an example in How-To)
 - Entity recognition based on SKOS Taxonomies
 
-Also several Virtuoso Sponger Cartridges are available as Transformer, making Virtuoso enhancers available with the Transformer API is work in progress.
+Also several Virtuoso Sponger Cartridges as well as several Virtuoso enhancers are available as Transformers.
 
 ## Deployment architecture
 
