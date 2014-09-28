@@ -55,17 +55,17 @@ This work is licensed under the Creative Commons Attribution 4.0 International L
 
 ## Executive Summary
 
-The goal of Fusepool P3 project is to make publishing and processing of public data as linked data easy. For this purpose Fusepool P3 develops a set of of software components that integrate seamlessly by well defined API basing on Linked Data Best Practices and the Linked Data Platform standard.
+The goal of Fusepool P3 project is to make publishing and processing of public data as linked data easy. For this purpose Fusepool P3 develops a set of software components that integrate seamlessly by well defined APIs basing on Linked Data Best Practices and the Linked Data Platform standard.
 
-To ensure longevity of the code and the API developed within Fusepool the software is designed so that the individual components can be used not only as parts of the overall software, but also individually. The architecture is not tied to a particular runtime environment but bases exclusively on web standards. This allows components to be implemented using any language and framework.
+To ensure longevity of the code and the APIs developed within Fusepool the software is designed so that the individual components can be used not only as parts of the overall software, but also individually. The architecture is not tied to a particular runtime environment but bases exclusively on web standards. This allows components to be implemented using any language and framework.
 
-As a consequence of this the focus of the platform is not to build a central application into which the components are added as plugins but mainly specifying generic API to allow the interaction of loosly coupled modules. This is the reason why this document covers both D5.1 (Technical platform specifications and basic implementation) as well as D5.3 (Data storage access via generic RDF API). The platform is what emerges from components communicating with generic RESTful RDF API.
+As a consequence of this the focus of the platform is not to build a central application into which the components are added as plugins but mainly specifying generic APIs to allow the interaction of loosly coupled modules. This is the reason why this document covers both D5.1 (Technical platform specifications and basic implementation) as well as D5.3 (Data storage access via generic RDF APIs). The platform is what emerges from components communicating with generic RESTful RDF APIs.
 
 The Fusepool P3 process is divided in the following four steps: exploration, extraction, enrichment and delivery. The software provides tools for the last 3 steps:
 
- * Extraction: Data from various sources and formats is transformed to RDF and thus made usable in the Lined Open Data (LOD) Cloud.
+ * Extraction: Data from various sources and formats is transformed to RDF and thus made usable in the Linked Open Data (LOD) Cloud.
  * Enrichment: Entity recognition, Natural Language Processing (NLP), Interlinking as well as human processing such as by Crowdsourcing allow to enrich the available data increasing its value to its and to application builders.
- * Delivery: The actual delivery of the data can be separated into making it available via Lined Data standards and the actual presentation to the user with apps on desktops and mobile devices.
+ * Delivery: The actual delivery of the data can be separated into making it available via Linked Data standards and the actual presentation to the user with apps running on desktops and mobile devices.
 
 This document describes the modular architecture of the Fusepool P3 platform. It describes the modularization, the available and planned implementations of modules and shows how the modules play together to implement the use cases and provide the toolkit envisaged by the DOW.
 
@@ -146,12 +146,12 @@ IRI prefixed:
 
 This document describes the technical specification for the Fusepool P3 platform. It specifies the Fusepool P3 software by describing the basic architectural design choices and at a different level of precision (depending on the current status of the development of the respective components and work packages) the concrete interaction APIs. It aims to present an application that satisfies the high level requirements of the DoW but also the more concrete use cases developed by WP1. The described architecture is the result of discussion with all technical work packages as it affects all software deliverable of the project and not just  WP5.
 
-The main goal of the Fusepool P3 architecture is to provide interaction protocols and pattern so that the component can be used in concert to form the Fusepool P3 Platform. The interaction is based on HTTP. For the APIs introduced in Fusepool P3 we strive to adhere to the REST design principles. Also we adhere to the Linked Data principles [BernersLee2006](#BernersLee2006). This document also describes some of the workflows to illustrate how the APIs and architectural pattern are applied to satisfy concrete use case.
+The main goal of the Fusepool P3 architecture is to provide interaction protocols and pattern so that the components can be used in concert to form the Fusepool P3 Platform. The interaction is based on HTTP. For the APIs introduced in Fusepool P3 we strive to adhere to the REST design principles. Also we adhere to the Linked Data principles [BernersLee2006](#BernersLee2006). This document also describes some of the workflows to illustrate how the APIs and architectural patterns are applied to satisfy concrete use case.
 
 ### Uses cases summary
 
 The Fusepool P3 project partners Provincia Autonoma di Trento and
-Regione Toscana publish Open Data and develop apps in the domain of
+Regione Toscana have been publishing Open Data and develop apps in the domain of
 tourism for several years. During this time both partners gained
 valuable experience in data creation, maintenance and publication.
 
@@ -162,7 +162,7 @@ which integrate parts of the published Open Data into their own apps.
 
 As of today the data is mainly available in particular data formats like
 CSV, KML, XML and JSON. App developers need to download the raw data and
-process it using their own ETL (Extract, Transform Load) processes. With
+process it using their own ETL (Extract, Transform, Load) processes. With
 every update of the raw data this process has to be triggered for every
 single application where it is used. If the format of the raw data
 changed, the process has to be adjusted and cannot be automated. With
@@ -196,7 +196,7 @@ accessible.
 
 What is lacking is an integration framework that combines the data transformation to RDF, possible enhancement steps and the publishing of the Linked Data. Fusepool P3 will provide such an integration framework along with User Interface tools that serve both to model the data publication process as well as to coordinate the human interactions that might be required while the data is processed.
 
-This framework will integrate state-of-the-art tools like OpenRefine, OpenLink Virtuoso, Apache Stanbol, and Pundit. The framework is developed and tested based on the requirements by our project partners Provincia Autonoma di Trento and Regione Toscana. Both partners start working with the platform in an early stage and feedback
+This framework will integrate state-of-the-art tools like OpenRefine, OpenLink Virtuoso, Apache Stanbol, and Pundit. The framework is developed and tested based on the requirements by our project partners Provincia Autonoma di Trento and Regione Toscana. Both partners have started working with the platform in an early stage and feedback
 gets directly integrated into the agile development process of Fusepool
 P3.
 
@@ -210,30 +210,30 @@ they are right we have produced a bad implementation out of it. But we keep comp
 
 Once the first milestone of the project was accomplished, the project
 already has a working platform, something that is ready to be used for
-stating to develop and integrate all the other components. In parallel,
+starting to develop and integrate all the other components. In parallel,
 the platform will be also evaluated by external stakeholders that will
 provide the necessary feedback to feed the following development
 iterations. The Scrum methodology [Takeuchi1986] internally used for the
-project development will try deliver quickly and respond to all these
+project development will try to deliver quickly and respond to all these
 emerging requirements.
 
-Our methodology is heavily inspired by the twelfe-factor app [Wiggings2012] principles. This results in a platform composed of many standalone applications. These applications can be implemented used any language and communicate only via well defined protocols. There are no shared dependencies that might cause the entire system to break on an incompatible change, every module includes all the dependencies it needs to run.
+Our methodology is heavily inspired by the twelve-factor app [Wiggings2012] principles. This results in a platform composed of many standalone applications. These applications can be implemented using any language and communicate only via well defined protocols. There are no shared dependencies that might cause the entire system to break on an incompatible change, every module includes all the dependencies it needs to run.
 
 ## Architecture
 
 The architecture is based on components communicating via HTTP and exposing RESTfull APIs. This allows for components being developed in any language and hosted on any platform. After initial discussions on the architectural principles (see [[2]](#ftnt2) and [[3]](#ftnt3)) the decision was taken to have the components very loosely coupled and interacting only via HTTP, this design choice was made with the following goals:
 
-- Reusability of Fusepool component is maximized
+- Reusability of Fusepool components is maximized
 - Distributed development is facilitated
-- It is easy for developer to understand and extend the software
+- It is easy for developers to understand and extend the software
 - Ensure longevity of the software
 - The software is simple to deploy and maintain in organizational IT environments (DoW 1.2.2)
 
-Once the decision was taken on how components should interact the question was were the boundaries between components should be defined and how the components build the overall platform. The following figure depicts the high-level architecture for the Fusepool P3 platform:
+Once the decision was taken on how components should interact the question was where the boundaries between components should be defined and how the components build the overall platform. The following figure depicts the high-level architecture for the Fusepool P3 platform:
 
 ![Platform Diagram](p3-platform-diagram.svg "Platform Diagram")
 
-The diagram shows how the UI and other clients access the fusepool P3 primarily via and LDP transforming Proxy which exposes a front-end conforming to the LDP specification [Speicher2014] with the addition of the Transforming Container API [TODO link]. The proxy transparently handles
+The diagram shows how the UI and other clients access the fusepool P3 primarily via an LDP transforming Proxy which exposes a front-end conforming to the LDP specification [Speicher2014] with the addition of the Transforming Container API [TODO link]. The proxy transparently handles
 transformation processes by calling in background the actual transformers, and sending back the data to the platform once the process has finished. The clients can also directly access transformers via their REST API (transformer API) [TODO link] or use a SPARQL 1.1 [SPARQL11] endpoint.
 
 As the name suggests transformer data. The term ans the API are used broadly both for the functionality provided by WP 2 as well as by WP 3. It comprises the transformation from non-RDF content to RDF as well as the transformation from content without annotations to content with annotations.
@@ -283,7 +283,7 @@ produce RDF data using the ontologies best suited for the concrete data (e.g. FO
 
 Transformers are identified by an URI which is the entry point of the RESTfull transformation API. Very often a single HTTP Server will provide many related transformers. For example a server on host `translate.example.org` might provide an a transformer translating from English to German with URI `http://translate.example.org/en/de` and another transformer translating from Esperanto to Klingon at URI `http://translate.example.org/eo/tlh`. Such a software providing many transformers is called *transformer factory*.
 
-The transformer API supports both synchronous and asynchronous transformers. While a synchronous transformer return the transformation result right as the response of the transformation request asynchronous transformer will deliver their results at a later time. Asynchronous transformers might for instance require some user interaction in order to deliver their results.
+The transformer API supports both synchronous and asynchronous transformers. While a synchronous transformer returns the transformation result right as the response of the transformation request asynchronous transformer will deliver their results at a later time. Asynchronous transformers might for instance require some user interaction in order to deliver their results.
 
 Transformers may invoke other transformers, we provide a transformer factory to create pipeline transformers. A pipeline transformers invokes a list of transformers in sequence passing the output of one transformer as input to the next transformer and at the end retuning the output of the last transformer. For example this allows to chain a transformer translating the content with a transformer that does named entity extraction, which would be useful if no entity labels are available in the original language.
 
@@ -293,7 +293,7 @@ Fusepool P3 defined the Transforming Container API. This API bases on LDP and pr
 
 While it is possible for an LDP implementation to implement this API directly it would be hard to convince vendors of LDP implementations to add support for Transforming Containers, especially as long as this API is hardly known and there are few transformers available. As the API won't become more widely known as long as it is isn't supported this is a prototypical catch-22 situation.
 
-To break out of this dilemma we implemented the P3 Transforming Proxy. This is an HTTP Proxy that is used as a reverse proxy in front of an LDP Server and adds the capabilities described by the Transforming Container LDPC to the proxied instance. The proxy intercepts POST requests: if the request is against an LDPC marked as Transforming Container the proxy will not only forward the request to the proxied LDP instance but also send the contents to the transformer associated to the container. Once the result of the transformation is available the results will also be posted to the LDPC. Of course, the LDPC can be associated to a pipeline transformer if multiple transformers should be executed.
+To break out of this dilemma we implemented the P3 Transforming Proxy. This is an HTTP Proxy that is used as a reverse proxy in front of an LDP Server and adds the capabilities described by the Transforming Container LDPC to the proxied instance. The proxy intercepts POST requests: if the request is against an LDPC marked as Transforming Container the proxy will not only forward the request to the proxied LDP instance but also send the contents to the transformer associated to the container. Once the result of the transformation is available, such result will also be posted to the LDPC. Of course, the LDPC can be associated to a pipeline transformer if multiple transformers should be executed.
 
 #### Backends
 
@@ -335,8 +335,7 @@ collections of resources, often homogeneous ones. Resources can be added
 to containers using the standard HTTP POST method.
 
 Besides a general purpose LDP 1.0 implementation compliant with the
-specification[[11]](#ftnt11), for the concrete needs of the project it
-has to provide at least:
+specification[[11]](#ftnt11), for the concrete needs of the project:
 
 -   Implementation must support the creation of (nested) containers by posting
     them to an existing container.
@@ -905,7 +904,7 @@ of the container after the transformer terminates the transformation.
 Internally the proxy handles the invocation to the endpoint provided by
 the concrete transformer, and the storage of the data.
 
-So when a GET request is sent after transformation completed the
+So when a GET request is sent after the transformation process is completed the
 interaction might look as follows:
 
 
@@ -945,7 +944,7 @@ And the response SHOULD look like:
 
 All the code developed within Fusepool P3 is available on GitHub [[31]](#ftnt31). Currently we provide some first implementation of all components except he UI. Also we provide libraries to easily develop Transformers in Java, usage of this library is documented in a How-To [39](#ftnt39). To make development of clients easier we also provide a client-library, the library abstracts away the differences of the synchronous and the asynchronous interaction protocol.
 
-We provide an LDP server based he Marmotta that has been tested to work together with the LDP Proxy we provide.
+We provide an LDP server based on Apache Marmotta that has been tested to work together with the LDP Proxy we provide.
 
 Apart from the Pipeline Transformer mentioned above we have implemented several transformers such as for:
 
@@ -967,16 +966,16 @@ A et of basic bash scripts is provided to startup all components on Unix-based e
 ## Conclusions and future work
 
 This deliverable provides the initial architectural specification
-and basic implementation of the Fusepool P3 platform. The focus was set on clean interaction pattern to allow productive development on in a team using disparate technologies and to allow deployment in various infrastructural settings and for different needs.
+and basic implementation of the Fusepool P3 platform. The focus was set on clean interaction pattern to allow productive development in a team using disparate technologies and to allow deployment in various infrastructural settings and for different needs.
 We are aware that several questions still need to be defined. For example, this first version triggers the discussion of some core aspects, such as access control.
-Also the debuggability and logging of of the process may need to be standardized to accommodate future use cases, this may include data staging on each transformation performed, rollback and provenance.
+Also the debuggability and logging of the process may need to be standardized to accommodate future use cases, this may include data staging on each transformation performed, rollback and provenance.
 We are confident that the basic architecture as well as our methodology provides a robust framework to address these issues.
 
-The main goal was of this document to set the basic pillars where the
+The main goal of this document is to set the basic pillars where the
 complete Fusepool P3 project can be built on top of. This document
 accommodates the idea outlined in the proposal to the current status of
-the technology. Together this document it is been delivered an open
-source implementation, including the basic implementation of some of the
+the technology. Together with this document an open
+source implementation has been delivered, including the basic implementation of some of the
 core components described above. All these components have to evolve
 together the rest of the project, and moved towards the high-level goal
 of providing an integrated data-value chain management platform.
