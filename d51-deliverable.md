@@ -59,7 +59,8 @@ The goal of Fusepool P3 project is to make publishing and processing of public d
 
 To ensure longevity of the code and the APIs developed within Fusepool the software is designed so that the individual components can be used not only as parts of the overall software, but also individually. The architecture is not tied to a particular runtime environment but bases exclusively on web standards. This allows components to be implemented using any language and framework.
 
-As a consequence of this the focus of the platform is not to build a central application into which the components are added as plugins but mainly specifying generic APIs to allow the interaction of loosly coupled modules. This is the reason why this document covers both D5.1 (Technical platform specifications and basic implementation) as well as D5.3 (Data storage access via generic RDF APIs). The platform is what emerges from components communicating with generic RESTful RDF APIs.
+As a consequence of this the focus of the platform is not to build a central application into which the components are added as plugins but mainly specifying generic APIs to allow the interaction of loosly coupled modules. This is the reason why this document covers both D5.1 (Technical platform specifications and basic implementation) as well as D5.3 (Data storage access via generic RDF APIs). The platform is what emerges from components communicating with generic RESTful RDF APIs. 
+This focus on standards and loose coupling will provide the extensibility to cover both the current as well as future end-users needs. This is because new developers as well as new platforms and tools can be integrated very quickly.
 
 The Fusepool P3 process is divided in the following four steps: exploration, extraction, enrichment and delivery. The software provides tools for the last 3 steps:
 
@@ -229,6 +230,8 @@ The architecture is based on components communicating via HTTP and exposing REST
 - Ensure longevity of the software
 - The software is simple to deploy and maintain in organizational IT environments (DoW 1.2.2)
 
+In combination these goals ensure a platform that can satisfy both the current as well as future end user requirements.
+
 Once the decision was taken on how components should interact the question was where the boundaries between components should be defined and how the components build the overall platform. The following figure depicts the high-level architecture for the Fusepool P3 platform:
 
 ![Platform Diagram](p3-platform-diagram.svg "Platform Diagram")
@@ -240,8 +243,10 @@ As the name suggests transformer data. The term ans the API are used broadly bot
 
 The components drawn in blue are not actually separable components that interact via HTTP. While an LDP implementation could in principle interact with the RDF Triple Store exclusively via SPARQL and HTTP for performance reasons it is not implemented this way but is rather more tightly coupled to the implementation of the triple store. Similarly some custom services realized in T5.4 will be implemented to directly interact with the triple store; such services are only implemented if the development of the UI shows that an interaction via the standard mechanism SPARQL and LDP is not feasible or not providing an adequate level of performance.
 
-For the implementation of LDP (without the transforming container API) the concrete implementations that the partners bring into the consortium are Apache Marmotta^[[4]](#ftnt4)^ from SRFG and
-OpenLink Virtuoso^[[5]](#ftnt5)^ from OGL. With the exception of the T5.4 components any generic LDP implementation that supports read/write access can be used. Some more concrete details about the requirements for such implementations will be described below.
+For the implementation of LDP (without the transforming container API) the concrete implementations that the partners bring into the consortium are Apache Marmotta[[4]](#ftnt4) from SRFG and
+OpenLink Virtuoso[[5]](#ftnt5) from OGL. With the exception of the T5.4 components any generic LDP implementation that supports read/write access can be used. Some more concrete details about the requirements for such implementations will be described below.
+
+The UI provided will be the integrative element allowing end users to have a consistent user expirience seemlessly unifying the different components.
 
 All components are going to be described in sufficient detail in the upcoming sections.
 
@@ -342,9 +347,9 @@ specification[[11]](#ftnt11), for the concrete needs of the project:
 -   In addition to the normative LDP properties, the description of an LDPC shall be allowed
     to contain arbitrary properties.
 -   Further more, the underlying LDP implementation has to support to
-    transparently run behind the LDP Proxy, concretely this means the
-    LDPC must not assume the requested IRI to reflect the port it is
-    listening to.
+    transparently run behind a Proxy, concretely this means the
+    LDP implementation must not assume the requested IRI to reflect the port it is
+    listening to, e.g. the LDP implementation might be listening to port 8080 but answer requests directed to port 80. 
 
 LDP Specification: [http://www.w3.org/TR/ldp/](http://www.w3.org/TR/ldp/)
 
@@ -510,8 +515,8 @@ Given the proposed architecture, where all the interaction to the
 platform is done via the LDP Transformation Proxy Layer (further details
 can be found at Sections 2.1 and 3.1), access control not relying on
 HTTP Headers (e.g. WebID) must be at least partially be handled by a
-proxy handling the requests as they come in^[[e]](#cmnt5)^. This means
-that a HTTPS proxy might handle the request before the requests are
+proxy handling the requests as they come in. This means
+that a HTTPS proxy will handle the request before the requests are
 processed by the LDP Transformation Proxy described above. This HTTPS
 Proxy can of course rely on information stored in the proxied LDP
 implementation describing the users and their rights. Following the
@@ -523,20 +528,11 @@ part of the basic implementation delivered together with this report.
 There are still many issues to clarify before we would be able to
 provide a specification that could fit in the overall architecture.
 
-The access control mechanisms of the particular Linked Data Platform
+As a reference in the following sections we describe the access control 
+mechanisms of the particular Linked Data Platform
 (Apache Marmotta or OpenLink Virtuoso) providing the base layers of the
 FP3 framework (the blue components in the architecture diagram on
-Section 2), are likely to be vendor specific to some degree. The
-following sections describe the concrete access control features which
-could be used by the Fusepool platform. Whether a generic access control
-interface could be defined for the FP3 platform remains an item for
-discussion. Such a generic interface would seek to hide
-differences in access control configuration between the alternative
-Linked Data platforms which might provide the base storage layer. In the
-absence of a generic interface, the access control configuration might
-remain platform specific, but the effects of the access control as seen
-by the client, for example the reporting of access restrictions, should
-be consistent irrespective of the chosen storage platform.
+Section 2).
 
 #### Marmotta access control
 
