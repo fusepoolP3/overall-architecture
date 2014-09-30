@@ -466,9 +466,12 @@ analysis results:
     skos:ConceptScheme)
 
 All those Annotation Types will act as annotation bodies as defined in
-the core annotation structure. Annotation Types are extensible. This
-allows Annotations whose analysis results are not covered by the
-predefined Annotation Types to define their own.
+the core annotation structure. Transformers that require annotations not
+covered by the predefined Annotation Types can define their own types (within
+their own namespace). Those transformer specific Annotation Types can be used
+similar to the predefined one. It is also possible to extend existing Annotation
+Types (e.g. by defining additional properties). NOTE that components consuming 
+FAM annotations might not support custom annotation types.
 
 This section defines the first version of the Fusepool P3 Annotation
 Model[[19]](#ftnt19), which will be specified in detail in the future
