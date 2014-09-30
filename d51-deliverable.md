@@ -405,8 +405,8 @@ the following parts:
 
 -   oa:Annotation providing metadata and provenance information about
     the produced annotations
--   oa:SpecialResource acting as mediator between the optional
-    oa:Selector and the source
+-   oa:SpecialResource representing the n-ary relation between the 
+    oa:Annotation, oa:Selector and the source. 
 -   the source represented by the IRI of the annotated text
 -   an annotation body that formally describes the annotation
 
