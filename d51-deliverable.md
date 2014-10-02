@@ -474,9 +474,8 @@ Types (e.g. by defining additional properties). NOTE that components consuming
 FAM annotations might not support custom annotation types.
 
 This section defines the first version of the Fusepool P3 Annotation
-Model[[19]](#ftnt19), which will be specified in detail in the future
-by deliverable D5.2, Data retrieval for semantic enrichment/processing
-and semantic indexes for domain specific data retrieval.
+Model[[19]](#ftnt19). The final specification of the FAM will be presented as
+part of Deliverable D3.1 (M12).
 
 #### More specification
 
