@@ -18,6 +18,7 @@ Deliverable 5.1 and 5.3
 | v0.6|Sebastian Schaffert, Sarven Capadisli|29.06.201|First internal review|
 | v0.7|All|30.6.2014|Addressed review comments|
 | v0.8|Reto Gmür| 8.9.2014 | Reworked overall structure|
+| v1.0|Reto Gmür| 7.10.2014 | Addressed review comments|
 
 
 
