@@ -26,7 +26,7 @@ This section is normative.
 
 A Transformation Service (aka Transformer) is represented by an dereferenceable URI representing a resource of type `trans:Transformer`
 
-A GET request of the resource will return a description of the service. At least `text/turle` must be supported as format to describe the resource. A POST request does the actual transformation of the data.
+A GET request of the resource will return a description of the service. At least `text/turtle` must be supported as format to describe the resource. A POST request does the actual transformation of the data.
 
 This is a very generic mechanism designed to interface simple services that can do a very specific transformation as well as services that interface a complex pipe or routing mechanism to handle many input and output formats. Such a more complex service might well delegate to more simple services that also expose the interface.
 
@@ -43,7 +43,7 @@ Implementation MUST support the GET method for Transformers. Implementations MUS
 
 Implementations SHOULD return a triple with the Transformer as subject and `trans:supportedOutputFormat` as predicate and a media type as `xsd:String`value of the object for any media-type that might be the format of the result of a successful transformation.
 
-Implementations MUST support POST requests. Implementations SHOULD accept requests entities of all media-types matching a value of one of the `trans:supportedInputFormat` properties of the Transformer contained in the RDF representation returned on GET requests when interpreing this value as `media-range` the same way as the `media-range` is for accept header values as per section 14.1 of [RFC2616].
+Implementations MUST support POST requests. Implementations SHOULD accept requests entities of all media-types matching a value of one of the `trans:supportedInputFormat` properties of the Transformer contained in the RDF representation returned on GET requests when interpreting this value as `media-range` the same way as the `media-range` is for accept header values as per section 14.1 of [RFC2616].
 
 Implementations handle the request synchronously or asynchronously. If the implementations chooses to handle the request synchronously and the transformation succeeds it MUST respond with status code 200. The result of the transformation MUST be returned as the response entity. If the request fails because of an error in the POSTed entity implementation SHOULD answer the request with status code 400 and a response entity explaining the error.
 
@@ -66,7 +66,7 @@ Retrieving the description of the transformer `http://example.org/simple-transfo
 
     GET /simple-transformer
     Host: example.org
-    Accept: text/turte, application/rdf+xml;q=.8, */*;q=.1
+    Accept: text/turtle, application/rdf+xml;q=.8, */*;q=.1
     User-Agent: my-client/0.1
 
 Response:
@@ -79,7 +79,7 @@ Response:
 	@prefix dct: <http://purl.org/dc/terms/>.
     @prefix trans: <http://vocab.fusepool.info/transformer#>.
     <http://example.org/simple-transformer> a trans:Transformer;
-		dct:title "A simple rdf Transformation"@en;
+		dct:title "A simple RDF Transformation"@en;
 		dct:description "transforms vcards to RDF";
 		trans:supportedInputFormat "text/vcard";
 		trans:supportedOutputFormat "text/turtle";
@@ -89,15 +89,15 @@ This response tells the client that this is an Transformation service accepting 
 
 Parameters of the media type might further narrow the format using media type parameters, e.g. application/json;app=foobar%version=2.1. It the input format is specified with parameters the submitted data format must be qualified with all these parameters, the submitted data format may be qualified with additional parameters.
 
-The media type might also contain wildcars, analogously to the accept header in HTTP.
+The media type might also contain wildcards, analogously to the accept header in HTTP.
 
 
 #### Example 2
-Transorming data using the transformer `http://example.org/simple-transformer`
+Transforming data using the transformer `http://example.org/simple-transformer`
 
     POST /simple-transformer
     Host: example.org
-    Accept: text/turte, application/rdf+xml;q=.8, */*;q=.1
+    Accept: text/turtle, application/rdf+xml;q=.8, */*;q=.1
     User-Agent: my-client/0.1
     Content-Type: text/vcard
     Content-Length: 164
@@ -138,7 +138,7 @@ Request 1
 
     POST /asynchronous-transformer
     Host: example.org
-    Accept: text/turte, application/rdf+xml;q=.8, */*;q=.1
+    Accept: text/turtle, application/rdf+xml;q=.8, */*;q=.1
     User-Agent: my-client/0.1
     Content-Type: text/vcard
     Content-Length: 164
@@ -165,7 +165,7 @@ Request 2
 
     GET /asynchronous-transformer/status/765
     Host: example.org
-    Accept: text/turte, application/rdf+xml;q=.8, */*;q=.1
+    Accept: text/turtle, application/rdf+xml;q=.8, */*;q=.1
     User-Agent: my-client/0.1
 
 Response 2:
@@ -184,7 +184,7 @@ Request 3
 
     GET /asynchronous-transformer/status/765
     Host: example.org
-    Accept: text/turte, application/rdf+xml;q=.8, */*;q=.1
+    Accept: text/turtle, application/rdf+xml;q=.8, */*;q=.1
     User-Agent: my-client/0.1
 
 Response 3:
