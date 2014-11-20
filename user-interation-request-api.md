@@ -48,7 +48,7 @@ Non-normative note: A client presenting *interaction request*s to users MAY hide
 
 ## Example
 
-The following HTTP traces exemplify the process of submitting interaction requests to am *IR-LDPC* at `http://demo.fusepoolp3.eu/ir-ldpc`.
+The following HTTP traces exemplify the process of submitting interaction requests to an *IR-LDPC* at `http://demo.fusepoolp3.eu/ir-ldpc`.
 
 
     POST /ir-ldpc
