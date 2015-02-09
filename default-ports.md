@@ -15,6 +15,7 @@ STATUS: this is document is prescriptive and not yet fully descriptive
  * 8193 - Geo Enriching Transfomer
  * 8194 - Any23 Transformer
  * 8195 - Stanbol
+ * 8196 - Literal Extraction Transformer
  
 ## GUIs
 
