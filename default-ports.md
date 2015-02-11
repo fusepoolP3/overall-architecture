@@ -20,3 +20,4 @@ STATUS: this is document is prescriptive and not yet fully descriptive
 ## GUIs
 
  * 8201 - Pipeline Transfomer Factory GUI
+ * 8202 - Dictionary Matcher Factory GUI
