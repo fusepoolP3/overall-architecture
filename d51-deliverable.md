@@ -1,3 +1,8 @@
+Notes for layouting:
+
+ *  Figures are not numbered. Subsections do not have numbers and because of that it is hard to read the text (e.g. Section 8 contains a number of subsections of different levels).
+
+
 # Technical platform specifications basic implementation and generic RDF API
 
 
