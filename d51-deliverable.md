@@ -230,7 +230,7 @@ Our methodology is heavily inspired by the twelve-factor app [Wiggings2012] prin
 
 ## Architecture
 
-The architecture is based on components communicating via HTTP and exposing RESTfull APIs. This allows for components being developed in any language and hosted on any platform. After initial discussions on the architectural principles (see [[2]](#ftnt2) and [[3]](#ftnt3)) the decision was taken to have the components very loosely coupled and interacting only via HTTP, this design choice was made with the following goals:
+The architecture is based on components communicating via HTTP and exposing RESTfull RDF APIs. This allows for components being developed in any language and hosted on any platform. After initial discussions on the architectural principles (see [[2]](#ftnt2) and [[3]](#ftnt3)) the decision was taken to have the components very loosely coupled and interacting only via HTTP, this design choice was made with the following goals:
 
 - Reusability of Fusepool components is maximized
 - Distributed development is facilitated
@@ -247,7 +247,7 @@ Once the decision was taken on how components should interact the question was w
 The diagram shows how the UI and other clients access the fusepool P3 primarily via an LDP transforming Proxy which exposes a front-end conforming to the LDP specification [Speicher2014] with the addition of the Transforming Container API [TODO link]. The proxy transparently handles
 transformation processes by calling in background the actual transformers, and sending back the data to the platform once the process has finished. The clients can also directly access transformers via their REST API (transformer API) [TODO link] or use a SPARQL 1.1 [SPARQL11] endpoint.
 
-As the name suggests transformer data. The term ans the API are used broadly both for the functionality provided by WP 2 as well as by WP 3. It comprises the transformation from non-RDF content to RDF as well as the transformation from content without annotations to content with annotations.
+As the name suggests transformers transform data. The term and the API are used broadly both for the functionality provided by WP 2 as well as by WP 3. It comprises the transformation from non-RDF content to RDF as well as the transformation from content without annotations to content with annotations.
 
 The components drawn in blue are not actually separable components that interact via HTTP. While an LDP implementation could in principle interact with the RDF Triple Store exclusively via SPARQL and HTTP for performance reasons it is not implemented this way but is rather more tightly coupled to the implementation of the triple store. Similarly some custom services realized in T5.4 will be implemented to directly interact with the triple store; such services are only implemented if the development of the UI shows that an interaction via the standard mechanism SPARQL and LDP is not feasible or not providing an adequate level of performance.
 
