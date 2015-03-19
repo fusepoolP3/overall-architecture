@@ -347,8 +347,12 @@ Containers are very useful in building application models involving
 collections of resources, often homogeneous ones. Resources can be added
 to containers using the standard HTTP POST method.
 
-Besides a general purpose LDP 1.0 implementation compliant with the
-specification[[11]](#ftnt11), for the concrete needs of the project:
+The LDP specifications also allows for read-only implementations or 
+implementations that allow only storage of very specific data and not 
+arbitrary RDF data. As such an implementation would not be suitable as 
+a storage layer for the platform, an LDP implementation must fulfill 
+some additional requirements besides those mandated by the LDP 1.0 
+specification[[7]](#ftnt7):
 
 -   Implementation must support the creation of (nested) containers by posting
     them to an existing container.
@@ -359,7 +363,13 @@ specification[[11]](#ftnt11), for the concrete needs of the project:
     LDP implementation must not assume the requested IRI to reflect the port it is
     listening to, e.g. the LDP implementation might be listening to port 8080 but answer requests directed to port 80. 
 
-LDP Specification: [http://www.w3.org/TR/ldp/](http://www.w3.org/TR/ldp/)
+The first two of the above requirements ensure that the implementation 
+allows write access via LDP mechanisms and supports arbitrary RDF data.
+The third requirement is to ensure that exclusively the HTTP headers
+is used to determine the IRI of requested resources, while this should
+be the normal behavior of an HTTP application it is not explicitly
+required by the LDP spec so it has been added here.  
+
 
 #### SPARQL 1.1
 
