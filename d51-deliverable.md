@@ -970,13 +970,17 @@ Apart from the Pipeline Transformer mentioned above we have implemented several 
 
 Also several Virtuoso Sponger Cartridges as well as several Virtuoso enhancers are available as Transformers.
 
+We also provide an extension to Apache Stanbol so that the many Stanbol 
+Enhancement Engines also expose the Transformer API and can thus be used 
+in the Fusepool P3 Platform.
+
 ## Deployment architecture
 
 All component can run on any platform that can expose HTTP services. The
 components of the reference implementation may require some common
 runtimes readily available on common platforms.
 
-A et of basic bash scripts is provided to startup all components on Unix-based environments.
+A set of basic bash scripts is provided to startup all components on Unix-based environments.
 
 ## Conclusions and future work
 
