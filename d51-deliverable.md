@@ -240,6 +240,8 @@ The architecture is based on components communicating via HTTP and exposing REST
 
 In combination these goals ensure a platform that can satisfy both the current as well as future end user requirements.
 
+With the chosen design the generic RDF API allowing access to the data storage is not something provided additionally to some less-generic and more proprietary data access APIs. Components that are part of the platform as well as third party applications communicate with the platform using generic RDF APIs. The platform is built around and with these generic RDF API so that no adapter or translation is necessary. RESTfull RDF is the platform's native interaction method. As a side benefit generic RDF APIs are not only provided for the data storage but each component is accessible via such APIs. So even third party services embedded in the platform that do not themselves expose generic RDF API by being wrapped as platform components become accessible via such a RESTfull RDF API.
+
 Once the decision was taken on how components should interact the question was where the boundaries between components should be defined and how the components build the overall platform. The following figure depicts the high-level architecture for the Fusepool P3 platform:
 
 ![Platform Diagram](p3-platform-diagram.svg "Platform Diagram")
