@@ -19,6 +19,7 @@ STATUS: this is document is prescriptive and not yet fully descriptive
  * 8196 - Literal Extraction Transformer
  * 8197 - SilkDedup
  * 8198 - XSLT Transformer
+ * 8199 - Geocoordinates Transformer
  
 ## GUIs
 
