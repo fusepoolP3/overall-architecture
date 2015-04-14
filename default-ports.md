@@ -16,6 +16,7 @@ STATUS: this is document is prescriptive and not yet fully descriptive
  * 8194 - Any23 Transformer
  * 8195 - Stanbol
  * 8196 - Literal Extraction Transformer
+ * 8197 - SilkDedup
  
 ## GUIs
 
