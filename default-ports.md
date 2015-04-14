@@ -27,6 +27,7 @@ STATUS: this is document is prescriptive and not yet fully descriptive
  * 8202 - Dictionary Matcher Factory GUI
  * 8203 - Batchrefine transformer factory GUI
  * 8204 - XSLT factory GUI
+ * 8205 - Resource GUI
  
 ## Others
 
