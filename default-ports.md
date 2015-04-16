@@ -11,15 +11,16 @@ STATUS: this is document is prescriptive and not yet fully descriptive
 
 ## Transformers
 
- * 8190 - Pipeline Transformer
- * 8192 - Dictionary Matcher
- * 8193 - Geo Enriching Transfomer
- * 8194 - Any23 Transformer
- * 8195 - Stanbol
- * 8196 - Literal Extraction Transformer
- * 8197 - SilkDedup
- * 8198 - XSLT Transformer
- * 8199 - Geocoordinates Transformer
+ * 8300 - Pipeline Transformer
+ * 8301 - Dictionary Matcher
+ * 8302 - Geo Enriching Transfomer
+ * 8303 - Any23 Transformer
+ * 8304 - Stanbol
+ * 8305 - Literal Extraction Transformer
+ * 8306 - SilkDedup
+ * 8307 - XSLT Transformer
+ * 8308 - Geocoordinates Transformer
+ * 8310 - Bing
  
 ## GUIs
 
