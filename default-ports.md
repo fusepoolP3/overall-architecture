@@ -21,6 +21,7 @@ STATUS: this is document is prescriptive and not yet fully descriptive
  * 8307 - XSLT Transformer
  * 8308 - Geocoordinates Transformer
  * 8309 - Bing
+ * 8310 - Batchrefine
  
 ## GUIs
 
