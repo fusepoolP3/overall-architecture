@@ -27,7 +27,7 @@ Fusepool-P3-D5.2
 
 ### Copyright
 
-This document contains material, which is the copyright of certain
+This document contains material copyright by certain
 Fusepool P3 consortium parties.
 
 This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.
@@ -68,11 +68,19 @@ On the side of the application level retrieval and query service the architectur
 
 ### Proxy
 
+The functional role and relevant APIs for the LDP Transforming Proxy are defined in D5.1. This deliverable report shall provided some more details on how the proxy has been implemented and how it is used.
+
 ### Crawler
+
+The integration of the Virtuoso Crawler is described in detail in D2.1 and shall not be repeated here. The proxy is a service to efficiently retrieve data for storage and semantic enrichment with the P3 platforrm.
 
 ### Monitoring data
 
-Originally we planned to implement a logging no-operation transformer for debugging as part of T5.3. This no-op transformer could have been added at any position of a transforming pipeline to log the data passed from one transformer to the next. The no-op transformer was thought to be useful to monitor the data at each of its transformation steps. Experience has shown however that standard TCP/IP network monitoring tools where sufficient in most cases. The only case we encountered where standard TCP/IP monitoring tool were not powerful enough was when debugging a scenario where different pipelines that are run concurrently access the same transformer, but even in this case we did not need the planned logging no-operation transformer but could use a standard logging HTTP Proxy such as The Grinder [Grinder], given that the transformer API is based on HTTP and the RDF data exchange bases on standard serialization formats no further tool was needed. This finding clearly exemplifies the benefits of the chose standards based architecture with loosely coupled components communicating vie HTTP and standard format. 
+Originally we planned to implement a logging no-operation transformer for debugging as part of T5.3. This no-op transformer could have been added at any position of a transforming pipeline to log the data passed from one transformer to the next. The no-op transformer was thought to be useful to monitor the data at each of its transformation steps. Experience has shown however that standard TCP/IP network monitoring tools where sufficient in most cases. The only case we encountered where standard TCP/IP monitoring tool were not powerful enough was when debugging a scenario where different pipelines that are run concurrently access the same transformer, but even in this case we did not need the planned logging no-operation transformer but could use a standard logging HTTP Proxy such as The Grinder [Grinder], given that the transformer API is based on HTTP and the RDF data exchange bases on standard serialization formats no further tool was needed. This finding clearly exemplifies the benefits of the chose standards based architecture with loosely coupled components communicating vie HTTP and standard format.
+
+### Dashboard
+
+The Dashboard allows the user to visually interact with transforming containers (defined in D5.1). The dashboard supports multiple configurations effectively allowing the user to have multiple visual workbenches to serve different usage scenario of one or of several users. With the Dashboard the user can to drag-and-drop files to the platform, as defined by the Transforming Container API these files are not only added to the container but a transformation job is also started in the background. The user will immediately see and be able to access the uploaded data (i.e. the file drag-and-dropped to the visual representation of the container and shortly after the transformation compleeted also the results of the transformation. The dashboard is described in detail in D4.1.
 
 ## Application level retrieval
 
