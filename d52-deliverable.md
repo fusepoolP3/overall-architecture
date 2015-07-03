@@ -47,6 +47,7 @@ With T5.4 this deliverable comprises the provision of application level retrieva
 
 | Acronym/Abbreviation | Description |
 |----------------------|-------------|
+| DoW | Description of Work |
 | API     | Application Programming Interface            |
 | LDP                 | Linked data platform |
 | LDPC                | Linked data platform Container |
@@ -63,6 +64,11 @@ The data retrieval for semantic enrichment supports both components delivering t
 
 On the side of the application level retrieval and query service the architecture of the platform foresees the possibilities of services providing a custom HTTP API that interact directly with the triple store. As written in the D5.1 report, such services are only implemented if the development of the UI shows that an interaction via the standard mechanism SPARQL and LDP is not feasible or not providing an adequate level of performance. We will see that a change of the standard protocol could avoid the introduction of such service, increasing the portability of the platform across storage backends. 
 
+## Positioning within the project life span
+
+The DoW has foressen this deliverables for project month 9. However the chosen architecture described in D5.1/5.3 emphasizises on using pre-existing standards wherever possible and writes about the domain specific query API and services foreseen by T5.4 (one of the two tasks comprising this deliverable) that "such services are only implemented if the development of the UI shows that an interaction via the standard mechanism SPARQL and LDP is not feasible or not providing an adequate level of performance". Defining and implementing such service at an early project stage would be a typical example of premature optimization. It was thus beneficial to postpone this task to a late stage in the project so that the application specific services could be defined to address empirically observed rather than be based on merely hypothized problems.
+As for the other task of this deliverable T5.3 recognizing that the chosen modular achitecture offers plenty of interfaces suitable for adding the required debugging and backtracing possibilities we opted to develop the required tools based on the concrete requirements that arise during the product development. As an unforseen dividend of the standard compliance we found that standard tools can be used and no development was necessary. This shows that it was a good decision not to develop tools beforehand, which would have not only been futile but also an unecessary addition of complexity to our software corpus.
+As postponenment of both task of this deliverable was indicated in our views we consequently decided to postpone this deliverable.
 
 ## Data retrieval
 
