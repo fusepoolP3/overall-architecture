@@ -51,6 +51,7 @@ With T5.4 this deliverable comprises the provision of application level retrieva
 | API     | Application Programming Interface            |
 | LDP                 | Linked data platform |
 | LDPC                | Linked data platform Container |
+| PHP |  PHP hypertext Preprocessor |
 | RDF     | Resource Description Framework               |
 | REST    | Representational State Transfer              |
 | SPARQL        | SPARQL Protocol And RDF Query Language |                                                                                                                                                                                                              
@@ -99,9 +100,10 @@ As well as protocls defined by the P3 project. The protocols defined within the 
 
  * Transformer API
  * Transforming Container API
+ * Transformer Registry API
  * User Interaction Request API
  
-Apart from there adherence to the REST principles and (for the latter two) relying on the LDP specification what these protocols have in common is that the payload of the messages (the HTTP message body) is expressed using a media type encoding an RDF graph (or, where the LDP specification foresees this, a serialization that will become an RDF graph once the LDP instance assigns the necessary base IRI for parsing). To foster interoperability at the semantic level the platform architecture also defines which ontologies shall be used for the purpose of describing semantic enrichments, notably:
+Apart from there adherence to the REST principles and (except for the first) relying on the LDP specification what these protocols have in common is that the payload of the messages (the HTTP message body) is expressed using a media type encoding an RDF graph (or, where the LDP specification foresees this, a serialization that will become an RDF graph once the LDP instance assigns the necessary base IRI for parsing). To foster interoperability at the semantic level the platform architecture also defines which ontologies shall be used for the purpose of describing semantic enrichments, notably:
 
  * Open Annotation [Sanderson2013]
  * Fusepool Annotation Model (FAM)
@@ -111,6 +113,11 @@ These standards and API describe generic and domain independent data retreival a
 The expected price of genericy is a degradation of performance as well as a higher complexity required by the client software. While the services developed within T5.4 should if possible also follow the overall design patterns, i.e. provide RESTfull interfaces with RDF payloads they should be designed for specific domains and applications. This would allow to optimize performance as well as to provide the simplest possible API for the use case at hands. As written earlier we would be guilty of premature optimization if we had defined such APIs before having concrete empirical facts on shortcomings of the generic APIs. The necessity and the content of the services implemented withing T5.4 thus depends on the results of T4.1 which shall identify possible optimizations of the genric APIs based on the development of clients.
 
 ### Findings from T4.1
+
+As described in report for D4.1 the generic APIs could readily be used and tested in the creation of the UI components. In some cases however the UI implementation was changes to use the platform's SPARQL endpoint rather than accessing the data via LDP as originally foreseen and implemented, this is discussed in some more details in the next section. Only some minor adaptations to the generic APIs where conducted based on the expirience with the UI development.
+
+ * Because of a limitation in PHP is is not possible to send nn HTTP response with status code 202 and a `location` header, therefore it was not possible to implement spec comformant implementation of asynchronous transformers using the PHP programming language. Because of this the Transfomer API was modified to allow the use of a 201 status code in place of the semantically more accurate 202 status code. The client libary was adapted to support this novelty. As the novetlty describes only an optional and its usage discourage no adpatation of the transfomer implementation library for Java was needed.
+ * As many clients are implemented in JavaScript and running in the browser the same-origin policy [SPO] applies. This policy is a security mechanism implemented by all modern browsers preventing scripts in a web page to access data and services on servers other than the "origin" server which server the web page. Luckily with the Cross-Origin Resource Sharing (CORS) Specification [CORS] there is a standard mechanism that allows services to override the default policy and be accessible even from scripts running in pages served from different hosts. As with CORS an existing standards is available and nothing in the RESTfull APIs we defined is incompatible with this specification, no adaptation in our specification was needed. We simply changed the transfomer library and all transformer to add support for CORS. We also addressed some issues with the CORS support in Marmotta. The P3 Proxy needed no adaptation as it forwards any CORS support the proxied service provides.
 
 ### LDP vs. SPARQL
 
@@ -123,10 +130,12 @@ The expected price of genericy is a degradation of performance as well as a high
 
 | Ref.             | Description |                                                                                                                                                                                                              
 |------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| CORS | [http://www.w3.org/TR/cors/](http://www.w3.org/TR/cors/) |
 | LDP | [http://www.w3.org/TR/ldp/](http://www.w3.org/TR/ldp/) |
 | Grinder | [http://grinder.sourceforge.net/g3/tcpproxy.html](http://grinder.sourceforge.net/g3/tcpproxy.html) |
 | Perry | Perry, M., Herring, J. (2012). OGC GeoSPARQL - A Geographic Query Language for RDF Data. Open Geospatial Consortium. http://www.opengeospatial.org/standards/geosparql |
 | Sanderson2013    | Sanderson, R., Ciccarese, P., Van deSompel, H. (2013). Open Annotation Data Model. Community Draft, W3C. http://www.openannotation.org/spec/core/                                                            |
+|SPO | [http://www.w3.org/Security/wiki/Same_Origin_Policy](http://www.w3.org/Security/wiki/Same_Origin_Policy) |
 
 
 
