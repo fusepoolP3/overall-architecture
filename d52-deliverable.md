@@ -90,6 +90,26 @@ The Dashboard allows the user to visually interact with transforming containers 
 
 ## Application level retrieval
 
+With T5.4 the DoW foresees the development of application level retrieval and query services. The platform architecture described in D5.1 stipulates that interaction with the platform by non-human agents as well as interactions between platform components shall be based on either established protocols and standards for interacting with linked data, specifically:
+
+ * LDP
+ * SPARQL
+
+As well as protocls defined by the P3 project. The protocols defined within the project shall follow the REST design principles. Notably the following protocols where defined within P3:
+
+ * Transformer API
+ * Transforming Container API
+ * User Interaction Request API
+ 
+Apart from there adherence to the REST principles and (for the latter two) relying on the LDP specification what these protocols have in common is that the payload of the messages (the HTTP message body) is expressed using a media type encoding an RDF graph (or, where the LDP specification foresees this, a serialization that will become an RDF graph once the LDP instance assigns the necessary base IRI for parsing). To foster interoperability at the semantic level the platform architecture also defines which ontologies shall be used for the purpose of describing semantic enrichments, notably:
+
+ * Open Annotation [Sanderson2013]
+ * Fusepool Annotation Model (FAM)
+ 
+These standards and API describe generic and domain independent data retreival and processing mechanism. The use of standard ontologies for describing annotations allows for text/label based retrieval using the standard SPARQL protocol. Where the backend supports GeoSPARQL [Perry] it is also possible to run more advanced topological queries using the SPARQL protocol. It should however be noted that simple bounding-box based spatial/temporal queries can be run efficiently against any SPARQL endpoint without requiring specific extensions.
+
+The expected price of genericy is a degradation of performance as well as a higher complexity required by the client software. While the services developed within T5.4 should if possible also follow the overall design patterns, i.e. provide RESTfull interfaces with RDF payloads they should be designed for specific domains and applications. This would allow to optimize performance as well as to provide the simplest possible API for the use case at hands. As written earlier we would be guilty of premature optimization if we had defined such APIs before having concrete empirical facts on shortcomings of the generic APIs. The necessity and the content of the services implemented withing T5.4 thus depends on the results of T4.1 which shall identify possible optimizations of the genric APIs based on the development of clients.
+
 ### Findings from T4.1
 
 ### LDP vs. SPARQL
@@ -105,6 +125,8 @@ The Dashboard allows the user to visually interact with transforming containers 
 |------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | LDP | [http://www.w3.org/TR/ldp/](http://www.w3.org/TR/ldp/) |
 | Grinder | [http://grinder.sourceforge.net/g3/tcpproxy.html](http://grinder.sourceforge.net/g3/tcpproxy.html) |
+| Perry | Perry, M., Herring, J. (2012). OGC GeoSPARQL - A Geographic Query Language for RDF Data. Open Geospatial Consortium. http://www.opengeospatial.org/standards/geosparql |
+| Sanderson2013    | Sanderson, R., Ciccarese, P., Van deSompel, H. (2013). Open Annotation Data Model. Community Draft, W3C. http://www.openannotation.org/spec/core/                                                            |
 
 
 
