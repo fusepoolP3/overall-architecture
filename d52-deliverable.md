@@ -121,11 +121,8 @@ As described in report for D4.1 the generic APIs could readily be used and teste
 
 ### LDP vs. SPARQL
 
-### CORS
- 
--> D4.1
--> Issue against marmotta
--> Added support in transformers by support in the library
+The `User Interaction Request API` as well as the other registries (`Transfomer Registry` and `Transformer Factory Registry)` describe how regular LDP capabilities are used to maintain these registries. While LDP access to the registries is efficient for adding new entries as well as for browsing from one entry to the next it is inefficient when retreiving a large amount of entries inclusing their description. Using LDP this requires at least one HTTP request to get the index and an additional request for every entry. As the used LDP implementation provide the data of the RDF resources also via the SPARQL endpoint some UI components now access the registry via SPARQL. As D5.1 already specified that all data in the RDF Graphs managed by a Fusepool P3 platform backend can be accessed via SPARQL, no change to the specification was considered necessary.
+
 
 
 | Ref.             | Description |                                                                                                                                                                                                              
