@@ -85,7 +85,7 @@ The DoW has foreseen this deliverables for project month 9. However the chosen a
 
 As for the other task of this deliverable T5.3 recognizing that the chosen modular architecture offers plenty of interfaces suitable for adding the required debugging and backtracing possibilities we opted to develop the required tools based on the concrete requirements that arise during the product development. As an unforeseen dividend of the standard compliance we found that standard tools can be used and no development was necessary. This shows that it was a good decision not to develop tools beforehand, which would have not only been futile but also an unnecessary addition of complexity to our software corpus.
 
-As postponement of both task of this deliverable was indicated in our views we consequently decided to postpone this deliverable.
+As postponement of both task of this deliverable was indicated in our view, we consequently decided to postpone this deliverable.
 
 ## Data retrieval
 
@@ -108,7 +108,7 @@ The integration of the Virtuoso Crawler is described in detail in D2.1 and shall
 
 ### Monitoring data
 
-Originally we planned to implement a logging no-operation transformer for debugging as part of T5.3. This no-op transformer could have been added at any position of a transforming pipeline to log the data passed from one transformer to the next. The no-op transformer was thought to be useful to monitor the data at each of its transformation steps. Experience has shown however that standard TCP/IP network monitoring tools where sufficient in most cases. The only case we encountered where standard TCP/IP monitoring tool were not powerful enough was when debugging a scenario where different pipelines that are run concurrently access the same transformer, but even in this case we did not need the planned logging no-operation transformer but could use a standard logging HTTP Proxy such as The Grinder [Grinder], given that the transformer API is based on HTTP and the RDF data exchange bases on standard serialization formats no further tool was needed. This finding clearly exemplifies the benefits of the chose standards based architecture with loosely coupled components communicating via HTTP and standard format.
+Originally we planned to implement a logging no-operation transformer for debugging to provide the traceability envisaged by T5.3. This no-op transformer could have been added at any position of a transforming pipeline to log the data passed from one transformer to the next. The no-op transformer was thought to be useful to monitor the data at each of its transformation steps. Experience has shown however that standard TCP/IP network monitoring tools where sufficient in most cases. The only case we encountered where standard TCP/IP monitoring tool were not powerful enough was when debugging a scenario where different pipelines that are run concurrently access the same transformer, but even in this case we did not need the planned logging no-operation transformer but could use a standard logging HTTP Proxy such as The Grinder [Grinder], given that the transformer API is based on HTTP and the RDF data exchange bases on standard serialization formats no further tool was needed. This finding clearly exemplifies the benefits of the chose standards based architecture with loosely coupled components communicating via HTTP and standard format.
 
 ### Dashboard
 
