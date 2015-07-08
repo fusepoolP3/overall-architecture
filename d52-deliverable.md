@@ -123,10 +123,10 @@ With T5.4 the DoW foresees the development of application level retrieval and qu
 
 As well as protocols defined by the P3 project. The protocols defined within the project shall follow the REST design principles. Notably the following protocols where defined within P3:
 
- * Transformer API [TODO: add link]
- * Transforming Container API [TODO: add link]
- * Transformer Registry API [TODO: add link]
- * User Interaction Request API [TODO: add link]
+ * Transformer API
+ * Transforming Container API
+ * Transformer Registry API
+ * User Interaction Request API
  
 Apart from there adherence to the REST principles and (except for the first) relying on the LDP specification what these protocols have in common is that the payload of the messages (the HTTP message body) is expressed using a media type encoding an RDF graph (or, where the LDP specification foresees this, a serialization that will become an RDF graph once the LDP instance assigns the necessary base IRI for parsing). To foster interoperability at the semantic level the platform architecture also defines which ontologies shall be used for the purpose of describing semantic enrichments, notably:
 
