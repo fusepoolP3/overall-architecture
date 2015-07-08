@@ -93,7 +93,7 @@ As postponement of both task of this deliverable was indicated in our view, we c
 
 The functional role and relevant APIs for the LDP Transforming Proxy are defined in D5.1. This deliverable report shall provided some more details on how the proxy has been implemented and how it is used.
 
-The P3 Proxy is a reverse proxy, i.e. it appears to the client as ordinary sever, clients are not aware of the proxy, what they see is an LDP implementation supporting the P3 Transforming Container extension. The proxy is transparent to the backend as well as to the client it never modifies neither the client's request nor the server response. As it forwards the HTTP `Host` header unmodified the backend might technically notice the presence of a proxy as the port indicated by the value of this header may not match the port the backend is actually bound to. As using reverse proxies is very common in productive environment and because implementation typically process HTTP messages independently of the network binding this should not be an issue for any LDP implementation, for completeness D5.1 nevertheless specifies that the LDP implementation must not assume the requested IRI to reflect the port it is listening to". Practically the LDP implementation will take the public address of proxy as its own public address (hostname and port). The Marmotta LDP implementation automatically configure itself on the first request based on the host header, it assumes this to be the canonical address of the instance and redirect all subsequent requests to use this hostname and port, because of this, it is important that the first request is made via the proxy nd using the correct public facing hostname (i.e. not using a hostname like `localhost` if the instance shall later be accessed from the internet). Unlike a classical file serving HTTP server for an LDP implementation it is important to consider the full URI the client is dereferencing as the LDP resources are identified by their full URI and not just by the URI-path section of the request. The HTTP responses of the LDP implementation encoding RDF normally describe the requested resource and contain its URI, it is thus important that the URIs are used consistently.
+The P3 Proxy is a [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy), i.e. it appears to the client as ordinary sever, clients are not aware of the proxy, what they see is an LDP implementation supporting the P3 Transforming Container extension. The proxy is [transparent](https://en.wikipedia.org/wiki/Proxy_server#Transparent_proxy) to the backend as well as to the client it never modifies neither the client's request nor the server response. As it forwards the HTTP `Host` header unmodified the backend might technically notice the presence of a proxy as the port indicated by the value of this header may not match the port the backend is actually bound to. As using reverse proxies is very common in productive environment and because implementation typically process HTTP messages independently of the network binding this should not be an issue for any LDP implementation, for completeness D5.1 nevertheless specifies that the LDP implementation must not assume the requested IRI to reflect the port it is listening to". Practically the LDP implementation will take the public address of proxy as its own public address (hostname and port). The Marmotta LDP implementation has the ability to automatically configure itself on the first request based on the `Host` header, it assumes this to be the canonical address of the instance and redirect all subsequent requests to use this hostname and port, because of this, it is important that the first request is made via the proxy nd using the correct public facing hostname (i.e. not using a hostname like `localhost` if the instance shall later be accessed from the internet). Unlike a classical file serving HTTP server for an LDP implementation it is important to consider the full URI the client is dereferencing as the LDP resources are identified by their full URI and not just by the URI-path section of the request. The HTTP responses of the LDP implementation encoding RDF normally describe the requested resource and contain its URI, it is thus important that the URIs are used consistently.
 
 The proxy doesn't do anything but forwarding the semantically unmodified request and response (with a byte-by-byte identical message body) for all HTTP requests methods but HTTP POST. In the case of HTTP POST it does the following in addition to forwarding the unmodified request:
 
@@ -104,7 +104,7 @@ The proxy doesn't do anything but forwarding the semantically unmodified request
 
 ### Crawler
 
-The integration of the Virtuoso Crawler is described in detail in D2.1 and shall not be repeated here. The proxy is a service to efficiently retrieve data for storage and semantic enrichment with the P3 platform.
+The integration of the Virtuoso Crawler is described in detail in D2.1 and shall not be repeated here. The crawler is a service to efficiently retrieve data for storage and semantic enrichment with the P3 platform.
 
 ### Monitoring data
 
@@ -118,15 +118,15 @@ The Dashboard allows the user to visually interact with transforming containers 
 
 With T5.4 the DoW foresees the development of application level retrieval and query services. The platform architecture described in D5.1 stipulates that interaction with the platform by non-human agents as well as interactions between platform components shall be based on either established protocols and standards for interacting with linked data, specifically:
 
- * LDP
- * SPARQL
+ * Linked Data Platform 1.0 - [LDP](http://www.w3.org/TR/ldp/)
+ * SPARQL 1.1 Query Language - [SPARQL](http://www.w3.org/TR/sparql11-query/)
 
 As well as protocols defined by the P3 project. The protocols defined within the project shall follow the REST design principles. Notably the following protocols where defined within P3:
 
- * Transformer API
- * Transforming Container API
- * Transformer Registry API
- * User Interaction Request API
+ * Transformer API [TODO: add link]
+ * Transforming Container API [TODO: add link]
+ * Transformer Registry API [TODO: add link]
+ * User Interaction Request API [TODO: add link]
  
 Apart from there adherence to the REST principles and (except for the first) relying on the LDP specification what these protocols have in common is that the payload of the messages (the HTTP message body) is expressed using a media type encoding an RDF graph (or, where the LDP specification foresees this, a serialization that will become an RDF graph once the LDP instance assigns the necessary base IRI for parsing). To foster interoperability at the semantic level the platform architecture also defines which ontologies shall be used for the purpose of describing semantic enrichments, notably:
 
