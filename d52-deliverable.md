@@ -18,8 +18,7 @@ Deliverable D5.2
 
 ### Quality Assurance / Review
 
- * Andrey Bratus (Spazio)
- * Milos Jovanovik (OGL)
+[TBD]
 
 
 ### Official Citation
@@ -119,8 +118,8 @@ The Dashboard allows the user to visually interact with transforming containers 
 
 With T5.4 the DoW foresees the development of application level retrieval and query services. The platform architecture described in D5.1 stipulates that interaction with the platform by non-human agents as well as interactions between platform components shall be based on either established protocols and standards for interacting with linked data, specifically:
 
- * Linked Data Platform 1.0 - [LDP](http://www.w3.org/TR/ldp/)
- * SPARQL 1.1 Query Language - [SPARQL](http://www.w3.org/TR/sparql11-query/)
+ * Linked Data Platform 1.0 [LDP]
+ * SPARQL 1.1 Query Language [SPARQL]
 
 As well as protocols defined by the P3 project. The protocols defined within the project shall follow the REST design principles. Notably the following protocols where defined within P3:
 
@@ -169,3 +168,4 @@ add but when there is nothing left to remove." Antoine de Saint-Exupéry
 | Perry | Perry, M., Herring, J. (2012). OGC GeoSPARQL - A Geographic Query Language for RDF Data. Open Geospatial Consortium. http://www.opengeospatial.org/standards/geosparql |
 | Sanderson2013    | Sanderson, R., Ciccarese, P., Van deSompel, H. (2013). Open Annotation Data Model. Community Draft, W3C. http://www.openannotation.org/spec/core/                                                            |
 |SPO | [http://www.w3.org/Security/wiki/Same_Origin_Policy](http://www.w3.org/Security/wiki/Same_Origin_Policy) |
+| SPARQL | [(http://www.w3.org/TR/sparql11-query/](http://www.w3.org/TR/sparql11-query/) |
