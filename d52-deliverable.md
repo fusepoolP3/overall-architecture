@@ -18,7 +18,8 @@ Deliverable D5.2
 
 ### Quality Assurance / Review
 
-[TBD]
+* Andrey Bratus (Spazio)
+* Milos Jovanovik (OGL)
 
 
 ### Official Citation
