@@ -104,7 +104,7 @@ The proxy doesn't do anything but forwarding the semantically unmodified request
 
 ### Crawler
 
-The integration of the Virtuoso Crawler is described in detail in D2.1 and shall not be repeated here. The crawler is a service to efficiently retrieve data for storage and semantic enrichment with the P3 platform.
+The integration of the Virtuoso Crawler is described in detail in D2.1 and shall not be repeated here. The crawler is a service to efficiently retrieve data for storage and semantic enrichment with the P3 platform. While building on the established Virtuoso Crawler it now supports the LDP standard for storing the data with the P3 platform.
 
 ### Monitoring data
 
