@@ -23,7 +23,7 @@ This section is normative.
 
 Implementations of this specification MUST also conform to [LDP].
 
-If the representation contains a triple with the LDPC as subject and `eldp:transformer` as predicate an implementation MUST invoke the `trans:Transformer` identified by the object of this triple whenever a non-RDF member resource is create following a POST request to the LDPC. The request against the `trans:Transformer` SHOUL be executed asynchronously, the POST request SHOULD return according to section 5.2.3.1 of [LDP] without waiting for the Transformer to complete. If the transformationis successful the results of the Transformation will SHOULD be added to the same collection. If the transformation result is an RDFS a triple with predicate `eldp:extractedFrom` the transformation result resource as subject and the original non-RDF resource as object SHOULD be added to the transformation result LDPR.
+If the representation contains a triple with the LDPC as subject and `eldp:transformer` as predicate an implementation MUST invoke the `trans:Transformer` identified by the object of this triple whenever a member resource is create following a POST request to the LDPC. The request against the `trans:Transformer` SHOULD be executed asynchronously: the POST request SHOULD return according to section 5.2.3.1 of [LDP] without waiting for the Transformer to complete. If the transformations is successful the results of the transformation SHOULD be added to the same collection. If the transformation result is an RDF graph a triple with predicate `eldp:transformedFrom` the transformation result resource as subject and the original resource as object SHOULD be added to the transformation result LDPR.
 
 ### Example
 
@@ -49,11 +49,11 @@ Response
 
     <http://example.org/container1/>
        a ldp:DirectContainer;
-       dcterms:title "An extracting LDP Container using simple-transformer";
+       dcterms:title "A transforming LDP Container using simple-transformer";
        ldp:membershipResource <http://example.org/container1/>;
        ldp:hasMemberRelation ldp:member;
        ldp:insertedContentRelation ldp:MemberSubject;
-       fp:transformer <http://example.org/simple-transformer>.
+       eldp:transformer <http://example.org/simple-transformer>.
 
 The above container will process added resources using `http://example.org/simple-transformer` if their media-type matches one of the supported input formats of this transformer. If this is the case both the original resource as well as the Transformation results will be added to the container.
 
