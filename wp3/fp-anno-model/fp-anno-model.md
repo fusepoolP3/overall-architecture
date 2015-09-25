@@ -371,6 +371,57 @@ Note that the selector `<http://www.example.com/example.txt#char=0>` is optional
         skos:prefLabel "Österreich"@de ;
         skos:broader my:Europe .
  
+### Sentiment Annotation
+
+Sentiment Annotation are used to define the sentiment of the document or an part (selection) of the document.
+
+Sentiment is defined as a double value in the range `[-1..1]` as value of the `fam:sentiment` property. The `fam:SentimentAnnotation` is used as `rdf:type` for such sentiments. To allow for simple quereis for the sentiment of the document those sentiment annotation do use the special `fam:DocumentSentimentAnnotation` type.
+
+#### Example
+
+The following listing provides the RDF representation of two Sentiment Annotations. First one about a section within the text and second one describing the Sentiment of the document as a whole.
+
+    @prefix ex: <urn:fam-example:> .
+    @prefix oa: <http://www.w3.org/ns/oa#> .
+    @prefix fam: <http://vocab.fusepool.info/fam#> .
+    @prefix nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> .
+
+First the a Sentiment for the section `[4245..4385]` in the text.
+
+    ex:sentiment1 a fam:SentimentAnnotation ;
+        fam:extracted-from <http://www.example.com/example.txt> ;
+        fam:selector <http://www.example.com/example.txt#char=4245,4385> ;
+        fam:sentiment "-0.12052237730103664"^^xsd:double .
+        
+Second the sentiment for the document as a whole
+
+    ex:sentiment2 a fam:DocumentSentimentAnnotation, fam:SentimentAnnotation ;
+        fam:extracted-from <http://www.example.com/example.txt> ;
+        fam:sentiment "-0.1635360928563686"^^xsd:double .
+
+
+### Keyword Annotation
+
+Keywords represent central words and phrases within a document. They are usually extracted by some algorithm and not based (nor linked) to any controlled vocabulary. High level usage of Keywords can include Tag suggestions, Suggestions for Search interfaces or Vocabulary seeding.
+
+`fam:KeywordAnnotation` use the `fam:keyword` property to link to the lexical form of the keyword as extracted from the text. Note this this may not be the word as mentioned in the text but may be already normalized (e.g. singular, base form, case corrected). In addition the `fam:metric` property a `xsd:double` in the range `[0..1]` defines how central the keyword is for the document and the `fam:count` defines how often this keyword was mentioned in the document. In the case of multi word keywords also mentions of sub phrases may contribute to the count.
+
+#### Example
+
+The following example shows the keyword "Polish President Lech Kaczynski" as extracted from a document. The metric is about 2/3 and it is mentioned 5 times in the text. Note that the mention may not be the number this exact phrase is mentioned in the document also mentions of sub-phrases may be counted.
+
+    @prefix ex: <urn:fam-example:> .
+    @prefix oa: <http://www.w3.org/ns/oa#> .
+    @prefix fam: <http://vocab.fusepool.info/fam#> .
+    @prefix nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> .
+
+    fam:keyword1 a fam:KeywordAnnotation ;
+        fam:confidence "1.0"^^xsd:double ;
+        fam:count "5"^^xsd:int ;
+        fam:extracted-from <http://www.example.com/example.txt> ;
+        fam:eyword "Polish President Lech Kaczynski"@en ;
+        fam:metric "0.6582523630117942"^^xsd:double .
+
 
 ### NIF 2.0 Integration
 
