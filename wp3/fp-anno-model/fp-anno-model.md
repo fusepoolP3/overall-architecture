@@ -185,11 +185,12 @@ The above listing shows the `fam:EntityMention` as well as the NIF based `oa:Sel
 
 ### Entity Annotation
 
-_Entity Annotation_ are used to link/suggest Entities from some controlled vocabulary. _Entity Annotation_ can be used for different kind of annotations:
+_Entity Annotation_ are used to link/suggest Entities from some controlled vocabulary that are mentioned in the text. _Entity Annotation_ can be used for different kind of annotations:
 
-1. _Keyword Annotation_ are typically used for Entity Tagging. This type does not define the actual mention(s) of the linked entities in the text. A _Keyword Annotation_ just defines that processed document is related to the linked Entity. A _Keyword Annotation_ is represented by a `fam:EntityAnnotation` that does not define a `oa:Selector`
-2. _Linked Entity Annotation_ do link an Entity with a mention in the text. They are represented by the `fam:LinkedEntity` class defined as a subclass of `fam:EntityAnnotation` and `fam:EntityMention`.
-3. In cases where multiple Entities could be linked to a mention a _Entity Linking Choice_ with multiple _Entity Suggestions_ can be used. The `fam:EntityLinkingChoice` is defined as subclass of both `fam:EntityMention` and `oa:Choice`. `fam:EntitySuggestion` instances are used to annotation all linking options. They are linked by the `oa:item` property from the `fam:EntityLinkingChoice`.
+1. _Entity Mention Annotation_ do link an Entity with a mention in the text. They are represented by the `fam:LinkedEntity` class defined as a subclass of `fam:EntityAnnotation` and `fam:EntityMention`. So one can annotate both the linked entity and the exact mention within the content.
+2. In case a mention is ambiguous multiple _Entity Suggestions_ can be linked to an _Entity Linking Choice_ representing the mention. The `fam:EntityLinkingChoice` is defined as subclass of both `fam:EntityMention` and `oa:Choice`. `fam:EntitySuggestion` instances are used to annotation all linking options. They are linked by the `oa:item` property from the `fam:EntityLinkingChoice`.
+
+__NOTE:__ Annotators that extract Keywords/-phrases from texts that are not based on a controlled vocabulary should use the _Keyword Annotation_ instead of an _Entity Annotation_.
 
 The following figure shows the base model of `fam:EntityAnnotation`
 
@@ -405,6 +406,8 @@ Second the sentiment for the document as a whole
 Keywords represent central words and phrases within a document. They are usually extracted by some algorithm and not based (nor linked) to any controlled vocabulary. High level usage of Keywords can include Tag suggestions, Suggestions for Search interfaces or Vocabulary seeding.
 
 `fam:KeywordAnnotation` use the `fam:keyword` property to link to the lexical form of the keyword as extracted from the text. Note this this may not be the word as mentioned in the text but may be already normalized (e.g. singular, base form, case corrected). In addition the `fam:metric` property a `xsd:double` in the range `[0..1]` defines how central the keyword is for the document and the `fam:count` defines how often this keyword was mentioned in the document. In the case of multi word keywords also mentions of sub phrases may contribute to the count.
+
+Annotators that want describe actual mentions of Keywords within the text can do so by adding the according text selectors and linking them to the _Keyword Annotation_.
 
 #### Example
 
