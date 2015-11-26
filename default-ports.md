@@ -32,6 +32,7 @@ STATUS: this is document is prescriptive and not yet fully descriptive
  * 8203 - Batchrefine transformer factory GUI
  * 8204 - XSLT factory GUI
  * 8205 - Resource GUI
+ * 8206 - Literal extraction transformer factory GUI
  * 8387 - Kibana - Log analysis
 
 ## Others
