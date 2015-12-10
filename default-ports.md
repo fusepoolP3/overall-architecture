@@ -20,7 +20,7 @@ STATUS: this is document is prescriptive and not yet fully descriptive
  * 8306 - SilkDedup
  * 8307 - XSLT Transformer
  * 8308 - Geocoordinates Transformer
- * 8309 - Bing
+ * 8309 - Bing Translate
  * 8310 - Batchrefine
  * 8386 - Pundit transformer
  
