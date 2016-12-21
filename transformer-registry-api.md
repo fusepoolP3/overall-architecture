@@ -17,7 +17,7 @@ The key words MUST, MUST NOT, REQUIRED, SHOULD, SHOULD NOT, RECOMMENDED, MAY, an
 
 ## Introduction
 
-It is not required for a transfomer to be registered in a registry for it to be usable as a transformer. Howver registering a transformer to one or several transformer registry advertises the transformer and UI tools that allow for example the creation of pipelines of of transforming containers can offer a better user experience thanks to these registries.
+It is not required for a transfomer to be registered in a registry for it to be usable as a transformer. However registering a transformer to one or several transformer registry advertises the transformer and UI tools that allow for example the creation of pipelines of of transforming containers can offer a better user experience thanks to these registries.
 
 ## Terms
 
